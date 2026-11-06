@@ -264,6 +264,20 @@
     .hint { margin-left: 0; }
   }
 
+  .radio.cIns, .radio.rLvl { flex: 1 1 110px; }
+  .count:empty { display: none; }
+  .chk { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+  .chk input { width: 18px; height: 18px; margin-top: 2px; flex: none; }
+  .sigcard { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 16px; border-radius: 14px; background: #FFFFFF; border: 1px solid var(--line); }
+  .sigcard.off { opacity: .6; }
+  .sigcard .who { flex: 1 1 240px; min-width: 0; }
+  .sigcard .blk { font-family: var(--gu); font-size: 14px; line-height: 1.7; color: #3A4152; white-space: pre-line; }
+  .sigcard .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag-s { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; background: var(--navy-100); color: var(--navy-900); }
+  .tag-s.gold { background: var(--gold-50); color: var(--gold-600); }
+  .side h2 + .nav { margin-top: 0; }
+  .side h2:not(:first-child) { margin-top: 14px; }
+
   /* ═════════ Logo theme: deep navy, gold, cool white ═════════ */
   body { background: var(--bg); }
   .unused-swoosh { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Cpath d='M400 260H90C210 236 320 170 400 70Z' fill='%23002850'/%3E%3Cpath d='M40 258C190 240 320 170 398 40' fill='none' stroke='%23D8A73C' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right bottom / 300px auto fixed; }
@@ -360,6 +374,9 @@
     <symbol id="ic-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M2 10l10-6 10 6"/></symbol>
     <symbol id="ic-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
     <symbol id="ic-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="ic-sign" viewBox="0 0 24 24"><path d="M3 17c3-1 4-6 6-6s1 5 3 5 2-3 4-3 2 2 5 2"/><path d="M3 21h18"/></symbol>
+    <symbol id="ic-remind" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/><path d="M12 3v2"/></symbol>
+    <symbol id="ic-upload" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 18v-6M9.5 14.5 12 12l2.5 2.5"/></symbol>
     <symbol id="ic-word" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8 12l1.5 5 2.5-4 2.5 4 1.5-5"/></symbol>
   </defs>
 </svg>
@@ -407,12 +424,15 @@
 
 <div class="shell">
   <nav class="side" aria-label="Main menu">
-    <h2>Workspace</h2>
-    <button type="button" class="nav active" id="navNew"><svg class="i"><use href="#ic-pen"/></svg>New Letter</button>
+    <h2>Create</h2>
+    <button type="button" class="nav active" id="navNew"><svg class="i"><use href="#ic-upload"/></svg>Forward / Reply</button>
+    <button type="button" class="nav" id="navCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a Letter</button>
+    <button type="button" class="nav" id="navReminder"><svg class="i"><use href="#ic-remind"/></svg>Reminder</button>
+    <h2>Work</h2>
     <button type="button" class="nav" id="navDrafts"><svg class="i"><use href="#ic-doc"/></svg>Current Draft</button>
     <button type="button" class="nav" id="navRegister"><svg class="i"><use href="#ic-book"/></svg>Register</button>
     <button type="button" class="nav" id="navDeadlines"><svg class="i"><use href="#ic-cal"/></svg>Deadlines</button>
-    <div class="nav" aria-disabled="true" title="Planned for a later version"><svg class="i"><use href="#ic-layers"/></svg>Templates &amp; Master Data<span class="soon">Soon</span></div>
+    <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
     <div class="side-foot">Joint Commissioner of State Tax<br>Division-3, Gandhinagar<br><span id="ver"></span><span id="modelInfo"></span><br><a id="sheetLink" href="#" target="_blank" style="color:#E8C066" hidden>Open spreadsheet (admin)</a></div>
   </nav>
 
@@ -566,6 +586,10 @@
                 <label class="f" for="e_encl">Enclosure</label>
                 <input type="text" id="e_encl">
               </div>
+              <div>
+                <label class="f" for="e_sig">Signed by <span>(the signature block and approval note follow this choice)</span></label>
+                <select id="e_sig"></select>
+              </div>
               <div class="fixed" id="sigBox" style="text-align:right"></div>
             </div>
             <div id="err2" class="msg err" role="alert" hidden></div>
@@ -608,6 +632,141 @@
         </div>
         <div class="reg-foot"><span id="regCount"></span><span>Status options: Drafted · Sent to Range-7 · Sent to CCST · Reply received · Closed</span></div>
       </section>
+
+      <!-- WRITE A LETTER -->
+      <section id="step4" hidden>
+        <div class="page-head">
+          <div>
+            <h2>Write a Letter</h2>
+            <p>Write in a few lines what the officer has asked. Lahiyo drafts a formal letter in Gujarati. The note is not stored; only the subject, addressee and deadline go into the register.</p>
+          </div>
+        </div>
+        <div class="section">
+          <div id="cBranchBox" hidden>
+            <div class="label"><span class="n">★</span>Record this letter under</div>
+            <div class="branch-pick"><select id="cBranch" aria-label="Branch for this letter"></select><span class="meta">Administrator only</span></div>
+          </div>
+          <div>
+            <div class="label"><span class="n">1</span>Instructed by</div>
+            <div class="radios" role="group" aria-label="Instructed by">
+              <button type="button" class="radio cIns" data-v="STO" aria-pressed="false"><span class="dot" aria-hidden="true"></span>STO</button>
+              <button type="button" class="radio cIns" data-v="AC" aria-pressed="false"><span class="dot" aria-hidden="true"></span>AC</button>
+              <button type="button" class="radio cIns" data-v="DC" aria-pressed="false"><span class="dot" aria-hidden="true"></span>DC</button>
+              <button type="button" class="radio cIns" data-v="JC" aria-pressed="true"><span class="dot" aria-hidden="true"></span>JC</button>
+            </div>
+          </div>
+          <div class="grid2" style="gap:16px">
+            <div style="flex:1 1 280px;min-width:0">
+              <label class="f" for="cTo">2 · To</label>
+              <select id="cTo"></select>
+              <textarea id="cToOther" rows="2" placeholder="Type the address, one line per row" style="margin-top:8px" hidden></textarea>
+            </div>
+            <div style="flex:1 1 280px;min-width:0">
+              <label class="f" for="cSig">3 · Signed by</label>
+              <select id="cSig"></select>
+            </div>
+          </div>
+          <div>
+            <label class="f" for="cNote">4 · What has been asked <span>(Gujarati or English, a few lines)</span></label>
+            <textarea id="cNote" rows="6" placeholder="દા.ત. વર્તુળ-૭ પાસેથી ઓક્ટોબર-૨૦૨૬ ની ઘટકવાર બાકી વસૂલાતની માહિતી નિયત પત્રકમાં મંગાવવી."></textarea>
+            <p class="meta" style="margin:6px 0 0">Nothing is invented: any missing date, number or format is left as a [blank] for you to fill.</p>
+          </div>
+          <div class="grid2" style="gap:16px">
+            <div style="flex:2 1 260px;min-width:0"><label class="f" for="cRefs">References <span>(optional)</span></label><input type="text" id="cRefs" placeholder="e.g. CCT/1655/05/2026"></div>
+            <div style="flex:1 1 160px;min-width:0"><label class="f" for="cDl">Deadline</label>
+              <select id="cDl"><option value="">No deadline</option><option value="IMMEDIATE">Immediately</option><option value="1">1 day</option><option value="2">2 days</option><option value="3" selected>3 days</option><option value="5">5 days</option><option value="7">7 days</option><option value="10">10 days</option><option value="15">15 days</option></select></div>
+            <div style="flex:2 1 220px;min-width:0"><label class="f" for="cEncl">Enclosure <span>(optional)</span></label><input type="text" id="cEncl" placeholder="e.g. નિયત પત્રક"></div>
+          </div>
+          <div id="err4" class="msg err" role="alert" hidden></div>
+          <div class="actions">
+            <button type="button" class="btn-main" id="cBtn"><span class="spinner" id="cSpin" hidden></span><svg class="i" id="cIcon"><use href="#ic-wand"/></svg><span id="cTxt">Write the Letter</span></button>
+            <span class="meta"><svg class="i"><use href="#ic-clock"/></svg>Usually 10–40 seconds</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- REMINDER -->
+      <section id="step5" hidden>
+        <div class="page-head">
+          <div>
+            <h2>Reminder Letter <span style="font-family:var(--gu);font-weight:600;color:var(--gold-600)">· સ્મરણપત્ર</span></h2>
+            <p>Upload the letter you sent earlier. Lahiyo drafts a reminder with a shorter deadline and adds earlier reminders from the register to the references.</p>
+          </div>
+        </div>
+        <div class="section">
+          <div id="rBranchBox" hidden>
+            <div class="label"><span class="n">★</span>Record this reminder under</div>
+            <div class="branch-pick"><select id="rBranch" aria-label="Branch for this reminder"></select><span class="meta">Administrator only</span></div>
+          </div>
+          <div>
+            <div class="label"><span class="n">1</span>Letter sent earlier (e-Sarkar PDF)</div>
+            <div class="drops">
+              <div class="drop" data-slot="rem">
+                <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+                <div class="t">Our earlier letter (PDF)</div>
+                <div class="s">The letter whose reply has not been received</div>
+                <input type="file" id="f_rem" accept="application/pdf,.pdf">
+                <label class="filebtn" for="f_rem"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
+                <div class="or">or drag and drop the file here</div>
+                <div class="fname" id="n_rem"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="label"><span class="n">2</span>Reminder level</div>
+            <div class="radios" role="group" aria-label="Reminder level">
+              <button type="button" class="radio rLvl" data-v="1" aria-pressed="true"><span class="dot" aria-hidden="true"></span>1st reminder</button>
+              <button type="button" class="radio rLvl" data-v="2" aria-pressed="false"><span class="dot" aria-hidden="true"></span>2nd reminder</button>
+              <button type="button" class="radio rLvl" data-v="FINAL" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Final reminder</button>
+            </div>
+          </div>
+          <div class="grid2" style="gap:16px">
+            <div style="flex:1 1 260px;min-width:0"><label class="f" for="rDl">3 · New deadline</label>
+              <select id="rDl"><option value="AUTO" selected>Shorter than the original (automatic)</option><option value="3">3 days</option><option value="2">2 days</option><option value="1">1 day</option><option value="IMMEDIATE">Immediately (તાત્કાલિક)</option></select></div>
+            <div style="flex:1 1 260px;min-width:0"><label class="f" for="rSig">4 · Signed by</label><select id="rSig"></select></div>
+          </div>
+          <div id="err5" class="msg err" role="alert" hidden></div>
+          <div class="actions">
+            <button type="button" class="btn-main" id="rBtn"><span class="spinner" id="rSpin" hidden></span><svg class="i" id="rIcon"><use href="#ic-remind"/></svg><span id="rTxt">Draft the Reminder</span></button>
+            <span class="meta"><svg class="i"><use href="#ic-clock"/></svg>Usually 20–60 seconds · the PDF is not stored</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIGNATORIES (admin) -->
+      <section id="step6" hidden>
+        <div class="page-head">
+          <div>
+            <h2>Signatories</h2>
+            <p>Officers who sign letters. Every letter type asks "Signed by" and offers this list. Changes apply to new drafts straight away.</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="info-col" style="flex:2 1 480px" id="sigList"></div>
+          <div class="paper" style="flex:1 1 320px">
+            <div class="paper-head"><h3 id="sgTitle">Add a signatory</h3></div>
+            <input type="hidden" id="sgId">
+            <div><label class="f" for="sgName">Name <span>(English, for the menu)</span></label><input type="text" id="sgName" placeholder="e.g. R.K. Patel"></div>
+            <div><label class="f" for="sgBlock">Signature block <span>(Gujarati, one line per row, as printed)</span></label><textarea id="sgBlock" rows="3" placeholder="(આર.કે. પટેલ)&#10;નાયબ રાજ્યવેરા કમિશનર&#10;વિભાગ-૩, ગાંધીનગર"></textarea></div>
+            <div><label class="f" for="sgRank">Rank</label><select id="sgRank"><option>JC</option><option>DC</option><option>AC</option><option>STO</option></select></div>
+            <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+              <legend class="f" style="margin-bottom:6px">Suggest by default for</legend>
+              <label class="chk"><input type="checkbox" id="sgDefDOWN"> Forward to Range-7</label>
+              <label class="chk"><input type="checkbox" id="sgDefUP"> Reply to CCST</label>
+              <label class="chk"><input type="checkbox" id="sgDefCOMPOSE"> Write a Letter</label>
+              <label class="chk"><input type="checkbox" id="sgDefREMINDER"> Reminders</label>
+            </fieldset>
+            <label class="chk"><input type="checkbox" id="sgNote"> Add the approval note "(નોંધ: સદર પત્રનો મુસદ્દો … મંજૂર કરેલ છે.)" when this officer signs</label>
+            <label class="chk"><input type="checkbox" id="sgActive" checked> Active (shown in the "Signed by" menu)</label>
+            <div id="err6" class="msg err" role="alert" hidden></div>
+            <div id="ok6" class="msg info" role="status" hidden></div>
+            <div class="actions">
+              <button type="button" class="btn-main" id="sgSave">Save signatory</button>
+              <button type="button" class="btn-ghost" id="sgCancel" hidden>Cancel edit</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <aside class="rail" id="rail" aria-label="Summary">
@@ -632,7 +791,7 @@
         <h3><svg class="i"><use href="#ic-bolt"/></svg>Quick actions</h3>
         <div class="quick">
           <button type="button" class="qa" id="qaNew"><svg class="i"><use href="#ic-plus-doc"/></svg>New draft</button>
-          <div class="qa" aria-disabled="true" title="Planned for a later version"><svg class="i"><use href="#ic-grid"/></svg>Templates</div>
+          <button type="button" class="qa" id="qaCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a letter</button>
           <button type="button" class="qa" id="qaReg"><svg class="i"><use href="#ic-book"/></svg>Register</button>
         </div>
       </div>
@@ -642,7 +801,8 @@
 </div>
 
 <script>
-  var state = { mode: 'DOWN', deadline: 'SAME', files: {}, draft: null, token: null, sess: null, regRows: [], statuses: [] };
+  var state = { mode: 'DOWN', deadline: 'SAME', files: {}, draft: null, token: null, sess: null, regRows: [], statuses: [],
+                sigs: [], addressees: [], note: '', ins: 'JC', level: '1' };
   var $ = function (id) { return document.getElementById(id); };
 
   function en(n) { return String(n == null ? '' : n).replace(/[૦-૯]/g, function (c) { return '૦૧૨૩૪૫૬૭૮૯'.indexOf(c); }); }
@@ -650,6 +810,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function leftLabel(l) { return l < 0 ? Math.abs(l) + (l === -1 ? ' day' : ' days') + ' overdue' : (l === 0 ? 'Due today' : l + (l === 1 ? ' day' : ' days') + ' left'); }
   var TYPES = { forward_for_action: 'Forward for action', data_call: 'Data call', explanation: 'Explanation sought', reply_with_data: 'Reply with data', other: 'Other' };
+  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder' };
   var CLOSED = /received|closed|done|મળેલ|બંધ|પૂર્ણ/i;
   /** Branch name without the word "શાખા"/"Branch", for small labels. */
   function shortBranch(n) { return String(n || '').replace(/\s*(શાખા|Branch)\s*$/i, '').replace(/\s*શાખા\s*/, ' ').trim() || n; }
@@ -724,6 +885,7 @@
 
   function startSession(s) {
     state.token = s.token; state.sess = s; saveToken(s.token);
+    state.addressees = s.addressees || []; state.note = s.approvalNote || '';
     $('login').hidden = true;
     $('userName').textContent = s.branch;
     $('userRole').textContent = s.admin ? 'Administrator' : 'Branch user';
@@ -731,15 +893,16 @@
     $('ver').textContent = 'Version ' + s.version;
     $('modelInfo').textContent = s.model ? ' · AI: ' + s.model : '';
     $('dueScope').textContent = s.admin ? 'All branches' : '';
-    if (s.admin) {
-      var opts = s.branches.map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + '</option>'; }).join('');
-      $('recBranch').innerHTML = opts;
-      $('regBranch').innerHTML = '<option value="">All branches</option>' + opts;
-      $('adminBranchBox').hidden = false; $('regBranchBox').hidden = false;
-      if (s.sheetUrl) { $('sheetLink').href = s.sheetUrl; $('sheetLink').hidden = false; }
-    } else {
-      $('adminBranchBox').hidden = true; $('regBranchBox').hidden = true; $('sheetLink').hidden = true;
-    }
+    var opts = (s.branches || []).map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + '</option>'; }).join('');
+    ['recBranch', 'cBranch', 'rBranch'].forEach(function (id) { $(id).innerHTML = opts; });
+    $('regBranch').innerHTML = '<option value="">All branches</option>' + opts;
+    ['adminBranchBox', 'cBranchBox', 'rBranchBox', 'regBranchBox'].forEach(function (id) { $(id).hidden = !s.admin; });
+    $('navSign').hidden = !s.admin;
+    $('sheetLink').hidden = !(s.admin && s.sheetUrl);
+    if (s.admin && s.sheetUrl) $('sheetLink').href = s.sheetUrl;
+    $('cTo').innerHTML = state.addressees.map(function (a) { return '<option value="' + esc(a.id) + '">' + esc(a.label) + '</option>'; }).join('') +
+      '<option value="OTHER">Other (type the address)</option>';
+    setSignatories(s.signatories || []);
     showStep(1);
     loadDashboard();
   }
@@ -752,6 +915,26 @@
     google.script.run.withSuccessHandler(startSession).withFailureHandler(function () { showLogin(''); }).resumeSession(t);
   })();
 
+  // ── Signatories (menus) ──
+  function activeSigs() { return state.sigs.filter(function (x) { return x.active; }); }
+  function defaultSig(mode) {
+    var a = activeSigs();
+    return (a.filter(function (x) { return x.defaults.indexOf(mode) >= 0; })[0] || a[0] || null);
+  }
+  function sigOptions(selId) {
+    var a = activeSigs();
+    if (!a.length) return '<option value="">No signatories — ask the Administrator</option>';
+    return a.map(function (x) { return '<option value="' + esc(x.id) + '"' + (x.id === selId ? ' selected' : '') + '>' + esc(x.name) + (x.rank ? ' · ' + esc(x.rank) : '') + '</option>'; }).join('');
+  }
+  function setSignatories(list) {
+    state.sigs = list || [];
+    var c = defaultSig('COMPOSE'), r = defaultSig('REMINDER');
+    $('cSig').innerHTML = sigOptions(c && c.id);
+    $('rSig').innerHTML = sigOptions(r && r.id);
+    if (state.sess && state.sess.admin) renderSigList();
+  }
+  function sigById(id) { return state.sigs.filter(function (x) { return x.id === id; })[0] || null; }
+
   // ── Dashboard ──
   function loadDashboard() {
     api('getDashboard', [''], renderDashboard, function () { $('dueList').innerHTML = '<p class="empty">The register could not be read.</p>'; });
@@ -760,27 +943,35 @@
     $('stOpen').textContent = d.open; $('stDue7').textContent = d.due7; $('stOver').textContent = d.overdue;
     $('bellBadge').textContent = d.overdue; $('bellBadge').hidden = !d.overdue;
     if (!d.dueSoon.length) {
-      $('dueList').innerHTML = '<p class="empty">No open deadlines. Deadlines appear here once a Range-7 letter has been downloaded.</p>';
+      $('dueList').innerHTML = '<p class="empty">No open deadlines. Deadlines appear here once a letter with a deadline has been downloaded.</p>';
       return;
     }
     var admin = state.sess && state.sess.admin;
     $('dueList').innerHTML = d.dueSoon.map(function (x) {
       var late = x.left < 0, up = /CCST/.test(x.direction);
       var left = late ? Math.abs(x.left) + (x.left === -1 ? ' day' : ' days') + ' overdue' : (x.left === 0 ? 'Due today' : x.left + (x.left === 1 ? ' day' : ' days'));
-      return '<div class="due ' + (late ? 'late' : (up ? 'up' : '')) + '"><div class="txt"><b>' + esc(x.due) + ' · ' + (up ? 'Reply to CCST' : 'Range-7 report') + (admin ? ' · ' + esc(shortBranch(x.tab)) : '') + '</b>' +
-        '<span>' + esc(x.letterNo) + ' — <span class="gu">' + esc(x.subject) + '</span></span></div><span class="left">' + left + '</span></div>';
+      var what = /^To Range-7$/.test(x.direction) ? 'Range-7 report' : (/^To CCST$/.test(x.direction) ? 'Reply to CCST' : x.direction);
+      return '<div class="due ' + (late ? 'late' : (up ? 'up' : '')) + '"><div class="txt"><b>' + esc(x.due) + ' · ' + esc(what) + (admin ? ' · ' + esc(shortBranch(x.tab)) : '') + '</b>' +
+        '<span>' + esc(x.letterNo || '—') + ' — <span class="gu">' + esc(x.subject) + '</span></span></div><span class="left">' + left + '</span></div>';
     }).join('');
   }
 
   // ── Navigation ──
-  function setNav(id) { ['navNew', 'navDrafts', 'navRegister', 'navDeadlines'].forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
+  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6' };
+  var NAV_FOR = { 1: 'navNew', 2: 'navDrafts', 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign' };
+  function setNav(id) { ['navNew', 'navCompose', 'navReminder', 'navDrafts', 'navRegister', 'navDeadlines', 'navSign'].forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
   function showStep(n) {
-    $('step1').hidden = n !== 1; $('step2').hidden = n !== 2; $('step3').hidden = n !== 3;
-    $('rail').hidden = n === 3; // the register table uses the full width
-    setNav(n === 1 ? 'navNew' : n === 2 ? 'navDrafts' : 'navRegister'); window.scrollTo(0, 0);
+    Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
+    $('rail').hidden = n === 3 || n === 6; // wide screens use the full width
+    setNav(NAV_FOR[n]); window.scrollTo(0, 0);
   }
+  function leaveDraftOk() { return !(state.draft && !$('step2').hidden) || confirm('Leave this draft? Unsaved edits will be lost.'); }
   $('navNew').onclick = function () { startNew(); };
   $('qaNew').onclick = function () { startNew(); };
+  $('navCompose').onclick = function () { if (leaveDraftOk()) { $('err4').hidden = true; showStep(4); } };
+  $('navReminder').onclick = function () { if (leaveDraftOk()) { $('err5').hidden = true; showStep(5); } };
+  $('qaCompose').onclick = function () { $('navCompose').click(); };
+  $('navSign').onclick = function () { if (leaveDraftOk()) { resetSigForm(); renderSigList(); showStep(6); } };
   $('navDrafts').onclick = function () {
     if (state.draft) showStep(2);
     else { showStep(1); showErr('err1', 'No draft is open. Upload a letter and click Generate Draft.'); }
@@ -797,7 +988,7 @@
   $('qaReg').onclick = function () { openRegister('all'); };
   $('bellBtn').onclick = function () { openRegister('overdue'); };
 
-  // ── Step 1 ──
+  // ── Forward / Reply (step 1) ──
   function setMode(m) {
     state.mode = m;
     $('modeDown').setAttribute('aria-pressed', m === 'DOWN');
@@ -815,20 +1006,22 @@
   $('dlSame').onclick = function () { setDl('SAME'); };
   $('dlLess').onclick = function () { setDl('LESS'); };
 
-  var LABELS = { ccst: 'CCST letter', r7: 'Range-7 reply', orig: 'Original CCST letter' };
+  var LABELS = { ccst: 'CCST letter', r7: 'Range-7 reply', orig: 'Original CCST letter', rem: 'Letter sent earlier' };
+  var SLOTS = ['ccst', 'r7', 'orig', 'rem'];
+  function errFor(slot) { return slot === 'rem' ? 'err5' : 'err1'; }
   function readFile(slot, file) {
     if (!file) return;
-    if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf') { showErr('err1', 'Please choose a PDF file.'); return; }
+    if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf') { showErr(errFor(slot), 'Please choose a PDF file.'); return; }
     var r = new FileReader();
     r.onload = function () {
       state.files[slot] = { label: LABELS[slot], name: file.name, data: String(r.result).split(',')[1] };
       $('n_' + slot).textContent = '✓ ' + file.name;
       $('n_' + slot).closest('.drop').classList.add('has');
-      $('err1').hidden = true;
+      $(errFor(slot)).hidden = true;
     };
     r.readAsDataURL(file);
   }
-  ['ccst', 'r7', 'orig'].forEach(function (slot) { $('f_' + slot).onchange = function (e) { readFile(slot, e.target.files[0]); }; });
+  SLOTS.forEach(function (slot) { $('f_' + slot).onchange = function (e) { readFile(slot, e.target.files[0]); }; });
   Array.prototype.forEach.call(document.querySelectorAll('.drop'), function (box) {
     box.addEventListener('dragover', function (e) { e.preventDefault(); box.classList.add('dragover'); });
     box.addEventListener('dragleave', function () { box.classList.remove('dragover'); });
@@ -836,9 +1029,8 @@
   });
 
   function showErr(id, e) { var el = $(id); el.textContent = (e && e.message) ? e.message : String(e); el.hidden = false; }
-  function busy(on) {
-    $('genBtn').disabled = on; $('spin').hidden = !on; $('genIcon').style.display = on ? 'none' : '';
-    $('genTxt').textContent = on ? 'Reading the letter…' : 'Generate Draft';
+  function busyBtn(btn, spin, icon, txt, on, busyText, idleText) {
+    $(btn).disabled = on; $(spin).hidden = !on; $(icon).style.display = on ? 'none' : ''; $(txt).textContent = on ? busyText : idleText;
   }
 
   $('genBtn').onclick = function () {
@@ -852,27 +1044,83 @@
       files.push(state.files.r7);
       if (state.files.orig) files.push(state.files.orig);
     }
-    busy(true);
+    busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', true, 'Reading the letter…', 'Generate Draft');
     api('generateDraft', [{ mode: state.mode, deadline: state.deadline, files: files, branch: $('recBranch').value }],
-      function (d) { busy(false); state.draft = d; showDraft(d); },
-      function (e) { busy(false); showErr('err1', e); });
+      function (d) { busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft'); state.draft = d; showDraft(d); },
+      function (e) { busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft'); showErr('err1', e); });
   };
 
-  // ── Step 2 ──
-  function showDraft(d) {
-    var det = d.details || {}, L = d.letter || {};
-    var facts = [
+  // ── Write a Letter (step 4) ──
+  Array.prototype.forEach.call(document.querySelectorAll('.cIns'), function (b) {
+    b.onclick = function () {
+      state.ins = b.dataset.v;
+      Array.prototype.forEach.call(document.querySelectorAll('.cIns'), function (x) { x.setAttribute('aria-pressed', x === b); });
+    };
+  });
+  $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; };
+  $('cBtn').onclick = function () {
+    $('err4').hidden = true;
+    var note = $('cNote').value.trim();
+    if (note.length < 10) return showErr('err4', 'Please write what has been asked (at least one sentence).');
+    if ($('cTo').value === 'OTHER' && !$('cToOther').value.trim()) return showErr('err4', 'Please type the address.');
+    if (!$('cSig').value) return showErr('err4', 'Please choose who signs the letter.');
+    busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', true, 'Writing the letter…', 'Write the Letter');
+    api('composeDraft', [{ instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, note: note,
+      refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: $('cSig').value }],
+      function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); state.draft = d; showDraft(d); },
+      function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); });
+  };
+
+  // ── Reminder (step 5) ──
+  Array.prototype.forEach.call(document.querySelectorAll('.rLvl'), function (b) {
+    b.onclick = function () {
+      state.level = b.dataset.v;
+      Array.prototype.forEach.call(document.querySelectorAll('.rLvl'), function (x) { x.setAttribute('aria-pressed', x === b); });
+    };
+  });
+  $('rBtn').onclick = function () {
+    $('err5').hidden = true;
+    if (!state.files.rem) return showErr('err5', 'Please upload the letter sent earlier.');
+    if (!$('rSig').value) return showErr('err5', 'Please choose who signs the reminder.');
+    busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', true, 'Reading the earlier letter…', 'Draft the Reminder');
+    api('reminderDraft', [{ files: [state.files.rem], level: state.level, deadline: $('rDl').value, branch: $('rBranch').value, signatoryId: $('rSig').value }],
+      function (d) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); state.draft = d; showDraft(d); },
+      function (e) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); showErr('err5', e); });
+  };
+
+  // ── Review (step 2), all letter types ──
+  function factsFor(d) {
+    var det = d.details || {};
+    if (d.mode === 'COMPOSE') return [
+      ['Letter type', 'Written letter'], ['To', det.addressee], ['Instructed by', det.instructed_by],
+      ['Deadline', det.deadline_text], ['References', det.input_letter_no], ['Register', d.branch], ['AI model', d.model]];
+    if (d.mode === 'REMINDER') return [
+      ['Letter type', det.level === 'FINAL' ? 'Final reminder' : 'Reminder ' + det.level], ['Earlier letter No.', det.input_letter_no],
+      ['Earlier letter date', det.input_approved_date], ['To', det.addressee], ['Original deadline', days(det.original_days)],
+      ['New deadline', det.deadline_text], ['Earlier reminders found', String(det.earlier_reminders || 0)], ['Register', d.branch], ['AI model', d.model]];
+    return [
       ['Letter No.', det.input_letter_no], ['Approved on', det.input_approved_date],
       ['From', det.sender_full], ['File No.', det.input_file_no],
       ['CCST deadline', days(det.ccst_days)],
       d.mode === 'DOWN' ? ['Range-7 deadline', days(det.range7_days)] : ['CCST letter No.', det.ccst_letter_no],
       ['Enclosures', det.enclosures], ['Letter type', TYPES[det.letter_type] || det.letter_type],
-      ['Direction', d.mode === 'DOWN' ? 'Forward to Range-7' : 'Reply to CCST'], ['Register', d.branch],
-      ['AI model', d.model]
-    ];
-    $('facts').innerHTML = facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1] || '—') + '</dd></div>'; }).join('');
+      ['Direction', MODE_NAMES[d.mode]], ['Register', d.branch], ['AI model', d.model]];
+  }
+  function applySignatory(id) {
+    var s = sigById(id);
+    var lines = s ? s.block : ((state.draft && state.draft.letter.signature) || []);
+    $('sigBox').innerHTML = '<span class="k">Signature block</span>' + esc(lines.join('\n'));
+    var showNote = s ? s.note : !!(state.draft && state.draft.letter.note);
+    $('noteBox').hidden = !showNote;
+    $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(state.note) : '';
+  }
+  $('e_sig').onchange = function () { applySignatory($('e_sig').value); };
 
-    var tags = { change: 'Wording changed', unclear: 'Could not read', decide: 'Officer decision needed' };
+  function showDraft(d) {
+    var det = d.details || {}, L = d.letter || {};
+    $('facts').innerHTML = factsFor(d).map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1] || '—') + '</dd></div>'; }).join('');
+
+    var tags = { change: 'Wording changed', unclear: 'Could not read / to fill', decide: 'Officer decision needed' };
     var cs = d.checks || [];
     $('checkCount').textContent = cs.length;
     $('checks').innerHTML = cs.length ? cs.map(function (c) {
@@ -885,14 +1133,15 @@
 
     $('e_to').value = (L.to || []).join('\n');
     $('e_to').readOnly = d.mode === 'DOWN';
-    $('toHint').textContent = d.mode === 'DOWN' ? '(fixed · from master data)' : '(check the CCST branch)';
+    $('toHint').textContent = d.mode === 'DOWN' ? '(fixed · from master data)' : (d.mode === 'UP' ? '(check the CCST branch)' : '(you can edit the address)');
     $('e_subject').value = L.subject || '';
     $('e_refs').value = (L.refs || []).join('\n');
     $('e_body').value = (L.body || []).join('\n\n');
     $('e_encl').value = L.enclosure || '';
-    $('noteBox').hidden = !L.note;
-    $('noteBox').innerHTML = L.note ? '<span class="k">Approval note</span>' + esc(L.note) : '';
-    $('sigBox').innerHTML = '<span class="k">Signature block</span>' + esc((L.signature || []).join('\n'));
+
+    var chosen = sigById(d.signatoryId) || defaultSig(d.mode);
+    $('e_sig').innerHTML = sigOptions(chosen && chosen.id);
+    applySignatory(chosen ? chosen.id : '');
 
     if (d.duplicate) {
       $('dupWarn').textContent = 'This letter (' + (det.input_letter_no || '') + ') was already drafted on ' + d.duplicate.when + ' (' + d.duplicate.direction + ', ' + d.duplicate.branch + '). Please check the register before sending it again.';
@@ -908,15 +1157,18 @@
 
   $('dlBtn').onclick = function () {
     var d = state.draft; if (!d) return;
+    var s = sigById($('e_sig').value);
     var letter = {
       to: lines($('e_to').value),
       subject: $('e_subject').value.trim(),
       refs: lines($('e_refs').value),
-      body: $('e_body').value.split(/\n\s*\n/).map(function (s) { return s.replace(/\s*\n\s*/g, ' ').trim(); }).filter(Boolean),
-      note: d.letter.note || '',
+      body: $('e_body').value.split(/\n\s*\n/).map(function (x) { return x.replace(/\s*\n\s*/g, ' ').trim(); }).filter(Boolean),
+      note: s ? (s.note ? state.note : '') : (d.letter.note || ''),
       enclosure: $('e_encl').value.trim(),
-      signature: d.letter.signature || []
+      signature: s ? s.block : (d.letter.signature || [])
     };
+    if (!letter.subject) return showErr('err2', 'The subject is empty.');
+    if (!letter.signature.length) return showErr('err2', 'Please choose who signs the letter.');
     $('dlBtn').disabled = true; $('spin2').hidden = false; $('err2').hidden = true;
     api('makeWord', [letter, d.details, d.mode, d.branch], function (f) {
       $('dlBtn').disabled = false; $('spin2').hidden = true;
@@ -936,7 +1188,7 @@
 
   function resetDraft() {
     state.files = {}; state.draft = null;
-    ['ccst', 'r7', 'orig'].forEach(function (s) { $('f_' + s).value = ''; $('n_' + s).textContent = ''; $('n_' + s).closest('.drop').classList.remove('has'); });
+    SLOTS.forEach(function (s) { $('f_' + s).value = ''; $('n_' + s).textContent = ''; $('n_' + s).closest('.drop').classList.remove('has'); });
   }
   function startNew() {
     if (state.draft && !$('step2').hidden && !confirm('Start a new letter? Unsaved edits to this draft will be lost.')) return;
@@ -946,7 +1198,7 @@
   }
   $('newBtn').onclick = startNew;
 
-  // ── Register ──
+  // ── Register (step 3) ──
   function loadRegister() {
     $('regErr').hidden = true;
     $('regBody').innerHTML = '<tr><td colspan="9">Loading…</td></tr>';
@@ -967,11 +1219,11 @@
       if (view === 'deadlines' && (closed || r.left == null)) return false;
       if (view === 'overdue' && (closed || r.left == null || r.left >= 0)) return false;
       if (view === 'closed' && !closed) return false;
-      if (q && (r.letterNo + ' ' + r.subject + ' ' + r.outward + ' ' + r.from).toLowerCase().indexOf(q) < 0) return false;
+      if (q && (r.letterNo + ' ' + r.subject + ' ' + r.outward + ' ' + r.from + ' ' + r.direction).toLowerCase().indexOf(q) < 0) return false;
       return true;
     });
     if (view === 'deadlines' || view === 'overdue') rows.sort(function (a, b) { return a.left - b.left; });
-    var head = ['Drafted', admin ? 'Branch' : null, 'Direction', 'Letter No. / From', 'Subject', 'Deadline', 'Outward No.', 'Status', ''].filter(function (x) { return x !== null; });
+    var head = ['Drafted', admin ? 'Branch' : null, 'Type / To', 'Letter No. / From', 'Subject', 'Deadline', 'Outward No.', 'Status', ''].filter(function (x) { return x !== null; });
     $('regHead').innerHTML = head.map(function (h) { return '<th scope="col">' + h + '</th>'; }).join('');
     if (!rows.length) { $('regBody').innerHTML = '<tr><td colspan="' + head.length + '" class="empty" style="padding:18px">No letters to show.</td></tr>'; }
     else $('regBody').innerHTML = rows.map(function (r, i) {
@@ -983,8 +1235,8 @@
       return '<tr data-i="' + i + '">' +
         '<td style="white-space:nowrap">' + esc(r.drafted) + '</td>' +
         (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') +
-        '<td style="white-space:nowrap">' + esc(r.direction) + '</td>' +
-        '<td><b>' + esc(r.letterNo) + '</b><br><span class="gu" style="font-family:var(--gu);color:var(--muted)">' + esc(r.from) + '</span></td>' +
+        '<td style="max-width:200px">' + esc(r.direction) + '</td>' +
+        '<td><b>' + esc(r.letterNo || '—') + '</b><br><span class="gu" style="font-family:var(--gu);color:var(--muted)">' + esc(r.from) + '</span></td>' +
         '<td class="gu">' + esc(r.subject) + '</td>' +
         '<td>' + dl + '</td>' +
         '<td><input type="text" value="' + esc(r.outward) + '" aria-label="Outward number" placeholder="CCTJC3/…"></td>' +
@@ -1011,6 +1263,56 @@
   $('regSearch').oninput = renderRegister;
   $('regBranch').onchange = loadRegister;
   $('regRefresh').onclick = loadRegister;
+
+  // ── Signatories admin (step 6) ──
+  var MODE_SHORT = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'Reminder' };
+  function renderSigList() {
+    if (!state.sigs.length) { $('sigList').innerHTML = '<p class="empty">No signatories yet. Add one on the right.</p>'; return; }
+    $('sigList').innerHTML = state.sigs.map(function (x) {
+      return '<div class="sigcard' + (x.active ? '' : ' off') + '" data-id="' + esc(x.id) + '">' +
+        '<div class="avatar" aria-hidden="true" style="width:44px;height:44px">' + esc((x.name.match(/[A-Za-z]/g) || ['•']).slice(0, 2).join('').toUpperCase()) + '</div>' +
+        '<div class="who"><b>' + esc(x.name) + '</b>' + (x.rank ? ' <span class="tag-s">' + esc(x.rank) + '</span>' : '') + (x.active ? '' : ' <span class="tag-s">Inactive</span>') +
+        '<div class="blk">' + esc(x.block.join('\n')) + '</div>' +
+        '<div class="tags">' + x.defaults.map(function (m) { return '<span class="tag-s gold">Default · ' + esc(MODE_SHORT[m] || m) + '</span>'; }).join('') +
+        (x.note ? '<span class="tag-s">Adds approval note</span>' : '') + '</div></div>' +
+        '<div style="display:flex;gap:8px"><button type="button" class="savebtn sgEdit">Edit</button><button type="button" class="savebtn sgDel" style="border-color:#E6C3BE;color:#8E2A20">Remove</button></div></div>';
+    }).join('');
+  }
+  function resetSigForm() {
+    $('sgId').value = ''; $('sgName').value = ''; $('sgBlock').value = ''; $('sgRank').value = 'AC';
+    ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].forEach(function (m) { $('sgDef' + m).checked = false; });
+    $('sgNote').checked = false; $('sgActive').checked = true;
+    $('sgTitle').textContent = 'Add a signatory'; $('sgCancel').hidden = true; $('err6').hidden = true; $('ok6').hidden = true;
+  }
+  $('sigList').addEventListener('click', function (e) {
+    var card = e.target.closest('.sigcard'); if (!card) return;
+    var x = sigById(card.dataset.id); if (!x) return;
+    if (e.target.classList.contains('sgEdit')) {
+      $('sgId').value = x.id; $('sgName').value = x.name; $('sgBlock').value = x.block.join('\n'); $('sgRank').value = x.rank || 'AC';
+      ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].forEach(function (m) { $('sgDef' + m).checked = x.defaults.indexOf(m) >= 0; });
+      $('sgNote').checked = x.note; $('sgActive').checked = x.active;
+      $('sgTitle').textContent = 'Edit · ' + x.name; $('sgCancel').hidden = false; $('err6').hidden = true; $('ok6').hidden = true;
+      $('sgName').focus();
+    } else if (e.target.classList.contains('sgDel')) {
+      if (!confirm('Remove ' + x.name + ' from the signatories list? Letters already drafted are not affected.')) return;
+      api('removeSignatory', [x.id], function (list) { setSignatories(list); resetSigForm(); $('ok6').textContent = x.name + ' removed.'; $('ok6').hidden = false; },
+        function (err) { showErr('err6', err); });
+    }
+  });
+  $('sgCancel').onclick = resetSigForm;
+  $('sgSave').onclick = function () {
+    $('err6').hidden = true; $('ok6').hidden = true;
+    var data = { id: $('sgId').value, name: $('sgName').value, block: $('sgBlock').value, rank: $('sgRank').value,
+      defaults: ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].filter(function (m) { return $('sgDef' + m).checked; }),
+      note: $('sgNote').checked, active: $('sgActive').checked };
+    if (!data.name.trim()) return showErr('err6', 'Please enter the officer\'s name.');
+    if (!data.block.trim()) return showErr('err6', 'Please enter the signature block in Gujarati.');
+    $('sgSave').disabled = true;
+    api('saveSignatory', [data], function (list) {
+      $('sgSave').disabled = false; setSignatories(list);
+      var nm = data.name.trim(); resetSigForm(); $('ok6').textContent = nm + ' saved.'; $('ok6').hidden = false;
+    }, function (err) { $('sgSave').disabled = false; showErr('err6', err); });
+  };
 </script>
 <script>
   // Makes Lahiyo installable ("Install app" in Chrome) and quick to open.

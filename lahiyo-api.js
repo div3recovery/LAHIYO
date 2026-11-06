@@ -5,11 +5,13 @@
  */
 (function () {
   function apiUrl() {
-    var u = (window.LAHIYO_CONFIG && window.LAHIYO_CONFIG.API_URL) || '';
-    if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(u)) {
-      throw new Error('Setup is not complete: paste the Apps Script Web app URL (ending in /exec) into config.js.');
+    var u = String((window.LAHIYO_CONFIG && window.LAHIYO_CONFIG.API_URL) || '').trim();
+    // Accepts .../macros/s/<id>/exec (also Workspace links .../a/macros/<domain>/s/<id>/exec)
+    if (!/^https:\/\/script\.google\.com\/(macros\/s|a\/macros\/[^\/\s]+\/s)\/[^\/\s]+\/(exec|dev)\/?$/.test(u)) {
+      var shown = !u || u === 'PASTE_YOUR_WEB_APP_URL_HERE' ? 'nothing yet' : '"' + u.slice(0, 70) + (u.length > 70 ? '…' : '') + '"';
+      throw new Error('Setup is not complete: config.js must contain the Apps Script Web app URL ending in /exec. It currently has ' + shown + '.');
     }
-    return u;
+    return u.replace(/\/$/, '');
   }
 
   function call(fn, args) {
