@@ -70,6 +70,9 @@
   .nav.active svg.i { color: var(--navy-900); }
   .nav[aria-disabled="true"] { opacity: .5; cursor: default; }
   .nav[aria-disabled="true"]:hover { background: transparent; }
+  .nav .nb { margin-left: auto; min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: #E0483B; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+  .gu-l { font-family: var(--gu); font-weight: 600; }
+  .side .gap { height: 14px; flex: none; }
   .nav .soon { margin-left: auto; font-size: 10px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; border: 1px solid rgba(255,255,255,.3); }
   .side-foot { margin-top: auto; padding: 18px 12px 0; font-size: 12px; line-height: 1.6; color: #8FA2BF; position: relative; z-index: 1; }
 
@@ -177,6 +180,10 @@
   .qa[aria-disabled="true"] { opacity: .5; cursor: default; }
   .qa[aria-disabled="true"]:hover { border-color: var(--line); background: #fff; }
   .fine { margin: 0; font-size: 12px; color: var(--muted); }
+  .rail .stats { margin: 4px 0 14px; }
+  .other-sig { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; padding: 14px; border-radius: 10px; border: 1px dashed var(--gold-500); background: var(--gold-50); }
+  .other-sig[hidden] { display: none; }
+  .other-sig .row { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
 
   /* Review */
   .grid2 { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
@@ -347,6 +354,13 @@
     .nav.active { border-left: 0; border-bottom: 3px solid var(--gold-500); }
     .login { background-size: 200px auto, 200px auto, auto; }
   }
+
+  .credit { display: flex; flex-direction: column; gap: 2px; padding: 12px 0 0; margin-bottom: 10px; border-top: 2px solid var(--gold-500); width: 100%; }
+  .credit .c-k { font-family: var(--head); font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-600); }
+  .credit b { font-family: var(--head); font-size: 14px; font-weight: 800; color: var(--navy-900); letter-spacing: .01em; }
+  .credit .c-r { font-size: 11.5px; line-height: 1.45; color: var(--muted); }
+  .login .credit { align-items: center; text-align: center; border-top: 1px solid var(--line); padding-top: 14px; margin: 4px 0 0; }
+  .login .credit b { font-size: 15px; }
 </style>
 </head>
 <body>
@@ -402,6 +416,7 @@
       <div id="lgErr" class="msg err" role="alert" hidden></div>
       <button type="submit" class="btn-main" id="lgBtn"><span class="spinner" id="lgSpin" hidden></span>Sign in</button>
       <p class="login-foot">Each branch sees only its own register. Ask the administrator for your branch PIN.</p>
+      <div class="credit"><span class="c-k">Designed &amp; developed by</span><b>Mehul Ranavasiya</b><span class="c-r">State Tax Inspector<br>Division 3, Gandhinagar</span></div>
     </form>
   </div>
 </div>
@@ -413,7 +428,6 @@
   </div>
   <div class="top-right">
     <span class="dept"><svg class="i"><use href="#ic-building"/></svg><span class="dept-bar" aria-hidden="true"></span><span>Office of the Joint Commissioner of State Tax<br>Division 3, Gandhinagar</span></span>
-    <button type="button" class="bell" id="bellBtn" aria-label="Overdue letters"><svg class="i"><use href="#ic-bell"/></svg><span class="badge" id="bellBadge" hidden></span></button>
     <div class="user">
       <div class="avatar" id="avatar" aria-hidden="true">–</div>
       <div><b id="userName">–</b><span class="role" id="userRole"></span></div>
@@ -424,16 +438,16 @@
 
 <div class="shell">
   <nav class="side" aria-label="Main menu">
-    <h2>Create</h2>
-    <button type="button" class="nav active" id="navNew"><svg class="i"><use href="#ic-upload"/></svg>Forward / Reply</button>
+    <h2>New letter</h2>
+    <button type="button" class="nav active" id="navFwd"><svg class="i"><use href="#ic-down"/></svg>Forward to Range-7</button>
+    <button type="button" class="nav" id="navReply"><svg class="i"><use href="#ic-up"/></svg>Reply to CCST</button>
     <button type="button" class="nav" id="navCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a Letter</button>
-    <button type="button" class="nav" id="navReminder"><svg class="i"><use href="#ic-remind"/></svg>Reminder</button>
-    <h2>Work</h2>
-    <button type="button" class="nav" id="navDrafts"><svg class="i"><use href="#ic-doc"/></svg>Current Draft</button>
-    <button type="button" class="nav" id="navRegister"><svg class="i"><use href="#ic-book"/></svg>Register</button>
-    <button type="button" class="nav" id="navDeadlines"><svg class="i"><use href="#ic-cal"/></svg>Deadlines</button>
+    <button type="button" class="nav" id="navReminder"><svg class="i"><use href="#ic-remind"/></svg><span>Reminder · <span class="gu-l">સ્મૃતિપત્ર</span></span></button>
+    <div class="gap"></div>
+    <h2>Records</h2>
+    <button type="button" class="nav" id="navRegister"><svg class="i"><use href="#ic-book"/></svg>Register<span class="nb" id="overBadge" title="Overdue letters" hidden></span></button>
     <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
-    <div class="side-foot">Joint Commissioner of State Tax<br>Division-3, Gandhinagar<br><span id="ver"></span><span id="modelInfo"></span><br><a id="sheetLink" href="#" target="_blank" style="color:#E8C066" hidden>Open spreadsheet (admin)</a></div>
+    <div class="side-foot"><div class="credit"><span class="c-k">Designed &amp; developed by</span><b>Mehul Ranavasiya</b><span class="c-r">State Tax Inspector<br>Division 3, Gandhinagar</span></div><span id="ver"></span><span id="modelInfo"></span><br><a id="sheetLink" href="#" target="_blank" style="color:#E8C066" hidden>Open spreadsheet (admin)</a></div>
   </nav>
 
   <div class="content">
@@ -443,31 +457,12 @@
       <section id="step1">
         <div class="page-head">
           <div>
-            <h2>Prepare a New Letter</h2>
-            <p>Upload the letter received on e-Sarkar. Lahiyo prepares a Word draft in Gujarati, ready for e-Sarkar.</p>
+            <h2 id="fwdTitle">Forward to Range-7</h2>
+            <p id="fwdSub">Upload the CCST letter received on e-Sarkar. Lahiyo prepares the forwarding letter to the Deputy Commissioner, Range-7.</p>
           </div>
-          <ol class="stepper" aria-label="Progress">
-            <li class="on"><b>1</b>Upload</li><li><b>2</b>Review</li><li><b>3</b>Download</li>
-          </ol>
         </div>
 
         <div class="section">
-          <div>
-            <div class="label"><span class="n">1</span>Letter direction</div>
-            <div class="choices">
-              <button type="button" class="choice" id="modeDown" aria-pressed="true">
-                <span class="ci"><svg class="i"><use href="#ic-down"/></svg></span>
-                <span><b>Forward to Range-7</b><span class="d">Send a CCST letter down to the Deputy Commissioner, Range-7</span><em>Signed by: Asst. Commissioner (Admin)</em></span>
-                <span class="tick" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="choice" id="modeUp" aria-pressed="false">
-                <span class="ci"><svg class="i"><use href="#ic-up"/></svg></span>
-                <span><b>Reply to CCST</b><span class="d">Send Range-7's report up to the CCST branch</span><em>Signed by: Joint Commissioner</em></span>
-                <span class="tick" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
-
           <div id="adminBranchBox" hidden>
             <div class="label"><span class="n">★</span>Record this letter under</div>
             <div class="branch-pick">
@@ -478,7 +473,7 @@
 
           <div id="downBox" style="display:flex;flex-direction:column;gap:26px">
             <div>
-              <div class="label"><span class="n">2</span>Upload the CCST letter</div>
+              <div class="label"><span class="n">1</span>Upload the CCST letter</div>
               <div class="drops">
                 <div class="drop" data-slot="ccst">
                   <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
@@ -492,7 +487,7 @@
               </div>
             </div>
             <div>
-              <div class="label"><span class="n">3</span>Deadline for Range-7</div>
+              <div class="label"><span class="n">2</span>Deadline for Range-7</div>
               <p class="hint">The CCST deadline (in days) is read from the letter. Keep it, or give Range-7 one day less.</p>
               <div class="radios">
                 <button type="button" class="radio" id="dlSame" aria-pressed="true"><span class="dot" aria-hidden="true"></span>Same as CCST</button>
@@ -502,7 +497,7 @@
           </div>
 
           <div id="upBox" hidden>
-            <div class="label"><span class="n">2</span>Upload the letters</div>
+            <div class="label"><span class="n">1</span>Upload the letters</div>
             <div class="drops">
               <div class="drop" data-slot="r7">
                 <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
@@ -541,9 +536,6 @@
             <h2>Review the Draft</h2>
             <p>Check the details read from the letter and every change made. Edit the text if needed, then download.</p>
           </div>
-          <ol class="stepper" aria-label="Progress">
-            <li class="done"><b>✓</b>Upload</li><li class="on" id="stReview"><b>2</b>Review</li><li id="stDl"><b>3</b>Download</li>
-          </ol>
         </div>
 
         <div id="dupWarn" class="msg warn" role="status" hidden></div>
@@ -592,12 +584,15 @@
                 <select id="e_sig"></select>
               </div>
               <div class="fixed" id="sigBox" style="text-align:right"></div>
+              <div class="other-sig" id="eOther" hidden>
+                <div><label class="f" for="eOtherBlock">Signature block <span>(one line per row)</span></label><textarea id="eOtherBlock" rows="3"></textarea></div>
+                <label class="chk"><input type="checkbox" id="eOtherNote"> Add the approval note</label>
+              </div>
             </div>
             <div id="err2" class="msg err" role="alert" hidden></div>
             <div id="ok2" class="msg info" role="status" hidden></div>
             <div class="actions">
               <button type="button" class="btn-main" id="dlBtn"><span class="spinner" id="spin2" hidden></span><svg class="i"><use href="#ic-word"/></svg>Download Word (.docx)</button>
-              <button type="button" class="btn-ghost" id="newBtn"><svg class="i"><use href="#ic-plus-doc"/></svg>New letter</button>
               <span class="meta"><svg class="i"><use href="#ic-book"/></svg>Downloading also records the letter in the register</span>
             </div>
           </div>
@@ -667,6 +662,18 @@
               <select id="cSig"></select>
             </div>
           </div>
+          <div class="other-sig" id="cOther" hidden>
+            <div><label class="f" for="cOtherBlock">Other signatory · signature block <span>(Gujarati, one line per row, as printed)</span></label>
+              <textarea id="cOtherBlock" rows="3" placeholder="(આર.કે. પટેલ)&#10;નાયબ રાજ્યવેરા કમિશનર&#10;વિભાગ-૩, ગાંધીનગર"></textarea></div>
+            <div class="row">
+              <label class="chk"><input type="checkbox" id="cOtherNote"> Add the approval note</label>
+              <span id="cOtherSaveBox" hidden>
+                <label class="chk" style="display:inline-flex"><input type="checkbox" id="cOtherSave"> Also save to the Signatories list as</label>
+                <input type="text" id="cOtherName" placeholder="Name in English, e.g. R.K. Patel" aria-label="Name in English" style="width:220px;display:inline-block;margin-left:6px">
+                <select id="cOtherRank" aria-label="Rank" style="width:auto;display:inline-block;margin-left:6px"><option>JC</option><option selected>DC</option><option>AC</option><option>STO</option></select>
+              </span>
+            </div>
+          </div>
           <div>
             <label class="f" for="cNote">4 · What has been asked <span>(Gujarati or English, a few lines)</span></label>
             <textarea id="cNote" rows="6" placeholder="દા.ત. વર્તુળ-૭ પાસેથી ઓક્ટોબર-૨૦૨૬ ની ઘટકવાર બાકી વસૂલાતની માહિતી નિયત પત્રકમાં મંગાવવી."></textarea>
@@ -690,8 +697,8 @@
       <section id="step5" hidden>
         <div class="page-head">
           <div>
-            <h2>Reminder Letter <span style="font-family:var(--gu);font-weight:600;color:var(--gold-600)">· સ્મરણપત્ર</span></h2>
-            <p>Upload the letter you sent earlier. Lahiyo drafts a reminder with a shorter deadline and adds earlier reminders from the register to the references.</p>
+            <h2>Reminder <span style="font-family:var(--gu);font-weight:600;color:var(--gold-600)">· સ્મૃતિપત્ર</span></h2>
+            <p>Upload the letter you sent earlier. Lahiyo drafts a સ્મૃતિપત્ર with a shorter deadline and adds earlier reminders from the register to the references.</p>
           </div>
         </div>
         <div class="section">
@@ -716,9 +723,9 @@
           <div>
             <div class="label"><span class="n">2</span>Reminder level</div>
             <div class="radios" role="group" aria-label="Reminder level">
-              <button type="button" class="radio rLvl" data-v="1" aria-pressed="true"><span class="dot" aria-hidden="true"></span>1st reminder</button>
-              <button type="button" class="radio rLvl" data-v="2" aria-pressed="false"><span class="dot" aria-hidden="true"></span>2nd reminder</button>
-              <button type="button" class="radio rLvl" data-v="FINAL" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Final reminder</button>
+              <button type="button" class="radio rLvl" data-v="1" aria-pressed="true"><span class="dot" aria-hidden="true"></span>1st · <span class="gu-l">સ્મૃતિપત્ર-૧</span></button>
+              <button type="button" class="radio rLvl" data-v="2" aria-pressed="false"><span class="dot" aria-hidden="true"></span>2nd · <span class="gu-l">સ્મૃતિપત્ર-૨</span></button>
+              <button type="button" class="radio rLvl" data-v="FINAL" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Final · <span class="gu-l">અંતિમ સ્મૃતિપત્ર</span></button>
             </div>
           </div>
           <div class="grid2" style="gap:16px">
@@ -772,31 +779,15 @@
 
     <aside class="rail" id="rail" aria-label="Summary">
       <div class="card" id="duePanel">
-        <h3><svg class="i"><use href="#ic-cal"/></svg>Upcoming deadlines<span class="count" id="dueScope"></span></h3>
-        <div id="dueList"><p class="empty">Loading…</p></div>
-        <button type="button" class="link-row" id="regLink" style="border:0;background:none;padding:0;cursor:pointer"><svg class="i"><use href="#ic-ext"/></svg>Open register</button>
-      </div>
-
-      <div class="stats" role="group" aria-label="Register summary">
-        <div><div class="n" id="stOpen">–</div><small>Open letters</small></div>
-        <div><div class="n" id="stDue7">–</div><small>Due in 7 days</small></div>
-        <div><div class="n" id="stOver">–</div><small>Overdue</small></div>
-      </div>
-
-      <div class="card safe">
-        <h3><svg class="i"><use href="#ic-shield"/></svg>Data protection</h3>
-        <p>Uploaded PDFs are read once and never stored. Only the letter number, date, subject and deadline are kept, in your branch's own register.</p>
-      </div>
-
-      <div class="card">
-        <h3><svg class="i"><use href="#ic-bolt"/></svg>Quick actions</h3>
-        <div class="quick">
-          <button type="button" class="qa" id="qaNew"><svg class="i"><use href="#ic-plus-doc"/></svg>New draft</button>
-          <button type="button" class="qa" id="qaCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a letter</button>
-          <button type="button" class="qa" id="qaReg"><svg class="i"><use href="#ic-book"/></svg>Register</button>
+        <h3><svg class="i"><use href="#ic-cal"/></svg>Deadlines<span class="count" id="dueScope"></span></h3>
+        <div class="stats" role="group" aria-label="Register summary">
+          <div><div class="n" id="stOpen">–</div><small>Open letters</small></div>
+          <div><div class="n" id="stDue7">–</div><small>Due in 7 days</small></div>
+          <div><div class="n" id="stOver">–</div><small>Overdue</small></div>
         </div>
+        <div id="dueList"><p class="empty">Loading…</p></div>
       </div>
-      <p class="fine">AI-generated drafts must be checked by an officer before they are sent.</p>
+      <p class="fine">PDFs are read once and never stored. AI drafts must be checked by an officer before they are sent.</p>
     </aside>
   </div>
 </div>
@@ -811,7 +802,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function leftLabel(l) { return l < 0 ? Math.abs(l) + (l === -1 ? ' day' : ' days') + ' overdue' : (l === 0 ? 'Due today' : l + (l === 1 ? ' day' : ' days') + ' left'); }
   var TYPES = { forward_for_action: 'Forward for action', data_call: 'Data call', explanation: 'Explanation sought', reply_with_data: 'Reply with data', other: 'Other' };
-  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder' };
+  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder · સ્મૃતિપત્ર' };
   var CLOSED = /received|closed|done|મળેલ|બંધ|પૂર્ણ/i;
   /** Branch name without the word "શાખા"/"Branch", for small labels. */
   function shortBranch(n) { return String(n || '').replace(/\s*(શાખા|Branch)\s*$/i, '').replace(/\s*શાખા\s*/, ' ').trim() || n; }
@@ -924,13 +915,15 @@
   }
   function sigOptions(selId) {
     var a = activeSigs();
-    if (!a.length) return '<option value="">No signatories — ask the Administrator</option>';
-    return a.map(function (x) { return '<option value="' + esc(x.id) + '"' + (x.id === selId ? ' selected' : '') + '>' + esc(x.name) + (x.rank ? ' · ' + esc(x.rank) : '') + '</option>'; }).join('');
+    if (!a.length) return '<option value="">Choose…</option><option value="OTHER"' + (selId === 'OTHER' ? ' selected' : '') + '>＋ Other signatory (type the signature)</option>';
+    return a.map(function (x) { return '<option value="' + esc(x.id) + '"' + (x.id === selId ? ' selected' : '') + '>' + esc(x.name) + (x.rank ? ' · ' + esc(x.rank) : '') + '</option>'; }).join('') +
+      '<option value="OTHER"' + (selId === 'OTHER' ? ' selected' : '') + '>＋ Other signatory (type the signature)</option>';
   }
   function setSignatories(list) {
     state.sigs = list || [];
     var c = defaultSig('COMPOSE'), r = defaultSig('REMINDER');
-    $('cSig').innerHTML = sigOptions(c && c.id);
+    var keepC = $('cSig').value === 'OTHER';
+    $('cSig').innerHTML = sigOptions(keepC ? 'OTHER' : (c && c.id));
     $('rSig').innerHTML = sigOptions(r && r.id);
     if (state.sess && state.sess.admin) renderSigList();
   }
@@ -942,7 +935,7 @@
   }
   function renderDashboard(d) {
     $('stOpen').textContent = d.open; $('stDue7').textContent = d.due7; $('stOver').textContent = d.overdue;
-    $('bellBadge').textContent = d.overdue; $('bellBadge').hidden = !d.overdue;
+    $('overBadge').textContent = d.overdue; $('overBadge').hidden = !d.overdue;
     if (!d.dueSoon.length) {
       $('dueList').innerHTML = '<p class="empty">No open deadlines. Deadlines appear here once a letter with a deadline has been downloaded.</p>';
       return;
@@ -959,51 +952,62 @@
 
   // ── Navigation ──
   var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6' };
-  var NAV_FOR = { 1: 'navNew', 2: 'navDrafts', 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign' };
-  function setNav(id) { ['navNew', 'navCompose', 'navReminder', 'navDrafts', 'navRegister', 'navDeadlines', 'navSign'].forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
+  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navRegister', 'navSign'];
+  var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', COMPOSE: 'navCompose', REMINDER: 'navReminder' };
+  function setNav(id) { NAV_IDS.forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
+  function navFor(n) {
+    if (n === 1) return MODE_NAV[state.mode];
+    if (n === 2) return MODE_NAV[(state.draft && state.draft.mode) || state.mode];
+    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign' }[n];
+  }
   function showStep(n) {
     Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
     $('rail').hidden = n === 3 || n === 6; // wide screens use the full width
-    setNav(NAV_FOR[n]); window.scrollTo(0, 0);
+    setNav(navFor(n)); window.scrollTo(0, 0);
   }
-  function leaveDraftOk() { return !(state.draft && !$('step2').hidden) || confirm('Leave this draft? Unsaved edits will be lost.'); }
-  $('navNew').onclick = function () { startNew(); };
-  $('qaNew').onclick = function () { startNew(); };
+  /** Leaving the review page drops the draft (after asking). */
+  function leaveDraftOk() {
+    if (state.draft && !$('step2').hidden) {
+      if (!state.downloaded && !confirm('Leave this draft? It has not been downloaded yet.')) return false;
+      state.draft = null;
+      resetDraft();
+    }
+    return true;
+  }
+  function openForward(m) {
+    if (!leaveDraftOk()) return;
+    if (state.mode !== m) { resetDraft(); setMode(m); }
+    $('err1').hidden = true;
+    showStep(1);
+  }
+  $('navFwd').onclick = function () { openForward('DOWN'); };
+  $('navReply').onclick = function () { openForward('UP'); };
   $('navCompose').onclick = function () { if (leaveDraftOk()) { $('err4').hidden = true; showStep(4); } };
   $('navReminder').onclick = function () { if (leaveDraftOk()) { $('err5').hidden = true; showStep(5); } };
-  $('qaCompose').onclick = function () { $('navCompose').click(); };
   $('navSign').onclick = function () { if (leaveDraftOk()) { resetSigForm(); renderSigList(); showStep(6); } };
-  $('navDrafts').onclick = function () {
-    if (state.draft) showStep(2);
-    else { showStep(1); showErr('err1', 'No draft is open. Upload a letter and click Generate Draft.'); }
-  };
   function openRegister(view) {
+    if (!leaveDraftOk()) return;
     $('regStatus').value = view || 'all';
     showStep(3);
-    if (view === 'deadlines') setNav('navDeadlines');
     loadRegister();
   }
   $('navRegister').onclick = function () { openRegister('all'); };
-  $('navDeadlines').onclick = function () { openRegister('deadlines'); };
-  $('regLink').onclick = function () { openRegister('deadlines'); };
-  $('qaReg').onclick = function () { openRegister('all'); };
-  $('bellBtn').onclick = function () { openRegister('overdue'); };
 
   // ── Forward / Reply (step 1) ──
   function setMode(m) {
     state.mode = m;
-    $('modeDown').setAttribute('aria-pressed', m === 'DOWN');
-    $('modeUp').setAttribute('aria-pressed', m === 'UP');
     $('downBox').hidden = m !== 'DOWN';
     $('upBox').hidden = m !== 'UP';
+    $('fwdTitle').textContent = m === 'DOWN' ? 'Forward to Range-7' : 'Reply to CCST';
+    $('fwdSub').textContent = m === 'DOWN'
+      ? 'Upload the CCST letter received on e-Sarkar. Lahiyo prepares the forwarding letter to the Deputy Commissioner, Range-7.'
+      : 'Upload the Range-7 report (and, if you have it, the original CCST letter). Lahiyo prepares the reply to the CCST branch.';
   }
   function setDl(d) {
     state.deadline = d;
     $('dlSame').setAttribute('aria-pressed', d === 'SAME');
     $('dlLess').setAttribute('aria-pressed', d === 'LESS');
   }
-  $('modeDown').onclick = function () { setMode('DOWN'); $('preHint').hidden = true; startPrefetch(); };
-  $('modeUp').onclick = function () { setMode('UP'); $('preHint').hidden = true; startPrefetch(); };
   $('dlSame').onclick = function () { setDl('SAME'); };
   $('dlLess').onclick = function () { setDl('LESS'); };
 
@@ -1125,18 +1129,45 @@
     };
   });
   $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; };
+  $('cSig').onchange = function () {
+    var other = $('cSig').value === 'OTHER';
+    $('cOther').hidden = !other;
+    $('cOtherSaveBox').hidden = !(other && state.sess && state.sess.admin);
+    if (other) $('cOtherBlock').focus();
+  };
   $('cBtn').onclick = function () {
     $('err4').hidden = true;
     var note = $('cNote').value.trim();
     if (note.length < 10) return showErr('err4', 'Please write what has been asked (at least one sentence).');
     if ($('cTo').value === 'OTHER' && !$('cToOther').value.trim()) return showErr('err4', 'Please type the address.');
     if (!$('cSig').value) return showErr('err4', 'Please choose who signs the letter.');
+    var sigId = $('cSig').value;
+    if (sigId === 'OTHER') {
+      var block = lines($('cOtherBlock').value);
+      if (!block.length) return showErr('err4', 'Please type the signature block of the other signatory.');
+      state.otherSig = { block: block, note: $('cOtherNote').checked };
+      if (state.sess && state.sess.admin && $('cOtherSave').checked && !$('cOtherName').value.trim())
+        return showErr('err4', 'Please type the officer\'s name in English to save the signatory.');
+    }
     var c0 = Date.now();
     busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', true, 'Writing the letter…', 'Write the Letter');
-    api('composeDraft', [{ instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, note: note,
-      refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: $('cSig').value }],
-      function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; state.draft = d; showDraft(d); },
-      function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); });
+    var fail = function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); };
+    var write = function (id) {
+      api('composeDraft', [{ instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, note: note,
+        refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id }],
+        function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; state.draft = d; showDraft(d); }, fail);
+    };
+    if (sigId === 'OTHER' && state.sess && state.sess.admin && $('cOtherSave').checked) {
+      var nm = $('cOtherName').value.trim();
+      api('saveSignatory', [{ name: nm, block: state.otherSig.block.join('\n'), rank: $('cOtherRank').value, note: state.otherSig.note, defaults: [], active: true }],
+        function (list) {
+          var added = (list || []).filter(function (x) { return x.name === nm; }).pop();
+          $('cOtherSave').checked = false; $('cOtherName').value = '';
+          setSignatories(list);
+          if (added) { $('cSig').innerHTML = sigOptions(added.id); $('cSig').onchange(); }
+          write(added ? added.id : 'OTHER');
+        }, fail);
+    } else write(sigId);
   };
 
   // ── Reminder (step 5) ──
@@ -1164,7 +1195,7 @@
       ['Letter type', 'Written letter'], ['To', det.addressee], ['Instructed by', det.instructed_by],
       ['Deadline', det.deadline_text], ['References', det.input_letter_no], ['Register', d.branch], ['AI model', d.model]];
     if (d.mode === 'REMINDER') return [
-      ['Letter type', det.level === 'FINAL' ? 'Final reminder' : 'Reminder ' + det.level], ['Earlier letter No.', det.input_letter_no],
+      ['Letter type', det.level === 'FINAL' ? 'અંતિમ સ્મૃતિપત્ર (final)' : 'સ્મૃતિપત્ર-' + det.level], ['Earlier letter No.', det.input_letter_no],
       ['Earlier letter date', det.input_approved_date], ['To', det.addressee], ['Original deadline', days(det.original_days)],
       ['New deadline', det.deadline_text], ['Earlier reminders found', String(det.earlier_reminders || 0)], ['Register', d.branch], ['AI model', d.model]];
     return [
@@ -1176,6 +1207,15 @@
       ['Direction', MODE_NAMES[d.mode]], ['Register', d.branch], ['AI model', d.model]];
   }
   function applySignatory(id) {
+    var other = id === 'OTHER';
+    $('eOther').hidden = !other; $('sigBox').hidden = other;
+    if (other) {
+      var o = state.otherSig || { block: [], note: false };
+      if (!$('eOther').dataset.filled) { $('eOtherBlock').value = o.block.join('\n'); $('eOtherNote').checked = !!o.note; $('eOther').dataset.filled = '1'; }
+      $('noteBox').hidden = !$('eOtherNote').checked;
+      $('noteBox').innerHTML = $('eOtherNote').checked ? '<span class="k">Approval note</span>' + esc(state.note) : '';
+      return;
+    }
     var s = sigById(id);
     var lines = s ? s.block : ((state.draft && state.draft.letter.signature) || []);
     $('sigBox').innerHTML = '<span class="k">Signature block</span>' + esc(lines.join('\n'));
@@ -1184,6 +1224,7 @@
     $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(state.note) : '';
   }
   $('e_sig').onchange = function () { applySignatory($('e_sig').value); };
+  $('eOtherNote').onchange = function () { applySignatory('OTHER'); };
 
   function showDraft(d) {
     var det = d.details || {}, L = d.letter || {};
@@ -1210,9 +1251,12 @@
     $('e_body').value = (L.body || []).join('\n\n');
     $('e_encl').value = L.enclosure || '';
 
-    var chosen = sigById(d.signatoryId) || defaultSig(d.mode);
-    $('e_sig').innerHTML = sigOptions(chosen && chosen.id);
-    applySignatory(chosen ? chosen.id : '');
+    var chosenId = d.signatoryId === 'OTHER' ? 'OTHER' : ((sigById(d.signatoryId) || defaultSig(d.mode) || {}).id || '');
+    if (d.signatoryId !== 'OTHER') state.otherSig = null;
+    delete $('eOther').dataset.filled;
+    $('e_sig').innerHTML = sigOptions(chosenId);
+    applySignatory(chosenId);
+    state.downloaded = false;
 
     if (d.duplicate) {
       $('dupWarn').textContent = 'This letter (' + (det.input_letter_no || '') + ') was already drafted on ' + d.duplicate.when + ' (' + d.duplicate.direction + ', ' + d.duplicate.branch + '). Please check the register before sending it again.';
@@ -1220,7 +1264,6 @@
     } else { $('dupWarn').hidden = true; }
 
     $('ok2').hidden = true; $('err2').hidden = true;
-    $('stReview').className = 'on'; $('stReview').firstChild.textContent = '2'; $('stDl').className = '';
     showStep(2);
   }
 
@@ -1228,7 +1271,8 @@
 
   $('dlBtn').onclick = function () {
     var d = state.draft; if (!d) return;
-    var s = sigById($('e_sig').value);
+    var other = $('e_sig').value === 'OTHER';
+    var s = other ? { block: lines($('eOtherBlock').value), note: $('eOtherNote').checked } : sigById($('e_sig').value);
     var letter = {
       to: lines($('e_to').value),
       subject: $('e_subject').value.trim(),
@@ -1252,7 +1296,7 @@
         'If the download did not start, <a href="' + href + '" download="' + esc(f.name) + '">click here to save ' + esc(f.name) + '</a>.';
       $('ok2').className = f.registerError ? 'msg warn' : 'msg info';
       $('ok2').hidden = false;
-      $('stReview').className = 'done'; $('stReview').firstChild.textContent = '✓'; $('stDl').className = 'on';
+      state.downloaded = true;
       loadDashboard();
     }, function (e) { $('dlBtn').disabled = false; $('spin2').hidden = true; showErr('err2', e); });
   };
@@ -1262,14 +1306,6 @@
     if ($('preHint')) $('preHint').hidden = true;
     SLOTS.forEach(function (s) { $('f_' + s).value = ''; $('n_' + s).textContent = ''; $('n_' + s).closest('.drop').classList.remove('has'); });
   }
-  function startNew() {
-    if (state.draft && !$('step2').hidden && !confirm('Start a new letter? Unsaved edits to this draft will be lost.')) return;
-    if (!$('step2').hidden || !state.draft) resetDraft();
-    $('err1').hidden = true;
-    showStep(1);
-  }
-  $('newBtn').onclick = startNew;
-
   // ── Register (step 3) ──
   function loadRegister() {
     $('regErr').hidden = true;
