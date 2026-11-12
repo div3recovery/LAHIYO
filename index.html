@@ -525,6 +525,7 @@
             </div>
           </div>
 
+          <div id="preHint" class="msg info" role="status" hidden></div>
           <div id="err1" class="msg err" role="alert" hidden></div>
           <div class="actions">
             <button type="button" class="btn-main" id="genBtn"><span class="spinner" id="spin" hidden></span><svg class="i" id="genIcon"><use href="#ic-wand"/></svg><span id="genTxt">Generate Draft</span></button>
@@ -1001,8 +1002,8 @@
     $('dlSame').setAttribute('aria-pressed', d === 'SAME');
     $('dlLess').setAttribute('aria-pressed', d === 'LESS');
   }
-  $('modeDown').onclick = function () { setMode('DOWN'); };
-  $('modeUp').onclick = function () { setMode('UP'); };
+  $('modeDown').onclick = function () { setMode('DOWN'); $('preHint').hidden = true; startPrefetch(); };
+  $('modeUp').onclick = function () { setMode('UP'); $('preHint').hidden = true; startPrefetch(); };
   $('dlSame').onclick = function () { setDl('SAME'); };
   $('dlLess').onclick = function () { setDl('LESS'); };
 
@@ -1018,6 +1019,7 @@
       $('n_' + slot).textContent = '✓ ' + file.name;
       $('n_' + slot).closest('.drop').classList.add('has');
       $(errFor(slot)).hidden = true;
+      if (slot === 'ccst' || slot === 'r7' || slot === 'orig') startPrefetch();
     };
     r.readAsDataURL(file);
   }
@@ -1029,25 +1031,90 @@
   });
 
   function showErr(id, e) { var el = $(id); el.textContent = (e && e.message) ? e.message : String(e); el.hidden = false; }
-  function busyBtn(btn, spin, icon, txt, on, busyText, idleText) {
-    $(btn).disabled = on; $(spin).hidden = !on; $(icon).style.display = on ? 'none' : ''; $(txt).textContent = on ? busyText : idleText;
+  var timers = {};
+  /** Shows the busy state with a running seconds counter, e.g. "Reading the letter… 12 s". */
+  function busyBtn(btn, spin, icon, txt, on, busyText, idleText, since) {
+    $(btn).disabled = on; $(spin).hidden = !on; $(icon).style.display = on ? 'none' : '';
+    clearInterval(timers[btn]);
+    if (!on) { $(txt).textContent = idleText; return; }
+    var t0 = since || Date.now();
+    var tick = function () { $(txt).textContent = busyText + ' ' + Math.round((Date.now() - t0) / 1000) + ' s'; };
+    tick(); timers[btn] = setInterval(tick, 1000);
+  }
+  function secs(ms) { return (Math.round((ms || 0) / 100) / 10).toFixed(1) + ' s'; }
+  function gu(n) { return String(n).replace(/[0-9]/g, function (c) { return '૦૧૨૩૪૫૬૭૮૯'[c]; }); }
+
+  // ── Early start: reading begins as soon as the PDF is chosen ──
+  // The AI works while the user chooses the deadline etc. The deadline choice is applied afterwards,
+  // so changing it does not need a new AI request.
+  function forwardFiles() {
+    if (state.mode === 'DOWN') return state.files.ccst ? [state.files.ccst] : null;
+    if (!state.files.r7) return null;
+    return state.files.orig ? [state.files.r7, state.files.orig] : [state.files.r7];
+  }
+  function prefetchKey(files) {
+    return state.mode + '|' + files.map(function (f) { return f.name + ':' + f.data.length; }).join('|');
+  }
+  function startPrefetch() {
+    var files = forwardFiles();
+    if (!files || !state.token) return null;
+    var key = prefetchKey(files);
+    if (state.pre && state.pre.key === key && state.pre.status !== 'error') return state.pre;
+    var pre = { key: key, status: 'running', started: Date.now(), waiters: [] };
+    state.pre = pre;
+    $('preHint').textContent = '⚡ Reading has started. You can choose the deadline meanwhile.';
+    $('preHint').hidden = false;
+    api('generateDraft', [{ mode: state.mode, deadline: 'SAME', files: files, branch: $('recBranch').value }],
+      function (d) {
+        if (state.pre !== pre) return;                     // a different file was chosen meanwhile
+        pre.status = 'done'; pre.draft = d; pre.ms = Date.now() - pre.started;
+        $('preHint').textContent = '✓ Draft is ready (' + secs(pre.ms) + '). Click Generate Draft to see it.';
+        pre.waiters.splice(0).forEach(function (f) { f(); });
+      },
+      function (e) {
+        if (state.pre !== pre) return;
+        pre.status = 'error'; pre.error = e;
+        $('preHint').hidden = true;
+        pre.waiters.splice(0).forEach(function (f) { f(); });
+      });
+    return pre;
+  }
+  /** One day less for Range-7, applied to a copy of the draft (no new AI request). */
+  function withDeadlineChoice(src) {
+    var d = JSON.parse(JSON.stringify(src));
+    if (d.mode !== 'DOWN' || state.deadline !== 'LESS') return d;
+    var det = d.details || {};
+    var n = Number(en(det.range7_days != null ? det.range7_days : det.ccst_days));
+    if (!n) { d.checks.unshift({ type: 'decide', from: '', to: '', note: 'CCST gave no deadline, so "one day less" could not be applied.' }); return d; }
+    if (n <= 1) { d.checks.unshift({ type: 'decide', from: '', to: '', note: 'CCST deadline is 1 day; it cannot be shortened further.' }); return d; }
+    var m = n - 1;
+    var re = new RegExp('દિન\\s*[-–]?\\s*(' + gu(n) + '|' + n + ')(?![૦-૯0-9])', 'g');
+    var changed = false;
+    d.letter.body = (d.letter.body || []).map(function (p) { return p.replace(re, function () { changed = true; return 'દિન-' + gu(m); }); });
+    det.range7_days = m;
+    d.checks.unshift({ type: 'change', from: 'દિન-' + gu(n), to: 'દિન-' + gu(m), note: changed ? 'Range-7 deadline one day less than CCST.' : 'Range-7 deadline set one day less; please add "દિન-' + gu(m) + '" in the body.' });
+    return d;
+  }
+  function showPrepared(pre) {
+    var d = withDeadlineChoice(pre.draft);
+    if (state.sess && state.sess.admin) d.branch = $('recBranch').value || d.branch;
+    d.clientMs = pre.ms;
+    state.draft = d; showDraft(d);
   }
 
   $('genBtn').onclick = function () {
     $('err1').hidden = true;
-    var files = [];
-    if (state.mode === 'DOWN') {
-      if (!state.files.ccst) return showErr('err1', 'Please upload the CCST letter first.');
-      files.push(state.files.ccst);
-    } else {
-      if (!state.files.r7) return showErr('err1', 'Please upload the Range-7 report first.');
-      files.push(state.files.r7);
-      if (state.files.orig) files.push(state.files.orig);
-    }
-    busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', true, 'Reading the letter…', 'Generate Draft');
-    api('generateDraft', [{ mode: state.mode, deadline: state.deadline, files: files, branch: $('recBranch').value }],
-      function (d) { busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft'); state.draft = d; showDraft(d); },
-      function (e) { busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft'); showErr('err1', e); });
+    if (!forwardFiles()) return showErr('err1', state.mode === 'DOWN' ? 'Please upload the CCST letter first.' : 'Please upload the Range-7 report first.');
+    var pre = startPrefetch();
+    var done = function () {
+      busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft');
+      if (pre.status === 'done') showPrepared(pre);
+      else { showErr('err1', pre.error); state.pre = null; }
+    };
+    if (pre.status === 'running') {
+      busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', true, 'Reading the letter…', 'Generate Draft', pre.started);
+      pre.waiters.push(done);
+    } else done();
   };
 
   // ── Write a Letter (step 4) ──
@@ -1064,10 +1131,11 @@
     if (note.length < 10) return showErr('err4', 'Please write what has been asked (at least one sentence).');
     if ($('cTo').value === 'OTHER' && !$('cToOther').value.trim()) return showErr('err4', 'Please type the address.');
     if (!$('cSig').value) return showErr('err4', 'Please choose who signs the letter.');
+    var c0 = Date.now();
     busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', true, 'Writing the letter…', 'Write the Letter');
     api('composeDraft', [{ instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, note: note,
       refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: $('cSig').value }],
-      function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); state.draft = d; showDraft(d); },
+      function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; state.draft = d; showDraft(d); },
       function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); });
   };
 
@@ -1082,9 +1150,10 @@
     $('err5').hidden = true;
     if (!state.files.rem) return showErr('err5', 'Please upload the letter sent earlier.');
     if (!$('rSig').value) return showErr('err5', 'Please choose who signs the reminder.');
+    var r0 = Date.now();
     busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', true, 'Reading the earlier letter…', 'Draft the Reminder');
     api('reminderDraft', [{ files: [state.files.rem], level: state.level, deadline: $('rDl').value, branch: $('rBranch').value, signatoryId: $('rSig').value }],
-      function (d) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); state.draft = d; showDraft(d); },
+      function (d) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); d.clientMs = Date.now() - r0; state.draft = d; showDraft(d); },
       function (e) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); showErr('err5', e); });
   };
 
@@ -1118,7 +1187,9 @@
 
   function showDraft(d) {
     var det = d.details || {}, L = d.letter || {};
-    $('facts').innerHTML = factsFor(d).map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1] || '—') + '</dd></div>'; }).join('');
+    var facts = factsFor(d);
+    if (d.timing) facts.push(['Time taken', 'AI ' + secs(d.timing.ai) + (d.clientMs ? ' · total ' + secs(d.clientMs) : '')]);
+    $('facts').innerHTML = facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1] || '—') + '</dd></div>'; }).join('');
 
     var tags = { change: 'Wording changed', unclear: 'Could not read / to fill', decide: 'Officer decision needed' };
     var cs = d.checks || [];
@@ -1187,7 +1258,8 @@
   };
 
   function resetDraft() {
-    state.files = {}; state.draft = null;
+    state.files = {}; state.draft = null; state.pre = null;
+    if ($('preHint')) $('preHint').hidden = true;
     SLOTS.forEach(function (s) { $('f_' + s).value = ''; $('n_' + s).textContent = ''; $('n_' + s).closest('.drop').classList.remove('has'); });
   }
   function startNew() {
