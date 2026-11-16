@@ -404,6 +404,9 @@
   input[type=date], input[type=datetime-local] { width: 100%; min-height: 44px; border: 1px solid var(--field); border-radius: 10px; padding: 8px 12px; font: 15px var(--ui); color: var(--ink); background: #fff; }
   input[type=date]:focus, input[type=datetime-local]:focus { border-color: var(--navy-700); outline: 3px solid rgba(26,63,115,.15); }
   .batch-note { margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .noting-card { margin-top: 14px; gap: 8px; }
+  .noting-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .btn-ghost.mini { min-height: 36px; padding: 6px 14px; font-size: 13px; }
   .rowbtns { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
   @media (max-width: 900px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } .three, .period { grid-template-columns: 1fr; } }
 </style>
@@ -659,6 +662,13 @@
                 <div><label class="f" for="eOtherBlock">Signature block <span>(one line per row)</span></label><textarea id="eOtherBlock" rows="3"></textarea></div>
                 <label class="chk"><input type="checkbox" id="eOtherNote"> Add the approval note</label>
               </div>
+            </div>
+            <div class="paper noting-card">
+              <div class="noting-head">
+                <label class="f" for="e_noting" style="margin:0">Noting for e-Sarkar <span>(copy and paste it in the file's noting)</span></label>
+                <button type="button" class="btn-ghost mini" id="copyNoting"><svg class="i"><use href="#ic-check"/></svg><span id="copyTxt">Copy noting</span></button>
+              </div>
+              <textarea id="e_noting" rows="3"></textarea>
             </div>
             <div id="err2" class="msg err" role="alert" hidden></div>
             <div id="ok2" class="msg info" role="status" hidden></div>
@@ -1489,6 +1499,10 @@
     $('e_refs').value = (L.refs || []).join('\n');
     $('e_body').value = (L.body || []).join('\n\n');
     $('e_encl').value = L.enclosure || '';
+    state.notingTopic = (det.noting_topic || '');
+    state.notingEdited = false;
+    $('e_noting').value = d.noting || notingFor(d);
+    $('copyTxt').textContent = 'Copy noting';
 
     var chosenId = d.signatoryId === 'OTHER' ? 'OTHER' : ((sigById(d.signatoryId) || defaultSig(d.mode) || {}).id || '');
     if (d.signatoryId !== 'OTHER') state.otherSig = null;
@@ -2111,6 +2125,25 @@
     $('stSave').disabled = true;
     api('saveStaff', [p], function (l) { $('stSave').disabled = false; renderStaff(l); resetStaffForm(); $('ok7').textContent = p.name + ' saved.'; $('ok7').hidden = false; },
       function (err) { $('stSave').disabled = false; showErr('err7', err); });
+  };
+
+  // ── Noting for e-Sarkar ──
+  function gujNum(n) { return String(n).replace(/[0-9]/g, function (c) { return '૦૧૨૩૪૫૬૭૮૯'[c]; }); }
+  function notingFor(d) {
+    var subj = $('e_subject').value || '';
+    var topic = (state.notingTopic || '').trim() || subj.replace(/\s*\((અંતિમ\s*)?સ્મૃતિપત્ર[^)]*\)\s*[.।]?\s*$/, '').replace(/\s*(બાબતે|બાબતનો|બાબત)[.।]?\s*$/, '').replace(/[.।]\s*$/, '');
+    var to = lines($('e_to').value).map(function (x) { return x.trim(); }).filter(Boolean).join(' ').replace(/^પ્રતિ,?\s*/, '').replace(/[\s.।]+$/, '');
+    var det = (d && d.details) || {};
+    var word = d && d.mode === 'REMINDER' ? (String(det.level) === 'FINAL' ? 'અંતિમ સ્મૃતિપત્ર' : 'સ્મૃતિપત્ર-' + gujNum(det.level || 1)) : 'પત્ર';
+    return 'સાદર રજૂ, આપશ્રીની મૌખિક સૂચના અનુસાર ' + topic + ' બાબતનો ' + word + (to ? ' ' + to + ' ને સંબોધીને' : '') + ' તૈયાર કરેલ છે. જે સહી અર્થે રજુ.';
+  }
+  $('e_noting').oninput = function () { state.notingEdited = true; };
+  $('e_to').addEventListener('input', function () { if (!state.notingEdited && state.draft) $('e_noting').value = notingFor(state.draft); });
+  $('copyNoting').onclick = function () {
+    var t = $('e_noting').value;
+    var done = function () { $('copyTxt').textContent = 'Copied ✓'; setTimeout(function () { $('copyTxt').textContent = 'Copy noting'; }, 2500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () { $('e_noting').select(); document.execCommand('copy'); done(); });
+    else { $('e_noting').select(); document.execCommand('copy'); done(); }
   };
 </script>
 <script>
