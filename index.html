@@ -361,6 +361,51 @@
   .credit .c-r { font-size: 11.5px; line-height: 1.45; color: var(--muted); }
   .login .credit { align-items: center; text-align: center; border-top: 1px solid var(--line); padding-top: 14px; margin: 4px 0 0; }
   .login .credit b { font-size: 15px; }
+  /* ── v3.4: sent, my work, check, tray, staff ── */
+  .parsed { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+  .parsed th { text-align: left; background: #EEF2F8; color: var(--navy-900); padding: 8px 10px; font-weight: 700; }
+  .parsed td { padding: 8px 10px; border-bottom: 1px solid #EEF1F6; vertical-align: top; }
+  .okline { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-radius: 10px; background: #E6F4EA; color: #1E5631; font-size: 13px; font-weight: 600; }
+  .okline.no { background: #FDECEA; color: #8E2A20; }
+  .paste { width: 100%; min-height: 110px; font: 12.5px ui-monospace, Menlo, Consolas, monospace; }
+  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font: 600 13px var(--ui); color: var(--navy-900); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--navy-900); color: #fff; border-color: var(--navy-900); }
+  .period { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: end; }
+  .tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+  .tile { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 6px; text-align: center; }
+  .tile .n { font: 800 24px var(--head); color: var(--navy-900); } .tile small { color: var(--muted); font-size: 12px; }
+  .tile.gold { border-color: var(--gold-500); background: var(--gold-50); }
+  .verdict { display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: 12px; border: 1px solid; }
+  .verdict b { font: 800 18px var(--head); } .verdict .ic { font-size: 26px; }
+  .verdict.READY { background: #E8F5EC; border-color: #9CD3AE; } .verdict.READY b { color: #1E5631; }
+  .verdict.SMALL_CHANGES { background: #FFF4DE; border-color: #F0C878; } .verdict.SMALL_CHANGES b { color: #6B3A0B; }
+  .verdict.REWORK { background: #FDECEA; border-color: #EBA59D; } .verdict.REWORK b { color: #8E2A20; }
+  .ck { display: grid; grid-template-columns: 26px 1fr; gap: 8px 8px; font-size: 13.5px; align-items: start; }
+  .ck .y { color: #1E7B3A; font-weight: 800; } .ck .n { color: #B3261E; font-weight: 800; }
+  .ck small { display: block; color: var(--muted); }
+  .sug { border-left: 3px solid var(--gold-500); background: var(--gold-50); padding: 10px 12px; border-radius: 8px; font-size: 13px; }
+  .sug .g { font-family: var(--gu); display: block; margin-top: 3px; } .sug s { color: #B3261E; } .sug ins { color: #1E7B3A; text-decoration: none; font-weight: 600; }
+  .sugs { display: flex; flex-direction: column; gap: 8px; }
+  .batch-box { border: 1px solid var(--gold-500); background: var(--gold-50); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .batch-box[hidden] { display: none; }
+  .batch-box > b { font: 700 15px var(--head); color: var(--navy-900); }
+  .batch-box ol { margin: 0; padding-left: 22px; font-size: 13px; max-height: 160px; overflow: auto; }
+  .st { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .st.Waiting { background: #EEF1F6; color: #3A4A63; } .st.Working { background: #DCE8FA; color: #0B3566; }
+  .st.Busy { background: #FBEBC8; color: #6B3A0B; } .st.Ready { background: #D9F0E0; color: #1E5631; }
+  .st.Opened { background: #E7EDF6; color: #164A8A; } .st.Downloaded { background: #EEF1F6; color: #3A4A63; }
+  .st.Failed { background: #F8D7D3; color: #8E2A20; }
+  .tray-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+  .linkbtn { background: none; border: 0; padding: 0; color: var(--navy-700); font: 600 13px var(--ui); cursor: pointer; text-decoration: underline; }
+  table.reg .mini { min-height: 32px; padding: 4px 10px; font-size: 12.5px; }
+  .user { cursor: default; } .user .who-btn { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+  input[type=date], input[type=datetime-local] { width: 100%; min-height: 44px; border: 1px solid var(--field); border-radius: 10px; padding: 8px 12px; font: 15px var(--ui); color: var(--ink); background: #fff; }
+  input[type=date]:focus, input[type=datetime-local]:focus { border-color: var(--navy-700); outline: 3px solid rgba(26,63,115,.15); }
+  .batch-note { margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .rowbtns { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } .three, .period { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -418,6 +463,18 @@
       <p class="login-foot">Each branch sees only its own register. Ask the administrator for your branch PIN.</p>
       <div class="credit"><span class="c-k">Designed &amp; developed by</span><b>Mehul Ranavasiya</b><span class="c-r">State Tax Inspector<br>Division 3, Gandhinagar</span></div>
     </form>
+    <form class="login-body" id="personForm" hidden autocomplete="off">
+      <h2>Who is working?</h2>
+      <p class="sub">Your name is recorded with every letter you draft, check or send, and in My Work.</p>
+      <div>
+        <label class="f" for="lgPerson">Your name</label>
+        <select id="lgPerson"></select>
+      </div>
+      <div id="psErr" class="msg err" role="alert" hidden></div>
+      <button type="submit" class="btn-main" id="psBtn">Continue</button>
+      <p class="login-foot">Name not in the list? Ask the Administrator to add it under Staff.</p>
+    </form>
+
   </div>
 </div>
 
@@ -430,7 +487,7 @@
     <span class="dept"><svg class="i"><use href="#ic-building"/></svg><span class="dept-bar" aria-hidden="true"></span><span>Office of the Joint Commissioner of State Tax<br>Division 3, Gandhinagar</span></span>
     <div class="user">
       <div class="avatar" id="avatar" aria-hidden="true">–</div>
-      <div><b id="userName">–</b><span class="role" id="userRole"></span></div>
+      <button type="button" class="who-btn" id="whoBtn" title="Change the name"><b id="userName">–</b><span class="role" id="userRole"></span></button>
       <button type="button" class="user-btn" id="signOut">Sign out</button>
     </div>
   </div>
@@ -443,9 +500,13 @@
     <button type="button" class="nav" id="navReply"><svg class="i"><use href="#ic-up"/></svg>Reply to CCST</button>
     <button type="button" class="nav" id="navCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a Letter</button>
     <button type="button" class="nav" id="navReminder"><svg class="i"><use href="#ic-remind"/></svg><span>Reminder · <span class="gu-l">સ્મૃતિપત્ર</span></span></button>
+    <button type="button" class="nav" id="navCheck"><svg class="i"><use href="#ic-check"/></svg>Check a Letter</button>
     <div class="gap"></div>
     <h2>Records</h2>
     <button type="button" class="nav" id="navRegister"><svg class="i"><use href="#ic-book"/></svg>Register<span class="nb" id="overBadge" title="Overdue letters" hidden></span></button>
+    <button type="button" class="nav" id="navWork"><svg class="i"><use href="#ic-cal"/></svg>My Work</button>
+    <button type="button" class="nav" id="navTray"><svg class="i"><use href="#ic-word"/></svg>Drafts Tray<span class="nb" id="trayBadge" title="Drafts ready" style="background:#1E7B3A" hidden></span></button>
+    <button type="button" class="nav" id="navStaff" hidden><svg class="i"><use href="#ic-sign"/></svg>Staff</button>
     <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
     <div class="side-foot"><div class="credit"><span class="c-k">Designed &amp; developed by</span><b>Mehul Ranavasiya</b><span class="c-r">State Tax Inspector<br>Division 3, Gandhinagar</span></div><span id="ver"></span><span id="modelInfo"></span><br><a id="sheetLink" href="#" target="_blank" style="color:#E8C066" hidden>Open spreadsheet (admin)</a></div>
   </nav>
@@ -479,9 +540,9 @@
                   <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
                   <div class="t">CCST letter from e-Sarkar (PDF)</div>
                   <div class="s">Recovery, Vigilance, Administration, Audit or Training branch</div>
-                  <input type="file" id="f_ccst" accept="application/pdf,.pdf">
+                  <input type="file" id="f_ccst" accept="application/pdf,.pdf" multiple>
                   <label class="filebtn" for="f_ccst"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
-                  <div class="or">or drag and drop the file here</div>
+                  <div class="or">or drag and drop · choose several PDFs to draft them in the background</div>
                   <div class="fname" id="n_ccst"></div>
                 </div>
               </div>
@@ -503,9 +564,9 @@
                 <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
                 <div class="t">Range-7 report (PDF)</div>
                 <div class="s">Required</div>
-                <input type="file" id="f_r7" accept="application/pdf,.pdf">
+                <input type="file" id="f_r7" accept="application/pdf,.pdf" multiple>
                 <label class="filebtn" for="f_r7"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
-                <div class="or">or drag and drop here</div>
+                <div class="or">or drag and drop · several = background drafting</div>
                 <div class="fname" id="n_r7"></div>
               </div>
               <div class="drop optional" data-slot="orig">
@@ -520,9 +581,19 @@
             </div>
           </div>
 
+          <div class="batch-box" id="batchBox" hidden>
+            <b id="batchTitle"></b>
+            <ol id="batchList"></ol>
+            <p class="batch-note">They are drafted one by one in the background. You can close Lahiyo and come back later — the drafts wait in the <b>Drafts Tray</b>. If Gemini is busy, Lahiyo waits and tries again by itself.</p>
+            <div id="batchErr" class="msg err" role="alert" hidden></div>
+            <div class="actions" style="margin:0">
+              <button type="button" class="btn-main" id="batchBtn"><span class="spinner" id="batchSpin" hidden></span><svg class="i" id="batchIcon"><use href="#ic-wand"/></svg><span id="batchTxt">Draft all in the background</span></button>
+              <button type="button" class="btn-ghost" id="batchClear">Clear</button>
+            </div>
+          </div>
           <div id="preHint" class="msg info" role="status" hidden></div>
           <div id="err1" class="msg err" role="alert" hidden></div>
-          <div class="actions">
+          <div class="actions" id="genActions">
             <button type="button" class="btn-main" id="genBtn"><span class="spinner" id="spin" hidden></span><svg class="i" id="genIcon"><use href="#ic-wand"/></svg><span id="genTxt">Generate Draft</span></button>
             <span class="meta"><svg class="i"><use href="#ic-clock"/></svg>Usually 20–60 seconds · the PDF is not stored</span>
           </div>
@@ -626,7 +697,165 @@
             <tbody id="regBody"><tr><td>Loading…</td></tr></tbody>
           </table>
         </div>
-        <div class="reg-foot"><span id="regCount"></span><span>Status options: Drafted · Sent to Range-7 · Sent to CCST · Reply received · Closed</span></div>
+        <div class="reg-foot"><span id="regCount"></span><span>Status options: Drafted · Sent · Sent to Range-7 · Sent to CCST · Reply received · Closed</span></div>
+      </section>
+
+      <!-- STAFF (Admin) -->
+      <section id="step7" hidden>
+        <div class="page-head"><div><h2>Staff</h2><p>Names people choose after signing in. Each letter they draft, check or send is recorded under their name. Leave Branch blank for staff who work for any branch.</p></div></div>
+        <div class="grid2">
+          <div class="info-col" style="flex:2 1 480px">
+            <div class="tablebox"><table class="reg" style="min-width:0"><thead><tr><th>Name</th><th>Designation</th><th>Branch</th><th>Active</th><th></th></tr></thead><tbody id="stList"></tbody></table></div>
+          </div>
+          <div class="paper" style="flex:1 1 320px">
+            <div class="paper-head"><h3 id="stTitle">Add staff</h3></div>
+            <input type="hidden" id="stId">
+            <div><label class="f" for="stName">Name <span>(as it should appear)</span></label><input type="text" id="stName" placeholder="e.g. Manharsinh B. Rathod"></div>
+            <div><label class="f" for="stDesig">Designation</label><input type="text" id="stDesig" placeholder="e.g. State Tax Inspector"></div>
+            <div><label class="f" for="stBranch">Branch</label><select id="stBranch"></select></div>
+            <label class="chk"><input type="checkbox" id="stActive" checked> Active (shown at sign-in)</label>
+            <div id="err7" class="msg err" role="alert" hidden></div>
+            <div id="ok7" class="msg info" role="status" hidden></div>
+            <div class="actions">
+              <button type="button" class="btn-main" id="stSave">Save</button>
+              <button type="button" class="btn-ghost" id="stCancel" hidden>Cancel edit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARK AS SENT -->
+      <section id="step8" hidden>
+        <div class="page-head"><div><h2>Mark as Sent</h2><p id="msWhat"></p></div>
+          <button type="button" class="btn-ghost" id="msBack">Back</button></div>
+        <div class="section">
+          <div>
+            <div class="label"><span class="n">1</span>Sent on e-Sarkar? Paste the message or the File History</div>
+            <p class="hint" style="margin:0 0 8px">Copy the green message shown after sending (“e-Tappal with reference number …”), <b>or</b> open the file's <b>History</b> and copy the Dispatch rows. Lahiyo reads the details by itself — instantly, without AI.</p>
+            <textarea class="paste" id="msPaste" placeholder="Paste here…"></textarea>
+            <div id="msParsed" style="margin-top:10px"></div>
+          </div>
+          <div>
+            <div class="label"><span class="n">2</span>Also (or only) sent manually?</div>
+            <div class="radios" role="group" aria-label="Sent manually" style="margin-bottom:12px">
+              <button type="button" class="radio msHow" data-v="" aria-pressed="true"><span class="dot" aria-hidden="true"></span>Not sent manually</button>
+              <button type="button" class="radio msHow" data-v="By hand" aria-pressed="false"><span class="dot" aria-hidden="true"></span>By hand</button>
+              <button type="button" class="radio msHow" data-v="Post" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Post</button>
+              <button type="button" class="radio msHow" data-v="Email" aria-pressed="false"><span class="dot" aria-hidden="true"></span>Email</button>
+            </div>
+            <div class="three" id="msManual" hidden>
+              <div><label class="f" for="msOutward">Outward No. <span>(જાવક ક્રમાંક)</span></label><input type="text" id="msOutward" placeholder="e.g. વિભાગ-૩/વસુલાત/૧૪૨૫/૨૦૨૬"></div>
+              <div><label class="f" for="msTo">Sent to <span>(office / officer / email)</span></label><input type="text" id="msTo"></div>
+              <div><label class="f" for="msWhen">Date &amp; time</label><input type="datetime-local" id="msWhen"></div>
+            </div>
+          </div>
+          <div id="err8" class="msg err" role="alert" hidden></div>
+          <div class="actions">
+            <button type="button" class="btn-main" id="msSave"><span class="spinner" id="msSpin" hidden></span><svg class="i"><use href="#ic-book"/></svg>Save in Register</button>
+            <span class="meta">Status becomes <b>Sent</b>. The deadline and any સ્મૃતિપત્ર count from the date sent.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MY WORK -->
+      <section id="step9" hidden>
+        <div class="page-head"><div><h2>My Work</h2><p id="wkSub">Letters drafted, checked or sent in the chosen period.</p></div>
+          <button type="button" class="btn-ghost" id="wkExcel"><svg class="i"><use href="#ic-book"/></svg>Download Excel</button></div>
+        <div class="section" style="gap:16px">
+          <div class="period">
+            <div><label class="f">Period</label><div class="chips" id="wkChips">
+              <button type="button" class="chip" data-p="today" aria-pressed="false">Today</button>
+              <button type="button" class="chip" data-p="week" aria-pressed="false">This week</button>
+              <button type="button" class="chip" data-p="month" aria-pressed="true">This month</button>
+              <button type="button" class="chip" data-p="last" aria-pressed="false">Last month</button>
+            </div></div>
+            <div><label class="f" for="wkFrom">From</label><input type="date" id="wkFrom"></div>
+            <div><label class="f" for="wkTo">To</label><input type="date" id="wkTo"></div>
+          </div>
+          <div class="tiles" id="wkTiles"></div>
+          <div class="toolbar" style="margin:0">
+            <div><label for="wkPerson">Person</label><select id="wkPerson"></select></div>
+            <div><label for="wkType">Type</label><select id="wkType"><option value="">All types</option><option>Forward</option><option>Reply</option><option>Written</option><option value="Reminder">સ્મૃતિપત્ર</option><option>Checked</option></select></div>
+            <div><label for="wkStatus">Status</label><select id="wkStatus"><option value="">All</option><option value="sent">Sent</option><option value="notsent">Not yet sent</option><option value="closed">Reply received / Closed</option></select></div>
+            <div class="grow"><label for="wkSearch">Search</label><input type="search" id="wkSearch" placeholder="Subject, letter no., outward or e-Sarkar no."></div>
+          </div>
+          <div id="wkErr" class="msg err" role="alert" hidden></div>
+          <div class="tablebox"><table class="reg" style="min-width:820px">
+            <thead><tr id="wkHead"></tr></thead><tbody id="wkBody"></tbody></table></div>
+          <div class="reg-foot"><span id="wkCount"></span></div>
+        </div>
+      </section>
+
+      <!-- CHECK A LETTER -->
+      <section id="step10" hidden>
+        <div class="page-head"><div><h2>Check a Letter</h2><p>Upload a letter written outside Lahiyo. It is checked for correctness and you get suggestions. Add the original letter to also check that every point is answered.</p></div></div>
+        <div class="section">
+          <div id="kBranchBox" hidden>
+            <div class="label"><span class="n">★</span>Record this letter under</div>
+            <div class="branch-pick"><select id="kBranch" aria-label="Branch for this letter"></select><span class="meta">Administrator only</span></div>
+          </div>
+          <div class="drops">
+            <div class="drop" data-slot="mine">
+              <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+              <div class="t">Your letter (Word or PDF)</div>
+              <div class="s">The letter you wrote</div>
+              <input type="file" id="f_mine" accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              <label class="filebtn" for="f_mine"><svg class="i"><use href="#ic-folder"/></svg>Choose file</label>
+              <div class="or">or drag and drop here</div>
+              <div class="fname" id="n_mine"></div>
+            </div>
+            <div class="drop optional" data-slot="korig">
+              <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+              <div class="t">Original letter (PDF)</div>
+              <div class="s">Optional · to check every point is answered</div>
+              <input type="file" id="f_korig" accept="application/pdf,.pdf">
+              <label class="filebtn" for="f_korig"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
+              <div class="or">or drag and drop here</div>
+              <div class="fname" id="n_korig"></div>
+            </div>
+          </div>
+          <label class="chk"><input type="checkbox" id="kSave" checked> Save this letter in the register</label>
+          <div id="err10" class="msg err" role="alert" hidden></div>
+          <div class="actions">
+            <button type="button" class="btn-main" id="kBtn"><span class="spinner" id="kSpin" hidden></span><svg class="i" id="kIcon"><use href="#ic-check"/></svg><span id="kTxt">Check the Letter</span></button>
+            <span class="meta"><svg class="i"><use href="#ic-clock"/></svg>Usually 15–45 seconds · files are not stored</span>
+          </div>
+        </div>
+        <div class="section" id="kResult" hidden style="margin-top:16px;gap:14px">
+          <div class="verdict" id="kVerdict"></div>
+          <div class="ck" id="kChecks"></div>
+          <div class="sugs" id="kSugs"></div>
+          <div id="kSaved" class="msg info" role="status" hidden></div>
+          <div id="err10b" class="msg err" role="alert" hidden></div>
+          <div class="actions" style="margin:0">
+            <button type="button" class="btn-main" id="kImprove"><span class="spinner" id="kiSpin" hidden></span><svg class="i" id="kiIcon"><use href="#ic-pen"/></svg><span id="kiTxt">Get an improved version</span></button>
+            <button type="button" class="btn-ghost" id="kSent" hidden>Mark as sent</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DRAFTS TRAY -->
+      <section id="step11" hidden>
+        <div class="page-head"><div><h2>Drafts Tray</h2><p>Letters drafted in the background. Open a draft to check and edit it, or download several at once. Drafts not opened are removed after 7 days.</p></div>
+          <button type="button" class="btn-ghost" id="trRefresh"><svg class="i"><use href="#ic-clock"/></svg>Refresh</button></div>
+        <div class="section" style="gap:14px">
+          <div class="tray-tools">
+            <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+              <label class="chk"><input type="checkbox" id="trAll"> Select all ready</label>
+              <span class="meta" id="trSummary"></span>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button type="button" class="btn-main" id="trZip"><span class="spinner" id="trSpin" hidden></span><svg class="i"><use href="#ic-word"/></svg><span id="trZipTxt">Download selected as Word (ZIP)</span></button>
+              <button type="button" class="btn-ghost" id="trRemove">Remove selected</button>
+            </div>
+          </div>
+          <p class="hint" style="margin:0">ZIP download uses the signatory chosen for the batch and records each letter in the register. Please read every letter before sending it.</p>
+          <div id="trErr" class="msg err" role="alert" hidden></div>
+          <div id="trOk" class="msg info" role="status" hidden></div>
+          <div class="tablebox"><table class="reg" style="min-width:760px">
+            <thead><tr><th style="width:34px"></th><th>Uploaded</th><th>Type</th><th>File / Letter</th><th>Status</th><th></th></tr></thead>
+            <tbody id="trBody"><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
+        </div>
       </section>
 
       <!-- WRITE A LETTER -->
@@ -713,9 +942,9 @@
                 <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
                 <div class="t">Our earlier letter (PDF)</div>
                 <div class="s">The letter whose reply has not been received</div>
-                <input type="file" id="f_rem" accept="application/pdf,.pdf">
+                <input type="file" id="f_rem" accept="application/pdf,.pdf" multiple>
                 <label class="filebtn" for="f_rem"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
-                <div class="or">or drag and drop the file here</div>
+                <div class="or">or drag and drop · choose several PDFs to draft them in the background</div>
                 <div class="fname" id="n_rem"></div>
               </div>
             </div>
@@ -734,7 +963,7 @@
             <div style="flex:1 1 260px;min-width:0"><label class="f" for="rSig">4 · Signed by</label><select id="rSig"></select></div>
           </div>
           <div id="err5" class="msg err" role="alert" hidden></div>
-          <div class="actions">
+          <div class="actions" id="rActions">
             <button type="button" class="btn-main" id="rBtn"><span class="spinner" id="rSpin" hidden></span><svg class="i" id="rIcon"><use href="#ic-remind"/></svg><span id="rTxt">Draft the Reminder</span></button>
             <span class="meta"><svg class="i"><use href="#ic-clock"/></svg>Usually 20–60 seconds · the PDF is not stored</span>
           </div>
@@ -794,7 +1023,7 @@
 
 <script>
   var state = { mode: 'DOWN', deadline: 'SAME', files: {}, draft: null, token: null, sess: null, regRows: [], statuses: [],
-                sigs: [], addressees: [], note: '', ins: 'JC', level: '1' };
+                sigs: [], addressees: [], note: '', ins: 'JC', level: '1', batch: null };
   var $ = function (id) { return document.getElementById(id); };
 
   function en(n) { return String(n == null ? '' : n).replace(/[૦-૯]/g, function (c) { return '૦૧૨૩૪૫૬૭૮૯'.indexOf(c); }); }
@@ -802,7 +1031,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function leftLabel(l) { return l < 0 ? Math.abs(l) + (l === -1 ? ' day' : ' days') + ' overdue' : (l === 0 ? 'Due today' : l + (l === 1 ? ' day' : ' days') + ' left'); }
   var TYPES = { forward_for_action: 'Forward for action', data_call: 'Data call', explanation: 'Explanation sought', reply_with_data: 'Reply with data', other: 'Other' };
-  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder · સ્મૃતિપત્ર' };
+  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder · સ્મૃતિપત્ર', CHECKED: 'Checked letter (improved)' };
   var CLOSED = /received|closed|done|મળેલ|બંધ|પૂર્ણ/i;
   /** Branch name without the word "શાખા"/"Branch", for small labels. */
   function shortBranch(n) { return String(n || '').replace(/\s*(શાખા|Branch)\s*$/i, '').replace(/\s*શાખા\s*/, ' ').trim() || n; }
@@ -832,7 +1061,7 @@
   // ── Sign-in ──
   function showLogin(msg) {
     state.token = null; state.sess = null; saveToken(null);
-    $('login').hidden = false;
+    $('login').hidden = false; $('loginForm').hidden = false; $('personForm').hidden = true;
     if (msg) { $('lgErr').textContent = msg; $('lgErr').hidden = false; }
     $('lgPin').value = '';
     setTimeout(function () { $('lgPin').focus(); }, 50);
@@ -864,7 +1093,7 @@
       $('lgBtn').disabled = false; $('lgSpin').hidden = true;
       $('lgErr').textContent = (e && e.message) || String(e); $('lgErr').hidden = false;
       $('lgPin').value = ''; $('lgPin').focus();
-    }).login(b, p);
+    }).login(b, p, rememberedPerson());
   };
   $('signOut').onclick = function () {
     if (state.draft && !$('step2').hidden && !confirm('Sign out? The open draft will be lost.')) return;
@@ -878,18 +1107,21 @@
   function startSession(s) {
     state.token = s.token; state.sess = s; saveToken(s.token);
     state.addressees = s.addressees || []; state.note = s.approvalNote || '';
+    if ((s.staff || []).length && !s.person) { showPersonStep(s); return; }
     $('login').hidden = true;
-    $('userName').textContent = s.branch;
-    $('userRole').textContent = s.admin ? 'Administrator' : 'Branch user';
+    $('userName').textContent = s.person ? s.person.name : s.branch;
+    $('userRole').textContent = s.person ? (s.admin ? 'Administrator' : shortBranch(s.branch)) : (s.admin ? 'Administrator' : 'Branch user');
+    $('whoBtn').title = (s.staff || []).length ? 'Change the name' : '';
     $('avatar').textContent = s.admin ? 'AD' : branchInitials(s.branch);
     $('ver').textContent = 'Version ' + s.version;
     $('modelInfo').textContent = s.model ? ' · AI: ' + s.model : '';
     $('dueScope').textContent = s.admin ? 'All branches' : '';
     var opts = (s.branches || []).map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + '</option>'; }).join('');
-    ['recBranch', 'cBranch', 'rBranch'].forEach(function (id) { $(id).innerHTML = opts; });
+    ['recBranch', 'cBranch', 'rBranch', 'kBranch'].forEach(function (id) { $(id).innerHTML = opts; });
+    $('stBranch').innerHTML = '<option value="">Any branch</option>' + opts;
     $('regBranch').innerHTML = '<option value="">All branches</option>' + opts;
-    ['adminBranchBox', 'cBranchBox', 'rBranchBox', 'regBranchBox'].forEach(function (id) { $(id).hidden = !s.admin; });
-    $('navSign').hidden = !s.admin;
+    ['adminBranchBox', 'cBranchBox', 'rBranchBox', 'regBranchBox', 'kBranchBox'].forEach(function (id) { $(id).hidden = !s.admin; });
+    $('navSign').hidden = !s.admin; $('navStaff').hidden = !s.admin;
     $('sheetLink').hidden = !(s.admin && s.sheetUrl);
     if (s.admin && s.sheetUrl) $('sheetLink').href = s.sheetUrl;
     $('cTo').innerHTML = state.addressees.map(function (a) { return '<option value="' + esc(a.id) + '">' + esc(a.label) + '</option>'; }).join('') +
@@ -897,6 +1129,7 @@
     setSignatories(s.signatories || []);
     showStep(1);
     loadDashboard();
+    loadTray();
   }
 
   (function boot() {
@@ -951,18 +1184,19 @@
   }
 
   // ── Navigation ──
-  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6' };
-  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navRegister', 'navSign'];
-  var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', COMPOSE: 'navCompose', REMINDER: 'navReminder' };
+  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11' };
+  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTray', 'navStaff', 'navSign'];
+  var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', COMPOSE: 'navCompose', REMINDER: 'navReminder', CHECKED: 'navCheck' };
   function setNav(id) { NAV_IDS.forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
   function navFor(n) {
     if (n === 1) return MODE_NAV[state.mode];
-    if (n === 2) return MODE_NAV[(state.draft && state.draft.mode) || state.mode];
-    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign' }[n];
+    if (n === 2) return state.draft && state.draft.details && state.draft.details.queueId ? 'navTray' : MODE_NAV[(state.draft && state.draft.mode) || state.mode];
+    if (n === 8) return state.sent && state.sent.back === 10 ? 'navCheck' : (state.sent && state.sent.back === 2 ? navFor(2) : 'navRegister');
+    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray' }[n];
   }
   function showStep(n) {
     Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
-    $('rail').hidden = n === 3 || n === 6; // wide screens use the full width
+    $('rail').hidden = [3, 6, 7, 8, 9, 11].indexOf(n) >= 0; // wide screens use the full width
     setNav(navFor(n)); window.scrollTo(0, 0);
   }
   /** Leaving the review page drops the draft (after asking). */
@@ -1013,7 +1247,7 @@
 
   var LABELS = { ccst: 'CCST letter', r7: 'Range-7 reply', orig: 'Original CCST letter', rem: 'Letter sent earlier' };
   var SLOTS = ['ccst', 'r7', 'orig', 'rem'];
-  function errFor(slot) { return slot === 'rem' ? 'err5' : 'err1'; }
+  function errFor(slot) { return slot === 'rem' ? 'err5' : (slot === 'mine' || slot === 'korig' ? 'err10' : 'err1'); }
   function readFile(slot, file) {
     if (!file) return;
     if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf') { showErr(errFor(slot), 'Please choose a PDF file.'); return; }
@@ -1027,11 +1261,12 @@
     };
     r.readAsDataURL(file);
   }
-  SLOTS.forEach(function (slot) { $('f_' + slot).onchange = function (e) { readFile(slot, e.target.files[0]); }; });
+  SLOTS.forEach(function (slot) { $('f_' + slot).onchange = function (e) { pickFiles(slot, e.target.files); }; });
+  ['mine', 'korig'].forEach(function (slot) { $('f_' + slot).onchange = function (e) { readAny(slot, e.target.files[0]); }; });
   Array.prototype.forEach.call(document.querySelectorAll('.drop'), function (box) {
     box.addEventListener('dragover', function (e) { e.preventDefault(); box.classList.add('dragover'); });
     box.addEventListener('dragleave', function () { box.classList.remove('dragover'); });
-    box.addEventListener('drop', function (e) { e.preventDefault(); box.classList.remove('dragover'); readFile(box.dataset.slot, e.dataTransfer.files[0]); });
+    box.addEventListener('drop', function (e) { e.preventDefault(); box.classList.remove('dragover'); var sl = box.dataset.slot; if (sl === 'mine' || sl === 'korig') readAny(sl, e.dataTransfer.files[0]); else pickFiles(sl, e.dataTransfer.files); });
   });
 
   function showErr(id, e) { var el = $(id); el.textContent = (e && e.message) ? e.message : String(e); el.hidden = false; }
@@ -1191,13 +1426,17 @@
   // ── Review (step 2), all letter types ──
   function factsFor(d) {
     var det = d.details || {};
+    if (d.mode === 'CHECKED') return [
+      ['Letter type', 'Checked letter · improved version'], ['To', det.addressee], ['Subject', det.subject],
+      ['Original letter', det.input_letter_no], ['Register', det.regTab ? 'Already recorded when checked' : d.branch], ['AI model', d.model]];
     if (d.mode === 'COMPOSE') return [
       ['Letter type', 'Written letter'], ['To', det.addressee], ['Instructed by', det.instructed_by],
       ['Deadline', det.deadline_text], ['References', det.input_letter_no], ['Register', d.branch], ['AI model', d.model]];
     if (d.mode === 'REMINDER') return [
       ['Letter type', det.level === 'FINAL' ? 'અંતિમ સ્મૃતિપત્ર (final)' : 'સ્મૃતિપત્ર-' + det.level], ['Earlier letter No.', det.input_letter_no],
       ['Earlier letter date', det.input_approved_date], ['To', det.addressee], ['Original deadline', days(det.original_days)],
-      ['New deadline', det.deadline_text], ['Earlier reminders found', String(det.earlier_reminders || 0)], ['Register', d.branch], ['AI model', d.model]];
+      ['New deadline', det.deadline_text], ['Earlier letter sent', det.sent_on ? det.sent_on + ' · ' + det.sent_via + (det.sent_ago != null ? ' (' + det.sent_ago + ' days ago)' : '') : 'Not marked as sent in the register'],
+      ['Earlier reminders found', String(det.earlier_reminders || 0)], ['Register', d.branch], ['AI model', d.model]];
     return [
       ['Letter No.', det.input_letter_no], ['Approved on', det.input_approved_date],
       ['From', det.sender_full], ['File No.', det.input_file_no],
@@ -1293,7 +1532,9 @@
       try { a.click(); } catch (e) {}
       a.remove();
       $('ok2').innerHTML = (f.registerError ? 'The Word file is ready, but the register could not be updated (' + esc(f.registerError) + '). ' : 'Recorded in the ' + esc(f.branch) + ' register. ') +
-        'If the download did not start, <a href="' + href + '" download="' + esc(f.name) + '">click here to save ' + esc(f.name) + '</a>.';
+        'If the download did not start, <a href="' + href + '" download="' + esc(f.name) + '">click here to save ' + esc(f.name) + '</a>.' +
+        (f.saved ? '<div style="margin-top:8px"><b>Sent it on e-Sarkar or by hand?</b> <button type="button" class="savebtn" id="ok2Sent">Mark as sent</button></div>' : '');
+      state.lastSaved = f.saved ? { tab: f.saved.tab, row: f.saved.row, subject: letter.subject, type: MODE_NAMES[d.mode], drafted: '' } : null;
       $('ok2').className = f.registerError ? 'msg warn' : 'msg info';
       $('ok2').hidden = false;
       state.downloaded = true;
@@ -1301,7 +1542,9 @@
     }, function (e) { $('dlBtn').disabled = false; $('spin2').hidden = true; showErr('err2', e); });
   };
 
+  $('ok2').addEventListener('click', function (e) { if (e.target.id === 'ok2Sent' && state.lastSaved) openMarkSent(state.lastSaved, 2); });
   function resetDraft() {
+    clearBatch();
     state.files = {}; state.draft = null; state.pre = null;
     if ($('preHint')) $('preHint').hidden = true;
     SLOTS.forEach(function (s) { $('f_' + s).value = ''; $('n_' + s).textContent = ''; $('n_' + s).closest('.drop').classList.remove('has'); });
@@ -1314,7 +1557,7 @@
     var b = admin ? $('regBranch').value : '';
     $('regTitle').textContent = admin ? (b ? b + ' · Register' : 'All Registers') : state.sess.branch + ' · Register';
     $('regSub').textContent = admin ? 'Administrator view. Choose a branch to see one register, or leave it on All branches.' :
-      'Letters drafted by your branch. Add the outward number and update the status once a letter is sent.';
+      'Letters of your branch. Use “Mark sent” to record the e-Sarkar dispatch or the outward number; deadlines then count from the date sent.';
     api('getRegister', [b], function (r) { state.regRows = r.rows; state.statuses = r.statuses; renderRegister(); },
       function (e) { showErr('regErr', e); $('regBody').innerHTML = ''; });
   }
@@ -1327,11 +1570,11 @@
       if (view === 'deadlines' && (closed || r.left == null)) return false;
       if (view === 'overdue' && (closed || r.left == null || r.left >= 0)) return false;
       if (view === 'closed' && !closed) return false;
-      if (q && (r.letterNo + ' ' + r.subject + ' ' + r.outward + ' ' + r.from + ' ' + r.direction).toLowerCase().indexOf(q) < 0) return false;
+      if (q && (r.letterNo + ' ' + r.subject + ' ' + r.outward + ' ' + r.from + ' ' + r.direction + ' ' + r.esarkar + ' ' + r.sentTo + ' ' + r.workedBy).toLowerCase().indexOf(q) < 0) return false;
       return true;
     });
     if (view === 'deadlines' || view === 'overdue') rows.sort(function (a, b) { return a.left - b.left; });
-    var head = ['Drafted', admin ? 'Branch' : null, 'Type / To', 'Letter No. / From', 'Subject', 'Deadline', 'Outward No.', 'Status', ''].filter(function (x) { return x !== null; });
+    var head = ['Drafted', admin ? 'Branch' : null, 'Type / To', 'Letter No. / From', 'Subject', 'Deadline', 'Sent', 'Status', ''].filter(function (x) { return x !== null; });
     $('regHead').innerHTML = head.map(function (h) { return '<th scope="col">' + h + '</th>'; }).join('');
     if (!rows.length) { $('regBody').innerHTML = '<tr><td colspan="' + head.length + '" class="empty" style="padding:18px">No letters to show.</td></tr>'; }
     else $('regBody').innerHTML = rows.map(function (r, i) {
@@ -1341,15 +1584,16 @@
       var opts = state.statuses.map(function (s) { return '<option' + (s === r.status ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('');
       if (state.statuses.indexOf(r.status) < 0) opts = '<option selected>' + esc(r.status) + '</option>' + opts;
       return '<tr data-i="' + i + '">' +
-        '<td style="white-space:nowrap">' + esc(r.drafted) + '</td>' +
+        '<td style="white-space:nowrap">' + esc(r.drafted) + (r.workedBy ? '<br><small class="meta">' + esc(r.workedBy) + '</small>' : '') + '</td>' +
         (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') +
         '<td style="max-width:200px">' + esc(r.direction) + '</td>' +
         '<td><b>' + esc(r.letterNo || '—') + '</b><br><span class="gu" style="font-family:var(--gu);color:var(--muted)">' + esc(r.from) + '</span></td>' +
         '<td class="gu">' + esc(r.subject) + '</td>' +
         '<td>' + dl + '</td>' +
-        '<td><input type="text" value="' + esc(r.outward) + '" aria-label="Outward number" placeholder="CCTJC3/…"></td>' +
+        '<td style="max-width:220px">' + (r.sentOn ? esc(r.sentVia) + ' · ' + esc(r.sentOn) + '<br><small class="meta">' + esc([r.outward, r.esarkar.split('\n')[0]].filter(Boolean).join(' · ')) + '</small>' +
+          (r.sentTo ? '<br><small class="meta">To ' + esc(r.sentTo.split('\n')[0]) + '</small>' : '') : (r.outward ? 'Outward ' + esc(r.outward) : '<span class="meta">Not sent</span>')) + '</td>' +
         '<td><select aria-label="Status">' + opts + '</select></td>' +
-        '<td><button type="button" class="savebtn">Save</button></td></tr>';
+        '<td><div class="rowbtns"><button type="button" class="savebtn">Save</button><button type="button" class="savebtn sentbtn">' + (r.sentOn ? 'Edit sent' : 'Mark sent') + '</button></div></td></tr>';
     }).join('');
     state.shown = rows;
     document.querySelector('.tablebox').scrollLeft = 0;
@@ -1358,7 +1602,8 @@
   $('regBody').addEventListener('click', function (e) {
     if (!e.target.classList.contains('savebtn')) return;
     var tr = e.target.closest('tr'), r = state.shown[Number(tr.dataset.i)];
-    var outward = tr.querySelector('input').value, status = tr.querySelector('select').value;
+    if (e.target.classList.contains('sentbtn')) { openMarkSent({ tab: r.tab, row: r.row, subject: r.subject, type: r.direction, drafted: r.drafted, outward: r.outward }, 3); return; }
+    var outward = r.outward, status = tr.querySelector('select').value;
     e.target.disabled = true; e.target.textContent = 'Saving…';
     api('updateRegisterEntry', [r.tab, r.row, outward, status], function () {
       r.outward = outward; r.status = status;
@@ -1420,6 +1665,452 @@
       $('sgSave').disabled = false; setSignatories(list);
       var nm = data.name.trim(); resetSigForm(); $('ok6').textContent = nm + ' saved.'; $('ok6').hidden = false;
     }, function (err) { $('sgSave').disabled = false; showErr('err6', err); });
+  };
+
+  // ════════════════════ v3.4 ════════════════════
+
+  // ── Who is working (after the PIN) ──
+  function rememberedPerson() { try { return localStorage.getItem('lahiyo_person') || ''; } catch (e) { return ''; } }
+  function showPersonStep(s) {
+    $('login').hidden = false; $('loginForm').hidden = true; $('personForm').hidden = false; $('psErr').hidden = true;
+    var last = rememberedPerson();
+    $('lgPerson').innerHTML = '<option value="">Select your name</option>' + (s.staff || []).map(function (p) {
+      return '<option value="' + esc(p.id) + '"' + (p.id === last ? ' selected' : '') + '>' + esc(p.name) + (p.designation ? ' · ' + esc(p.designation) : '') + '</option>';
+    }).join('');
+    setTimeout(function () { $('lgPerson').focus(); }, 50);
+  }
+  $('personForm').onsubmit = function (ev) {
+    ev.preventDefault();
+    var id = $('lgPerson').value;
+    if (!id) { $('psErr').textContent = 'Please choose your name.'; $('psErr').hidden = false; return; }
+    $('psBtn').disabled = true;
+    api('setPerson', [id], function (s) {
+      $('psBtn').disabled = false;
+      try { localStorage.setItem('lahiyo_person', id); } catch (e) {}
+      startSession(s);
+    }, function (e) { $('psBtn').disabled = false; $('psErr').textContent = e.message; $('psErr').hidden = false; });
+  };
+  $('whoBtn').onclick = function () {
+    if (!state.sess || !(state.sess.staff || []).length) return;
+    if (state.draft && !$('step2').hidden && !state.downloaded && !confirm('Change the name? The open draft stays open.')) return;
+    showPersonStep(state.sess);
+  };
+
+  // ── Background drafting: several PDFs chosen at once ──
+  var BATCH_SLOTS = { ccst: 'DOWN', r7: 'UP', rem: 'REMINDER' };
+  function pickFiles(slot, list) {
+    var files = Array.prototype.filter.call(list || [], function (f) { return /\.pdf$/i.test(f.name) || f.type === 'application/pdf'; });
+    if (BATCH_SLOTS[slot] && files.length > 1) return startBatchPick(slot, files);
+    clearBatch();
+    readFile(slot, (list || [])[0]);
+  }
+  function startBatchPick(slot, files) {
+    if (files.length > 25) { showErr(errFor(slot), 'Please choose up to 25 PDFs at a time.'); files = files.slice(0, 25); }
+    state.files[slot] = null; state.pre = null; $('preHint').hidden = true;
+    state.batch = { slot: slot, mode: BATCH_SLOTS[slot], files: files };
+    $('n_' + slot).textContent = '✓ ' + files.length + ' PDFs selected';
+    $('n_' + slot).closest('.drop').classList.add('has');
+    $('batchTitle').textContent = files.length + ' PDFs selected · ' + (slot === 'rem' ? 'સ્મૃતિપત્ર' : MODE_NAMES[BATCH_SLOTS[slot]]);
+    $('batchList').innerHTML = files.map(function (f) { return '<li>' + esc(f.name) + '</li>'; }).join('');
+    $('batchTxt').textContent = 'Draft all ' + files.length + ' in the background';
+    $('batchErr').hidden = true;
+    var actions = slot === 'rem' ? $('rActions') : $('genActions');
+    actions.parentNode.insertBefore($('batchBox'), actions);
+    $('batchBox').hidden = false; actions.hidden = true;
+    if (slot === 'r7') { $('f_orig').closest('.drop').style.opacity = '.45'; }
+  }
+  function clearBatch() {
+    if (!state.batch) return;
+    var slot = state.batch.slot;
+    state.batch = null; $('batchBox').hidden = true;
+    $('genActions').hidden = false; $('rActions').hidden = false;
+    $('f_orig').closest('.drop').style.opacity = '';
+    $('f_' + slot).value = ''; $('n_' + slot).textContent = ''; $('n_' + slot).closest('.drop').classList.remove('has');
+  }
+  $('batchClear').onclick = clearBatch;
+  function readAsBase64(file) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res(String(r.result).split(',')[1]); };
+      r.onerror = function () { rej(new Error(file.name + ' could not be read.')); };
+      r.readAsDataURL(file);
+    });
+  }
+  function apiP(fn, args) { return new Promise(function (res, rej) { api(fn, args, res, rej); }); }
+  $('batchBtn').onclick = function () {
+    var b = state.batch; if (!b) return;
+    $('batchErr').hidden = true;
+    var rem = b.mode === 'REMINDER';
+    if (rem && !$('rSig').value) return showErr('batchErr', 'Please choose who signs the reminders.');
+    var sig = rem ? $('rSig').value : ((defaultSig(b.mode) || {}).id || '');
+    if (sig === 'OTHER') return showErr('batchErr', 'For background drafting please choose a signatory from the list.');
+    var opts = { mode: b.mode, deadline: state.deadline, level: state.level, remDeadline: $('rDl').value,
+      branch: rem ? $('rBranch').value : $('recBranch').value, signatoryId: sig, count: b.files.length };
+    var n = b.files.length, done = 0;
+    busyBtn('batchBtn', 'batchSpin', 'batchIcon', 'batchTxt', true, 'Uploading 1 of ' + n + '…', '');
+    var tick = function () { clearInterval(timers.batchBtn); $('batchTxt').textContent = 'Uploading ' + Math.min(done + 1, n) + ' of ' + n + '…'; };
+    apiP('queueStart', [opts]).then(function (batchId) {
+      var chain = Promise.resolve();
+      b.files.forEach(function (f) {
+        chain = chain.then(function () { tick(); return readAsBase64(f); })
+          .then(function (data) { return apiP('queueAdd', [batchId, { name: f.name, data: data }]); })
+          .then(function () { done++; });
+      });
+      return chain;
+    }).then(function () { return apiP('queueStartWork', []); }).then(function (q) {
+      busyBtn('batchBtn', 'batchSpin', 'batchIcon', 'batchTxt', false, '', 'Draft all in the background');
+      clearBatch();
+      renderTray(q);
+      $('trOk').textContent = n + ' letters added. They are drafted one by one in the background — you can close Lahiyo and come back later.';
+      $('trOk').hidden = false;
+      showStep(11);
+    }).catch(function (e) {
+      busyBtn('batchBtn', 'batchSpin', 'batchIcon', 'batchTxt', false, '', 'Draft all ' + n + ' in the background');
+      showErr('batchErr', (done ? done + ' of ' + n + ' were added to the tray. ' : '') + e.message);
+      if (done) loadTray();
+    });
+  };
+
+  // ── Drafts Tray ──
+  var TRAY_TXT = { Waiting: 'Waiting', Working: 'Working…', Busy: 'Gemini busy', Ready: 'Draft ready', Opened: 'Opened', Downloaded: 'Downloaded', Failed: 'Needs attention' };
+  var MODE_SHORT2 = { DOWN: 'Forward', UP: 'Reply', REMINDER: 'સ્મૃતિપત્ર' };
+  function loadTray(cb) {
+    api('getQueue', [], function (q) { renderTray(q); if (cb) cb(q); }, function (e) { showErr('trErr', e); });
+  }
+  function renderTray(q) {
+    state.tray = q;
+    $('trayBadge').textContent = q.ready; $('trayBadge').hidden = !q.ready;
+    var admin = state.sess && state.sess.admin;
+    var waitingPos = 0;
+    var rows = q.rows.slice().reverse().map(function (r) { if (/Waiting|Busy/.test(r.status)) r.pos = ++waitingPos; return r; }).reverse();
+    $('trSummary').textContent = q.rows.length ? (q.ready + ' ready · ' + q.pending + ' in progress · ' + q.rows.length + ' in the tray') : '';
+    $('trBody').innerHTML = rows.length ? rows.map(function (r) {
+      var can = /Ready|Opened|Downloaded/.test(r.status);
+      var info = r.status === 'Waiting' ? 'Number ' + r.pos + ' in line' : (r.status === 'Busy' || r.status === 'Failed' || r.msg ? esc(r.msg) : '');
+      return '<tr data-id="' + esc(r.id) + '">' +
+        '<td>' + (can ? '<input type="checkbox" class="trSel" aria-label="Select"' + (r.status === 'Ready' ? ' data-ready="1"' : '') + '>' : '') + '</td>' +
+        '<td style="white-space:nowrap">' + esc(r.created) + (admin || !r.mine ? '<br><small class="meta">' + esc(r.person || shortBranch(r.branch)) + '</small>' : '') + '</td>' +
+        '<td>' + esc(MODE_SHORT2[r.mode] || r.mode) + '</td>' +
+        '<td><b>' + esc(r.letterNo || r.name) + '</b>' + (r.subject ? '<br><span class="gu" style="font-family:var(--gu)">' + esc(r.subject) + '</span>' : (r.letterNo ? '' : '')) + '</td>' +
+        '<td><span class="st ' + esc(r.status) + '">' + esc(TRAY_TXT[r.status] || r.status) + '</span>' + (info ? '<br><small class="meta">' + info + '</small>' : '') + '</td>' +
+        '<td style="white-space:nowrap">' + (can ? '<button type="button" class="savebtn trOpen">Open</button> ' : '') +
+        (r.status === 'Failed' ? '<button type="button" class="savebtn trRetry">Try again</button> ' : '') +
+        (r.status !== 'Working' ? '<button type="button" class="linkbtn trDel">Remove</button>' : '') + '</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">The tray is empty. Choose several PDFs on Forward, Reply or Reminder to draft them in the background.</td></tr>';
+    $('trAll').checked = false;
+    clearTimeout(state.trayTimer);
+    if (q.pending) state.trayTimer = setTimeout(function () { loadTray(); }, $('step11').hidden ? 60000 : 15000);
+  }
+  $('navTray').onclick = function () { if (leaveDraftOk()) { $('trErr').hidden = true; $('trOk').hidden = true; showStep(11); loadTray(); } };
+  $('trRefresh').onclick = function () { loadTray(); };
+  $('trAll').onchange = function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.trSel[data-ready]'), function (c) { c.checked = $('trAll').checked; });
+  };
+  function selectedTray() { return Array.prototype.filter.call(document.querySelectorAll('.trSel'), function (c) { return c.checked; }).map(function (c) { return c.closest('tr').dataset.id; }); }
+  $('trBody').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr || !tr.dataset.id) return;
+    var id = tr.dataset.id;
+    if (e.target.classList.contains('trOpen')) {
+      e.target.disabled = true; e.target.textContent = 'Opening…';
+      api('openQueued', [id], function (d) { state.draft = d; showDraft(d); loadTray(); },
+        function (err) { e.target.disabled = false; e.target.textContent = 'Open'; showErr('trErr', err); });
+    } else if (e.target.classList.contains('trRetry')) {
+      api('retryQueued', [id], renderTray, function (err) { showErr('trErr', err); });
+    } else if (e.target.classList.contains('trDel')) {
+      if (!confirm('Remove this letter from the tray? Its files are deleted.')) return;
+      api('removeQueued', [[id]], renderTray, function (err) { showErr('trErr', err); });
+    }
+  });
+  $('trRemove').onclick = function () {
+    var ids = selectedTray(); $('trErr').hidden = true;
+    if (!ids.length) return showErr('trErr', 'Tick the letters to remove first.');
+    if (!confirm('Remove ' + ids.length + ' letter(s) from the tray?')) return;
+    api('removeQueued', [ids], renderTray, function (err) { showErr('trErr', err); });
+  };
+  $('trZip').onclick = function () {
+    var ids = selectedTray(); $('trErr').hidden = true; $('trOk').hidden = true;
+    if (!ids.length) return showErr('trErr', 'Tick the drafts to download first (or "Select all ready").');
+    $('trZip').disabled = true; $('trSpin').hidden = false; $('trZipTxt').textContent = 'Preparing ' + ids.length + ' Word files…';
+    api('queueZip', [ids], function (z) {
+      $('trZip').disabled = false; $('trSpin').hidden = true; $('trZipTxt').textContent = 'Download selected as Word (ZIP)';
+      saveData('application/zip', z.data, z.name);
+      $('trOk').textContent = z.count + ' Word files downloaded and recorded in the register. Please read each letter before sending it.';
+      $('trOk').hidden = false;
+      loadTray(); loadDashboard();
+    }, function (err) { $('trZip').disabled = false; $('trSpin').hidden = true; $('trZipTxt').textContent = 'Download selected as Word (ZIP)'; showErr('trErr', err); });
+  };
+  function saveData(mime, b64, name) {
+    var href = 'data:' + mime + ';base64,' + b64;
+    var a = document.createElement('a'); a.href = href; a.download = name; document.body.appendChild(a);
+    try { a.click(); } catch (e) {}
+    a.remove();
+    return href;
+  }
+
+  // ── Mark as Sent (step 8) ──
+  /** Reads the e-Sarkar text: the message after sending, or rows copied from File History. */
+  function parseESarkar(text) {
+    var t = String(text || '').replace(/ /g, ' ');
+    var out = { file: '', sends: [] };
+    var f = t.match(/Dispatched\s+From\s+File\s*:\s*(\S+)/i); if (f) out.file = f[1];
+    function person(s) {
+      var m = String(s).trim().match(/^([^(]+?)\s*\(([^)]*)\)?\s*$/);
+      if (!m) return { name: String(s).trim(), designation: '', section: '', office: '' };
+      var p = m[2].split(',').map(function (x) { return x.trim(); });
+      return { name: m[1].trim(), designation: p[0] || '', section: p.length > 2 ? p[1] : '', office: p.length > 1 ? p[p.length - 1] : '' };
+    }
+    t.split(/\r?\n/).forEach(function (line) {
+      var m = line.match(/(\d{1,2}[-\/.]\d{1,2}[-\/.]\d{4})\s+(\d{1,2}:\d{2}\s*(?:AM|PM)?)\s+(Dispatch\w*)\s+(.+?\))\s+(.+?(?:\)|$))(?:\s+(Normal|Norma|Urgent|Immediate|Most Immediate|High)\w*)?\s*$/i);
+      if (!m) return;
+      var to = person(m[5]);
+      out.sends.push({ ref: out.file, date: m[1].replace(/[\/.]/g, '-'), time: m[2].toUpperCase(), by: person(m[4]).name,
+        to: to.name, toDesignation: to.designation, toSection: to.section, toOffice: to.office });
+    });
+    var re = /reference\s+number\s*:\s*(\S+)\s+has\s+been\s+successfully\s+transferred\s+to\s+([^\n]+?)(?=\s*e-Tappal|\s*$)/gim, q;
+    while ((q = re.exec(t))) {
+      var p = person(q[2]);
+      out.sends.push({ ref: q[1], date: '', time: '', by: '', to: p.name, toDesignation: p.designation, toSection: p.section, toOffice: p.office });
+    }
+    return out;
+  }
+  function nowLocal() { var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); }
+  function todayDMY() { var d = new Date(); return ('0' + d.getDate()).slice(-2) + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + d.getFullYear(); }
+  function timeAMPM() { var d = new Date(), h = d.getHours(); return ((h % 12) || 12) + ':' + ('0' + d.getMinutes()).slice(-2) + ' ' + (h < 12 ? 'AM' : 'PM'); }
+  function openMarkSent(target, backStep) {
+    state.sent = { target: target, back: backStep || 3, how: '' };
+    $('msWhat').innerHTML = 'Letter: <b class="gu-l">' + esc(target.subject || '—') + '</b>' + (target.type ? ' · ' + esc(target.type) : '') + (target.drafted ? ' · drafted ' + esc(target.drafted.slice(0, 10)) : '');
+    $('msPaste').value = ''; $('msParsed').innerHTML = ''; $('err8').hidden = true;
+    setHow(''); $('msOutward').value = target.outward || ''; $('msTo').value = ''; $('msWhen').value = nowLocal();
+    showStep(8);
+    setTimeout(function () { $('msPaste').focus(); }, 50);
+  }
+  function setHow(v) {
+    state.sent && (state.sent.how = v);
+    Array.prototype.forEach.call(document.querySelectorAll('.msHow'), function (x) { x.setAttribute('aria-pressed', x.dataset.v === v); });
+    $('msManual').hidden = !v;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.msHow'), function (b) { b.onclick = function () { setHow(b.dataset.v); }; });
+  $('msPaste').oninput = function () {
+    var txt = $('msPaste').value.trim();
+    if (!txt) { $('msParsed').innerHTML = ''; return; }
+    var p = parseESarkar(txt);
+    state.sent.parsed = p;
+    if (!p.sends.length) {
+      $('msParsed').innerHTML = '<div class="okline no">✗ No e-Sarkar dispatch found. Copy the green message after sending, or the Dispatch rows from the file History (with the date, time and names).</div>';
+      return;
+    }
+    var me = state.sess && state.sess.person && state.sess.person.name;
+    var warn = me && p.sends.some(function (s) { return s.by && !sameName(s.by, me); });
+    $('msParsed').innerHTML = '<div class="okline">✓ Read ' + p.sends.length + ' dispatch' + (p.sends.length > 1 ? 'es' : '') + ' from e-Sarkar</div>' +
+      (warn ? '<div class="msg warn" style="margin-top:8px">“Done by” in e-Sarkar is a different name from yours (' + esc(me) + '). It is saved as it is.</div>' : '') +
+      '<table class="parsed"><tr><th>e-File / e-Tappal No.</th><th>Date &amp; time</th><th>Sent to</th><th>Office</th><th>By</th></tr>' +
+      p.sends.map(function (s) {
+        return '<tr><td>' + esc(s.ref || '—') + '</td><td>' + (s.date ? esc(s.date + ' · ' + s.time) : '<span class="meta">now (when saved)</span>') + '</td><td>' + esc(s.to) +
+          (s.toDesignation || s.toSection ? '<br><small class="meta">' + esc([s.toDesignation, s.toSection].filter(Boolean).join(', ')) + '</small>' : '') + '</td><td>' + esc(s.toOffice || '') + '</td><td>' + esc(s.by || '—') + '</td></tr>';
+      }).join('') + '</table>';
+  };
+  function sameName(a, b) {
+    var w = function (s) { return String(s).toUpperCase().replace(/[^A-Z ]/g, ' ').split(/\s+/).filter(function (x) { return x.length > 2; }); };
+    var x = w(a), y = w(b);
+    return x.some(function (k) { return y.indexOf(k) >= 0; });
+  }
+  $('msBack').onclick = function () { var b = state.sent ? state.sent.back : 3; if (b === 3) openRegister('all'); else showStep(b); };
+  $('msSave').onclick = function () {
+    $('err8').hidden = true;
+    var st = state.sent; if (!st) return;
+    var p = $('msPaste').value.trim() ? parseESarkar($('msPaste').value) : { sends: [] };
+    if ($('msPaste').value.trim() && !p.sends.length) return showErr('err8', 'The pasted text has no e-Sarkar dispatch. Correct it or clear the box.');
+    var es = p.sends.map(function (s) { if (!s.date) { s.date = todayDMY(); s.time = timeAMPM(); } return s; });
+    var man = st.how ? { how: st.how, outward: $('msOutward').value.trim(), to: $('msTo').value.trim(), when: $('msWhen').value } : null;
+    if (!es.length && !man) return showErr('err8', 'Paste the e-Sarkar message, or choose how it was sent manually.');
+    if (man && !man.outward && !man.to) return showErr('err8', 'Please type the outward number or to whom it was sent.');
+    $('msSave').disabled = true; $('msSpin').hidden = false;
+    api('markSent', [st.target.tab, st.target.row, { esarkar: es, manual: man }], function () {
+      $('msSave').disabled = false; $('msSpin').hidden = true;
+      loadDashboard();
+      if (st.back === 2 || st.back === 10) { showStep(st.back); var box = st.back === 2 ? $('ok2') : $('kSaved'); box.className = 'msg info'; box.textContent = 'Marked as sent and saved in the register.'; box.hidden = false; }
+      else openRegister('all');
+    }, function (e) { $('msSave').disabled = false; $('msSpin').hidden = true; showErr('err8', e); });
+  };
+
+  // ── My Work (step 9) ──
+  function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function setPeriod(p) {
+    var t = new Date(), from = new Date(t), to = new Date(t);
+    if (p === 'week') { var dow = (t.getDay() + 6) % 7; from.setDate(t.getDate() - dow); }
+    else if (p === 'month') { from = new Date(t.getFullYear(), t.getMonth(), 1); }
+    else if (p === 'last') { from = new Date(t.getFullYear(), t.getMonth() - 1, 1); to = new Date(t.getFullYear(), t.getMonth(), 0); }
+    $('wkFrom').value = ymd(from); $('wkTo').value = ymd(to);
+    Array.prototype.forEach.call(document.querySelectorAll('#wkChips .chip'), function (c) { c.setAttribute('aria-pressed', c.dataset.p === p); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#wkChips .chip'), function (c) { c.onclick = function () { setPeriod(c.dataset.p); loadWork(); }; });
+  $('wkFrom').onchange = $('wkTo').onchange = function () {
+    Array.prototype.forEach.call(document.querySelectorAll('#wkChips .chip'), function (c) { c.setAttribute('aria-pressed', 'false'); });
+    loadWork();
+  };
+  $('navWork').onclick = function () {
+    if (!leaveDraftOk()) return;
+    if (!$('wkFrom').value) setPeriod('month');
+    showStep(9); loadWork();
+  };
+  function loadWork() {
+    $('wkErr').hidden = true;
+    if ($('wkFrom').value && $('wkTo').value && $('wkFrom').value > $('wkTo').value) return showErr('wkErr', '"From" is after "To".');
+    $('wkBody').innerHTML = '<tr><td colspan="7">Loading…</td></tr>';
+    api('getMyWork', [{ from: $('wkFrom').value, to: $('wkTo').value, person: $('wkPerson').value || '' }], function (w) {
+      state.work = w;
+      var cur = w.person;
+      var opts = (w.admin || !(state.sess && state.sess.person) ? ['ALL'] : []).concat(w.people);
+      $('wkPerson').innerHTML = opts.map(function (n) { return '<option value="' + esc(n) + '"' + (n === cur ? ' selected' : '') + '>' + (n === 'ALL' ? 'Everyone' : esc(n)) + '</option>'; }).join('');
+      renderWork();
+    }, function (e) { showErr('wkErr', e); $('wkBody').innerHTML = ''; });
+  }
+  $('wkPerson').onchange = loadWork;
+  $('wkType').onchange = $('wkStatus').onchange = renderWork;
+  $('wkSearch').oninput = renderWork;
+  function workRows() {
+    var w = state.work; if (!w) return [];
+    var t = $('wkType').value, s = $('wkStatus').value, q = $('wkSearch').value.trim().toLowerCase();
+    return w.rows.filter(function (r) {
+      if (t && r.type !== t) return false;
+      var sent = !!r.sentOnMs || /^Sent/.test(r.status), closed = CLOSED.test(r.status);
+      if (s === 'sent' && !sent) return false;
+      if (s === 'notsent' && (sent || closed)) return false;
+      if (s === 'closed' && !closed) return false;
+      if (q && [r.letterNo, r.subject, r.outward, r.esarkar, r.direction, r.sentTo].join(' ').toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+  }
+  var TYPE_LABEL = { Reminder: 'સ્મૃતિપત્ર' };
+  function renderWork() {
+    var rows = workRows(), all = state.work ? state.work.rows : [];
+    var count = function (t) { return all.filter(function (r) { return r.type === t; }).length; };
+    $('wkTiles').innerHTML = [['Total letters', all.length, 'gold'], ['Forward', count('Forward')], ['Reply', count('Reply')], ['Written', count('Written')], ['સ્મૃતિપત્ર', count('Reminder')], ['Checked', count('Checked')]]
+      .map(function (x) { return '<div class="tile ' + (x[2] || '') + '"><div class="n">' + x[1] + '</div><small' + (/[઀-૿]/.test(x[0]) ? ' class="gu-l"' : '') + '>' + esc(x[0]) + '</small></div>'; }).join('');
+    var admin = state.sess && state.sess.admin, showWho = $('wkPerson').value === 'ALL';
+    var head = ['Date', 'Type', 'Subject', 'To / From', 'Sent', 'Status'].concat(showWho ? ['Worked by'] : []).concat(admin ? ['Branch'] : []);
+    $('wkHead').innerHTML = head.map(function (h) { return '<th>' + h + '</th>'; }).join('');
+    $('wkBody').innerHTML = rows.length ? rows.map(function (r) {
+      var to = r.direction.replace(/^(Written|Checked|Reminder[^→]*)\s*→\s*/, '').replace(/^To /, '');
+      var sent = r.sentOn ? esc(r.sentVia) + ' · ' + esc(r.sentOn) + '<br><small class="meta">' + esc((r.outward || r.esarkar.split('\n')[0] || '')) + '</small>' : (r.outward ? 'Outward ' + esc(r.outward) : '—');
+      var closed = CLOSED.test(r.status);
+      return '<tr><td style="white-space:nowrap">' + esc(r.drafted.slice(0, 10)) + '</td><td' + (r.type === 'Reminder' ? ' class="gu-l"' : '') + '>' + esc(TYPE_LABEL[r.type] || r.type) + '</td>' +
+        '<td class="gu">' + esc(r.subject) + (r.letterNo ? '<br><small class="meta">' + esc(r.letterNo) + '</small>' : '') + '</td><td style="max-width:200px">' + esc(to) + '</td><td>' + sent + '</td>' +
+        '<td><span class="pill ' + (closed ? 'done' : (r.sentOn || /^Sent/.test(r.status) ? 'ok' : 'soon')) + '">' + esc(r.status) + '</span></td>' +
+        (showWho ? '<td>' + esc(r.workedBy || r.sentBy || '—') + '</td>' : '') + (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') + '</tr>';
+    }).join('') : '<tr><td colspan="' + head.length + '" class="empty" style="padding:18px">No letters in this period' + (state.work && state.work.person !== 'ALL' ? ' for ' + esc(state.work.person) : '') + '.</td></tr>';
+    $('wkCount').textContent = 'Showing ' + rows.length + ' of ' + all.length + ' letters · ' + $('wkFrom').value.split('-').reverse().join('-') + ' to ' + $('wkTo').value.split('-').reverse().join('-');
+  }
+  $('wkExcel').onclick = function () {
+    var rows = workRows();
+    if (!rows.length) return showErr('wkErr', 'Nothing to download for this period and filter.');
+    var cols = [['Drafted on', 'drafted'], ['Type', 'type'], ['Branch', 'tab'], ['Worked by', 'workedBy'], ['Direction', 'direction'], ['Letter No', 'letterNo'],
+      ['From', 'from'], ['Subject', 'subject'], ['Due date', 'due'], ['Status', 'status'], ['Sent through', 'sentVia'], ['Sent on', 'sentOn'],
+      ['Sent to', 'sentTo'], ['Outward No', 'outward'], ['e-Sarkar No', 'esarkar'], ['Sent by', 'sentBy']];
+    var cell = function (v) { v = String(v == null ? '' : v).replace(/\r?\n/g, ' | '); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    var csv = '﻿' + cols.map(function (c) { return c[0]; }).join(',') + '\r\n' +
+      rows.map(function (r) { return cols.map(function (c) { return cell(r[c[1]]); }).join(','); }).join('\r\n');
+    var b64 = btoa(unescape(encodeURIComponent(csv)));
+    var who = ($('wkPerson').value === 'ALL' ? 'Everyone' : $('wkPerson').value).replace(/[^A-Za-z0-9]+/g, '_');
+    saveData('text/csv;charset=utf-8', b64, 'Lahiyo_MyWork_' + who + '_' + $('wkFrom').value + '_to_' + $('wkTo').value + '.csv');
+  };
+
+  // ── Check a Letter (step 10) ──
+  $('navCheck').onclick = function () { if (leaveDraftOk()) { $('err10').hidden = true; showStep(10); } };
+  function readAny(slot, file) {
+    if (!file) return;
+    var okType = slot === 'mine' ? /\.(pdf|docx)$/i.test(file.name) : /\.pdf$/i.test(file.name);
+    if (!okType) return showErr('err10', slot === 'mine' ? 'Please choose a Word (.docx) or PDF file. For an old .doc file, save it again as .docx.' : 'Please choose a PDF file.');
+    var r = new FileReader();
+    r.onload = function () {
+      state.files[slot] = { name: file.name, data: String(r.result).split(',')[1], type: /\.docx$/i.test(file.name) ? 'docx' : 'pdf' };
+      $('n_' + slot).textContent = '✓ ' + file.name; $('n_' + slot).closest('.drop').classList.add('has');
+      $('err10').hidden = true; $('kResult').hidden = true; state.check = null;
+    };
+    r.readAsDataURL(file);
+  }
+  $('kBtn').onclick = function () {
+    $('err10').hidden = true;
+    if (!state.files.mine) return showErr('err10', 'Please upload your letter first.');
+    var k0 = Date.now();
+    busyBtn('kBtn', 'kSpin', 'kIcon', 'kTxt', true, 'Checking the letter…', 'Check the Letter');
+    api('checkLetter', [{ mine: state.files.mine, orig: state.files.korig || null, branch: $('kBranch').value, save: $('kSave').checked }], function (res) {
+      busyBtn('kBtn', 'kSpin', 'kIcon', 'kTxt', false, '', 'Check the Letter');
+      res.clientMs = Date.now() - k0; state.check = res; renderCheck(res);
+    }, function (e) { busyBtn('kBtn', 'kSpin', 'kIcon', 'kTxt', false, '', 'Check the Letter'); showErr('err10', e); });
+  };
+  var VERDICT = { READY: ['✅', 'Ready to send'], SMALL_CHANGES: ['⚠️', 'Small changes needed'], REWORK: ['❌', 'Needs rework'] };
+  function renderCheck(res) {
+    var v = VERDICT[res.verdict] || VERDICT.SMALL_CHANGES;
+    var pass = res.checks.filter(function (c) { return c.ok; }).length;
+    $('kVerdict').className = 'verdict ' + res.verdict;
+    $('kVerdict').innerHTML = '<span class="ic">' + v[0] + '</span><div><b>' + v[1] + '</b><div class="meta">' + pass + ' of ' + res.checks.length + ' checks passed' +
+      (res.hasOriginal ? '' : ' · checked without the original letter (language, format, addressee and references only)') + ' · ' + secs(res.clientMs || res.timing.ai) + '</div>' +
+      (res.summary ? '<div style="margin-top:4px">' + esc(res.summary) + '</div>' : '') + '</div>';
+    $('kChecks').innerHTML = res.checks.map(function (c) {
+      return '<span class="' + (c.ok ? 'y' : 'n') + '">' + (c.ok ? '✓' : '✗') + '</span><span>' + (c.ok ? esc(c.item) : '<b>' + esc(c.item) + '</b>') + (c.note && !c.ok ? '<small>' + esc(c.note) + '</small>' : '') + '</span>';
+    }).join('');
+    $('kSugs').innerHTML = res.suggestions.length ? res.suggestions.map(function (s) {
+      return '<div class="sug">Suggestion · ' + esc(s.area) + (s.note ? ' — ' + esc(s.note) : '') +
+        (s.from || s.to ? '<span class="g">' + (s.from ? '<s>' + esc(s.from) + '</s> → ' : '') + '<ins>' + esc(s.to) + '</ins></span>' : '') + '</div>';
+    }).join('') : '';
+    $('kSent').hidden = !res.saved;
+    if (res.saved) { $('kSaved').className = 'msg info'; $('kSaved').textContent = 'Saved in the ' + res.saved.tab + ' register.'; $('kSaved').hidden = false; }
+    else if (res.registerError) { $('kSaved').className = 'msg warn'; $('kSaved').textContent = 'Could not save in the register: ' + res.registerError; $('kSaved').hidden = false; }
+    else $('kSaved').hidden = true;
+    $('err10b').hidden = true;
+    $('kResult').hidden = false;
+    $('kResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('kImprove').onclick = function () {
+    var res = state.check; if (!res) return;
+    $('err10b').hidden = true;
+    var i0 = Date.now();
+    busyBtn('kImprove', 'kiSpin', 'kiIcon', 'kiTxt', true, 'Improving the letter…', 'Get an improved version');
+    api('improveLetter', [{ mine: state.files.mine, orig: state.files.korig || null, suggestions: res.suggestions.concat(res.checks.filter(function (c) { return !c.ok; }).map(function (c) { return { area: 'Content', note: c.item + (c.note ? ' — ' + c.note : '') }; })),
+      branch: $('kBranch').value, saved: res.saved || null }], function (d) {
+      busyBtn('kImprove', 'kiSpin', 'kiIcon', 'kiTxt', false, '', 'Get an improved version');
+      d.clientMs = Date.now() - i0; d.fromCheck = true; state.draft = d; showDraft(d);
+    }, function (e) { busyBtn('kImprove', 'kiSpin', 'kiIcon', 'kiTxt', false, '', 'Get an improved version'); showErr('err10b', e); });
+  };
+  $('kSent').onclick = function () {
+    var res = state.check; if (!res || !res.saved) return;
+    openMarkSent({ tab: res.saved.tab, row: res.saved.row, subject: res.details.subject, type: 'Checked', drafted: '' }, 10);
+  };
+
+  // ── Staff admin (step 7) ──
+  $('navStaff').onclick = function () { if (leaveDraftOk()) { resetStaffForm(); showStep(7); loadStaff(); } };
+  function loadStaff() { api('getStaff', [], renderStaff, function (e) { showErr('err7', e); }); }
+  function renderStaff(list) {
+    state.staffAll = list || [];
+    $('stList').innerHTML = state.staffAll.length ? state.staffAll.map(function (x) {
+      return '<tr data-id="' + esc(x.id) + '"' + (x.active ? '' : ' style="opacity:.55"') + '><td><b>' + esc(x.name) + '</b></td><td>' + esc(x.designation) + '</td><td class="gu">' + esc(x.branch || 'Any branch') + '</td><td>' + (x.active ? 'Yes' : 'No') + '</td>' +
+        '<td style="white-space:nowrap"><button type="button" class="savebtn stEdit">Edit</button> <button type="button" class="linkbtn stDel">Remove</button></td></tr>';
+    }).join('') : '<tr><td colspan="5" class="empty" style="padding:18px">No staff yet. Add names on the right.</td></tr>';
+  }
+  function resetStaffForm() {
+    $('stId').value = ''; $('stName').value = ''; $('stDesig').value = ''; $('stBranch').value = ''; $('stActive').checked = true;
+    $('stTitle').textContent = 'Add staff'; $('stCancel').hidden = true; $('err7').hidden = true; $('ok7').hidden = true;
+  }
+  $('stCancel').onclick = resetStaffForm;
+  $('stList').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var x = (state.staffAll || []).filter(function (s) { return s.id === tr.dataset.id; })[0]; if (!x) return;
+    if (e.target.classList.contains('stEdit')) {
+      $('stId').value = x.id; $('stName').value = x.name; $('stDesig').value = x.designation; $('stBranch').value = x.branch || ''; $('stActive').checked = x.active;
+      $('stTitle').textContent = 'Edit · ' + x.name; $('stCancel').hidden = false; $('err7').hidden = true; $('ok7').hidden = true; $('stName').focus();
+    } else if (e.target.classList.contains('stDel')) {
+      if (!confirm('Remove ' + x.name + ' from the staff list? Letters already recorded keep the name.')) return;
+      api('removeStaff', [x.id], function (l) { renderStaff(l); resetStaffForm(); $('ok7').textContent = x.name + ' removed.'; $('ok7').hidden = false; }, function (err) { showErr('err7', err); });
+    }
+  });
+  $('stSave').onclick = function () {
+    $('err7').hidden = true; $('ok7').hidden = true;
+    var p = { id: $('stId').value, name: $('stName').value.trim(), designation: $('stDesig').value.trim(), branch: $('stBranch').value, active: $('stActive').checked };
+    if (!p.name) return showErr('err7', 'Please enter the name.');
+    $('stSave').disabled = true;
+    api('saveStaff', [p], function (l) { $('stSave').disabled = false; renderStaff(l); resetStaffForm(); $('ok7').textContent = p.name + ' saved.'; $('ok7').hidden = false; },
+      function (err) { $('stSave').disabled = false; showErr('err7', err); });
   };
 </script>
 <script>
