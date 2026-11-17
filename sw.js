@@ -1,5 +1,5 @@
 /* Lahiyo — makes the app installable and opens it quickly. Letters and data always come from the server. */
-const CACHE = 'lahiyo-v3.4.2';
+const CACHE = 'lahiyo-v3.7';
 const SHELL = ['./', './index.html', './lahiyo-api.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {

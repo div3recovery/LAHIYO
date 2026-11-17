@@ -407,8 +407,69 @@
   .noting-card { margin-top: 14px; gap: 8px; }
   .noting-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
   .btn-ghost.mini { min-height: 36px; padding: 6px 14px; font-size: 13px; }
+  .selbar { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+  .btn-ghost.danger { color: #B3261E; border-color: #EBA59D; }
+  .btn-ghost.danger:hover { background: #FDECEA; }
+  .danger-fill { background: #B3261E !important; border-color: #B3261E !important; }
+  .delbtn { background: none; border: 0; cursor: pointer; color: #B3261E; font: 600 12.5px var(--ui); padding: 4px 0; text-decoration: underline; }
+  .modal { position: fixed; inset: 0; background: rgba(0, 20, 45, .45); display: flex; align-items: center; justify-content: center; z-index: 90; padding: 16px; }
+  .modal[hidden] { display: none; }
+  .modal-card { background: #fff; border-radius: 16px; padding: 22px; width: min(440px, 100%); box-shadow: 0 20px 50px rgba(0, 20, 45, .3); border-top: 4px solid var(--gold-500); }
+  .modal-card h3 { margin: 0 0 6px; font: 700 18px var(--head); color: var(--navy-900); }
+  td.selc, th.selc { width: 34px; }
   .rowbtns { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
   @media (max-width: 900px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } .three, .period { grid-template-columns: 1fr; } }
+  /* ── v3.7: source view, auto check, teach ── */
+  .head-btns { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  #srcPane { position: fixed; top: 82px; right: 0; bottom: 0; width: 44vw; background: #E9EEF5; border-left: 3px solid var(--gold-500); z-index: 60; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,20,45,.15); }
+  #srcPane[hidden] { display: none; }
+  #srcPane .src-top { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--navy-900); color: #fff; flex-wrap: wrap; }
+  #srcPane .src-top b { font: 700 14px var(--head); margin-right: auto; }
+  #srcPane .src-top button { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; padding: 5px 12px; font: 600 12.5px var(--ui); cursor: pointer; }
+  #srcPane .src-top button.on { background: var(--gold-500); color: var(--navy-900); border-color: var(--gold-500); }
+  #srcPages { overflow: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; align-items: center; flex: 1; }
+  #srcPages canvas { width: 100%; height: auto; background: #fff; box-shadow: 0 2px 10px rgba(0,20,45,.15); border-radius: 4px; }
+  body.src-open .app-main, body.src-open main { margin-right: 44vw; }
+  body.src-open #rail { display: none; }
+  @media (max-width: 1000px) { #srcPane { width: 100vw; } body.src-open main { margin-right: 0; } }
+  .auto { border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; font-size: 13px; border: 1px solid; }
+  .auto.ok { background: #E8F5EC; border-color: #9CD3AE; color: #1E5631; }
+  .auto.bad { background: #FDECEA; border-color: #EBA59D; color: #8E2A20; }
+  .auto.wait { background: #EEF3FA; border-color: #C9D6EA; color: var(--navy-900); }
+  .auto ul { margin: 6px 0 0; padding-left: 18px; } .auto li { margin: 2px 0; }
+  .auto code { font: 600 12.5px ui-monospace, Menlo, Consolas, monospace; background: rgba(255,255,255,.6); padding: 0 4px; border-radius: 4px; }
+  .tl-card { background: #fff; border-radius: 16px; width: min(760px, 100%); box-shadow: 0 20px 50px rgba(0,20,45,.3); border-top: 4px solid var(--gold-500); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; max-height: calc(100vh - 40px); overflow: auto; }
+  .tl-card h3 { margin: 0; font: 800 20px var(--head); color: var(--navy-900); display: flex; gap: 10px; align-items: center; }
+  .tl-card h3 .bulb { width: 34px; height: 34px; border-radius: 10px; background: var(--gold-50); border: 1px solid var(--gold-500); display: grid; place-items: center; font-size: 18px; flex: none; }
+  .tl-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tl-box { border-radius: 10px; padding: 10px 12px; font-family: var(--gu); font-size: 14.5px; line-height: 1.6; width: 100%; }
+  textarea.tl-box.wrong { background: #FDECEA; border: 1px solid #EBA59D; } textarea.tl-box.right { background: #E8F5EC; border: 1px solid #9CD3AE; }
+  .tl-lbl { font: 700 12px var(--ui); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .tl-lbl.w { color: #8E2A20; } .tl-lbl.r { color: #1E5631; }
+  .tl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tl-rule { background: #EEF3FA; border: 1px solid #C9D6EA; border-radius: 10px; padding: 10px 12px; font-size: 13.5px; }
+  .tl-rule textarea { width: 100%; background: #fff; margin-top: 6px; font-size: 13.5px; }
+  .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+  .seg button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font: 600 13px var(--ui); color: var(--navy-900); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--navy-900); color: #fff; border-color: var(--navy-900); }
+  .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .scope label { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; cursor: pointer; }
+  .scope label:has(input:checked) { border-color: var(--navy-700); background: #F3F7FD; box-shadow: inset 0 0 0 1px var(--navy-700); }
+  .scope b { display: block; color: var(--navy-900); }
+  .warnline { background: #FFF4DE; border: 1px solid #F0C878; color: #6B3A0B; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+  .warnline[hidden] { display: none; }
+  .chg { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; grid-template-columns: 26px 1fr; gap: 10px; }
+  .chg .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-family: var(--gu); font-size: 13.5px; }
+  .chg s { color: #B3261E; } .chg ins { color: #1E7B3A; text-decoration: none; }
+  .chg .opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; } .chg .opts select { width: auto; min-height: 34px; padding: 4px 8px; font-size: 13px; }
+  .tabsx { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .tabsx button { padding: 10px 14px; font: 700 14px var(--ui); color: var(--muted); border: 0; background: none; border-bottom: 3px solid transparent; cursor: pointer; }
+  .tabsx button[aria-selected="true"] { color: var(--navy-900); border-color: var(--gold-500); }
+  .lt td { vertical-align: top; } .lt .gu { font-family: var(--gu); font-size: 13px; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; margin-top: 4px; }
+  .b-wait { background: #FBEBC8; color: #6B3A0B; } .b-on { background: #D9F0E0; color: #1E5631; } .b-off { background: #EEF1F6; color: #3A4A63; } .b-all { background: #DCE8FA; color: #0B3566; } .b-br { background: #F3E8FB; color: #5B2A86; }
+  .bk { font-size: 13px; } .bk .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  @media (max-width: 760px) { .tl-pair, .tl-row, .scope, .chg .pair { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -508,13 +569,20 @@
     <h2>Records</h2>
     <button type="button" class="nav" id="navRegister"><svg class="i"><use href="#ic-book"/></svg>Register<span class="nb" id="overBadge" title="Overdue letters" hidden></span></button>
     <button type="button" class="nav" id="navWork"><svg class="i"><use href="#ic-cal"/></svg>My Work</button>
+    <button type="button" class="nav" id="navTeach"><svg class="i"><use href="#ic-wand"/></svg>Teach Lahiyo</button>
+    <button type="button" class="nav" id="navLessons" hidden><svg class="i"><use href="#ic-check"/></svg>Lessons<span class="nb" id="lsBadge" style="background:#C9A227" hidden></span></button>
     <button type="button" class="nav" id="navTray"><svg class="i"><use href="#ic-word"/></svg>Drafts Tray<span class="nb" id="trayBadge" title="Drafts ready" style="background:#1E7B3A" hidden></span></button>
+    <button type="button" class="nav" id="navCcst" hidden><svg class="i"><use href="#ic-book"/></svg>CCST Branches</button>
     <button type="button" class="nav" id="navStaff" hidden><svg class="i"><use href="#ic-sign"/></svg>Staff</button>
     <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
     <div class="side-foot"><div class="credit"><span class="c-k">Designed &amp; developed by</span><b>Mehul Ranavasiya</b><span class="c-r">State Tax Inspector<br>Division 3, Gandhinagar</span></div><span id="ver"></span><span id="modelInfo"></span><br><a id="sheetLink" href="#" target="_blank" style="color:#E8C066" hidden>Open spreadsheet (admin)</a></div>
   </nav>
 
   <div class="content">
+    <div id="srcPane" hidden role="complementary" aria-label="Source PDF">
+      <div class="src-top"><b>Source PDF</b><span id="srcTabs" style="display:flex;gap:6px;flex-wrap:wrap"></span><button type="button" id="srcClose">✕ Close</button></div>
+      <div id="srcPages"></div>
+    </div>
     <main class="main">
 
       <!-- STEP 1 -->
@@ -575,19 +643,26 @@
               <div class="drop optional" data-slot="orig">
                 <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
                 <div class="t">Original CCST letter (PDF)</div>
-                <div class="s">Optional · improves the references</div>
+                <div class="s">Recommended · Lahiyo reads the CCST office from it</div>
                 <input type="file" id="f_orig" accept="application/pdf,.pdf">
                 <label class="filebtn" for="f_orig"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
                 <div class="or">or drag and drop here</div>
                 <div class="fname" id="n_orig"></div>
               </div>
             </div>
+            <div class="label" style="margin-top:18px"><span class="n">2</span>Send the reply to (CCST office)</div>
+            <div class="grid2" style="gap:14px">
+              <div style="flex:1 1 240px;min-width:0"><label class="f" for="upRank">Officer</label>
+                <select id="upRank"><option value="JC">સંયુક્ત રાજ્યવેરા કમિશનરશ્રી (Joint)</option><option value="ADDL">અધિક રાજ્યવેરા કમિશનરશ્રી (Additional)</option><option value="DC">નાયબ રાજ્યવેરા કમિશનરશ્રી (Deputy)</option><option value="CHIEF">મુખ્ય રાજ્યવેરા કમિશનરશ્રી (Chief)</option></select></div>
+              <div style="flex:1 1 240px;min-width:0"><label class="f" for="upBranch">Branch</label><select id="upBranch"></select></div>
+            </div>
+            <p class="hint" id="upHint" style="margin:8px 0 0"></p>
           </div>
 
           <div class="batch-box" id="batchBox" hidden>
             <b id="batchTitle"></b>
             <ol id="batchList"></ol>
-            <p class="batch-note">They are drafted one by one in the background. You can close Lahiyo and come back later — the drafts wait in the <b>Drafts Tray</b>. If Gemini is busy, Lahiyo waits and tries again by itself.</p>
+            <p class="batch-note">They are drafted one by one in the background. You can close Lahiyo and come back later — the drafts wait in the <b>Drafts Tray</b>. If Gemini is busy, Lahiyo waits and tries again by itself. The PDFs are kept privately for 7 days (for the side-by-side view), then deleted.</p>
             <div id="batchErr" class="msg err" role="alert" hidden></div>
             <div class="actions" style="margin:0">
               <button type="button" class="btn-main" id="batchBtn"><span class="spinner" id="batchSpin" hidden></span><svg class="i" id="batchIcon"><use href="#ic-wand"/></svg><span id="batchTxt">Draft all in the background</span></button>
@@ -610,6 +685,10 @@
             <h2>Review the Draft</h2>
             <p>Check the details read from the letter and every change made. Edit the text if needed, then download.</p>
           </div>
+          <div class="head-btns">
+            <button type="button" class="btn-ghost" id="srcBtn" hidden>⇆ Show source</button>
+            <button type="button" class="btn-ghost" id="teachBtn" title="Select wrong words in the letter first">💡 Teach Lahiyo</button>
+          </div>
         </div>
 
         <div id="dupWarn" class="msg warn" role="status" hidden></div>
@@ -621,6 +700,7 @@
             </div>
             <div class="card checks">
               <h3><svg class="i"><use href="#ic-warn"/></svg>Points to verify<span class="count" id="checkCount"></span></h3>
+              <div id="autoCheck"></div>
               <div id="checks"></div>
             </div>
           </div>
@@ -699,7 +779,11 @@
               <option value="closed">Closed</option>
             </select></div>
           <div class="grow"><label for="regSearch">Search</label><input type="search" id="regSearch" placeholder="Letter number or subject"></div>
+          <div class="selbar"><button type="button" class="btn-ghost mini danger" id="regDel">Delete selected</button>
+            <button type="button" class="btn-ghost mini" id="regRestore" hidden>Restore selected</button>
+            <button type="button" class="btn-ghost mini danger" id="regErase" hidden>Erase selected</button></div>
         </div>
+        <div id="regOk" class="msg info" role="status" hidden></div>
         <div id="regErr" class="msg err" role="alert" hidden></div>
         <div class="tablebox">
           <table class="reg">
@@ -732,6 +816,148 @@
             </div>
           </div>
         </div>
+      </section>
+
+      <!-- CCST BRANCHES (Admin) -->
+      <section id="step12" hidden>
+        <div class="page-head"><div><h2>CCST Branches</h2><p>Branches offered in “Send to” for replies and letters to CCST. The e-Sarkar code is the branch word in “Approved By: Joint Commissioner of State Tax, <b>Admin</b>, CCT”, so Lahiyo can read the branch from the original letter.</p></div></div>
+        <div class="grid2">
+          <div class="info-col" style="flex:2 1 480px">
+            <div class="tablebox"><table class="reg" style="min-width:0"><thead><tr><th>Branch</th><th>Gujarati</th><th>Address line</th><th>e-Sarkar codes</th><th>Active</th><th></th></tr></thead><tbody id="cbList"></tbody></table></div>
+          </div>
+          <div class="paper" style="flex:1 1 320px">
+            <div class="paper-head"><h3 id="cbTitle">Add a branch</h3></div>
+            <input type="hidden" id="cbId">
+            <div><label class="f" for="cbName">Branch (English)</label><input type="text" id="cbName" placeholder="e.g. Court"></div>
+            <div><label class="f" for="cbGu">Gujarati name <span>(shown in brackets)</span></label><input type="text" id="cbGu" placeholder="e.g. અદાલત શાખા"></div>
+            <div><label class="f" for="cbAddr">Address line</label><input type="text" id="cbAddr" value="ગુજરાત રાજ્ય, અમદાવાદ"></div>
+            <div><label class="f" for="cbCodes">e-Sarkar codes <span>(comma separated)</span></label><input type="text" id="cbCodes" placeholder="e.g. Court, LEGAL"></div>
+            <label class="chk"><input type="checkbox" id="cbActive" checked> Active</label>
+            <p class="hint" id="cbPreview" style="margin:0"></p>
+            <div id="err12" class="msg err" role="alert" hidden></div>
+            <div id="ok12" class="msg info" role="status" hidden></div>
+            <div class="actions"><button type="button" class="btn-main" id="cbSave">Save</button><button type="button" class="btn-ghost" id="cbCancel" hidden>Cancel edit</button></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal" id="delModal" hidden role="dialog" aria-modal="true" aria-labelledby="delTitle">
+        <div class="modal-card">
+          <h3 id="delTitle">Delete entries</h3>
+          <p class="meta" id="delText" style="display:block;margin:0 0 12px"></p>
+          <label class="f" for="delReason">Reason <span>(optional)</span></label>
+          <select id="delReason"><option value="">— No reason —</option><option>Test entry</option><option>Duplicate</option><option>Wrong letter</option><option>Not sent / cancelled</option><option value="OTHER">Other…</option></select>
+          <input type="text" id="delOther" placeholder="Type the reason" style="margin-top:8px" hidden>
+          <div class="actions" style="margin:16px 0 0"><button type="button" class="btn-main danger-fill" id="delOk">Delete</button><button type="button" class="btn-ghost" id="delCancel">Cancel</button></div>
+        </div>
+      </div>
+
+      <!-- TEACH: one correction -->
+      <div class="modal" id="teachModal" hidden role="dialog" aria-modal="true" aria-labelledby="tTitle">
+        <div class="tl-card">
+          <h3 id="tTitle"><span class="bulb">💡</span><span id="tTitleTxt">Teach Lahiyo</span></h3>
+          <p class="meta" style="display:block;margin:0">Show Lahiyo what it should have written. From the next draft it follows this correction.</p>
+          <input type="hidden" id="tId">
+          <div class="tl-pair">
+            <div><label class="tl-lbl w" for="tWrong">Lahiyo wrote</label><textarea class="tl-box wrong" id="tWrong" rows="3"></textarea></div>
+            <div><label class="tl-lbl r" for="tRight">It should be</label><textarea class="tl-box right" id="tRight" rows="3"></textarea></div>
+          </div>
+          <div class="tl-row">
+            <div><label class="f">Letter type</label><div class="seg" id="tType">
+              <button type="button" data-v="DOWN">Forward</button><button type="button" data-v="UP">Reply</button><button type="button" data-v="COMPOSE">Write</button><button type="button" data-v="REMINDER">સ્મૃતિપત્ર</button><button type="button" data-v="ALL">All</button></div></div>
+            <div><label class="f">Addressee</label><div class="seg" id="tAddr">
+              <button type="button" data-v="R7">DC Range-7</button><button type="button" data-v="UNITS">Units</button><button type="button" data-v="CCST">CCST</button><button type="button" data-v="ANY">Any</button></div></div>
+          </div>
+          <div class="tl-rule">✨ <b>Rule Lahiyo will follow</b> <span class="meta">(written by Lahiyo · you can edit)</span>
+            <textarea id="tRule" rows="2" placeholder="Click “Write the rule”, or type it yourself"></textarea>
+            <div style="margin-top:6px"><button type="button" class="btn-ghost mini" id="tRuleBtn"><span class="spinner" id="tRuleSpin" hidden></span>✨ Write the rule</button></div>
+          </div>
+          <div class="warnline" id="tWarn" hidden></div>
+          <div id="tScopeBox"><label class="f">Apply to</label>
+            <div class="scope">
+              <label><input type="radio" name="tScope" value="Branch" checked> <span><b>My branch only</b><span id="tBrName">Works from the next draft.</span></span></label>
+              <label><input type="radio" name="tScope" value="All"> <span><b>Suggest for all branches</b><span id="tAllTxt">Sent to the Administrator for approval. Works for your branch meanwhile.</span></span></label>
+            </div></div>
+          <div id="tErr" class="msg err" role="alert" hidden></div>
+          <div id="tOk" class="msg info" role="status" hidden></div>
+          <div class="actions" style="margin:0;justify-content:space-between">
+            <button type="button" class="btn-ghost" id="tTry"><span class="spinner" id="tTrySpin" hidden></span>↻ Try it on this draft</button>
+            <div style="display:flex;gap:10px"><button type="button" class="btn-ghost" id="tCancel">Cancel</button><button type="button" class="btn-main" id="tSave">Save lesson</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEACH: after download -->
+      <div class="modal" id="learnModal" hidden role="dialog" aria-modal="true" aria-labelledby="lnTitle">
+        <div class="tl-card">
+          <h3 id="lnTitle"><span class="bulb">💡</span><span id="lnTitleTxt">You changed the draft. Teach Lahiyo?</span></h3>
+          <p class="meta" style="display:block;margin:0">Tick the changes Lahiyo should remember. Leave out changes that were only for this letter (names, amounts, dates).</p>
+          <div id="lnList" style="display:flex;flex-direction:column;gap:10px"></div>
+          <div><label class="f">Apply to</label>
+            <div class="scope">
+              <label><input type="radio" name="lnScope" value="Branch" checked> <span><b>My branch only</b>Works from the next draft.</span></label>
+              <label><input type="radio" name="lnScope" value="All"> <span><b>Suggest for all branches</b>Needs Administrator approval</span></label>
+            </div></div>
+          <div id="lnErr" class="msg err" role="alert" hidden></div>
+          <div class="actions" style="margin:0;justify-content:flex-end;gap:10px"><button type="button" class="btn-ghost" id="lnNo">Not now</button><button type="button" class="btn-main" id="lnSave">Teach Lahiyo</button></div>
+        </div>
+      </div>
+
+      <!-- TEACH LAHIYO page -->
+      <section id="step13" hidden>
+        <div class="page-head"><div><h2>Teach Lahiyo</h2><p>Make Lahiyo's drafts closer to how your office writes. Corrections become lessons Lahiyo follows from the next draft. Tip: you can also select wrong words on any draft and click “Teach Lahiyo”.</p></div></div>
+        <div class="tabsx" role="tablist">
+          <button type="button" role="tab" id="tkTab1" aria-selected="true">Teach from two letters</button>
+          <button type="button" role="tab" id="tkTab2" aria-selected="false">My lessons <span id="tkCount"></span></button>
+        </div>
+        <div id="tkPane1">
+          <div class="section">
+            <div class="drops">
+              <div class="drop" data-slot="tk1">
+                <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+                <div class="t">Letter drafted by Lahiyo</div><div class="s">Word or PDF</div>
+                <input type="file" id="f_tk1" accept=".docx,.pdf,application/pdf"><label class="filebtn" for="f_tk1"><svg class="i"><use href="#ic-folder"/></svg>Choose file</label>
+                <div class="fname" id="n_tk1"></div>
+              </div>
+              <div class="drop" data-slot="tk2">
+                <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+                <div class="t">Letter you expected</div><div class="s">Word or PDF</div>
+                <input type="file" id="f_tk2" accept=".docx,.pdf,application/pdf"><label class="filebtn" for="f_tk2"><svg class="i"><use href="#ic-folder"/></svg>Choose file</label>
+                <div class="fname" id="n_tk2"></div>
+              </div>
+            </div>
+            <div id="tkErr" class="msg err" role="alert" hidden></div>
+            <div class="actions" style="margin:0"><button type="button" class="btn-main" id="tkBtn"><span class="spinner" id="tkSpin" hidden></span><svg class="i" id="tkIcon"><use href="#ic-wand"/></svg><span id="tkTxt">Compare and suggest lessons</span></button></div>
+          </div>
+          <div class="section" id="tkResult" hidden style="margin-top:14px;gap:10px">
+            <b style="font:700 16px var(--head);color:var(--navy-900)" id="tkFound"></b>
+            <div id="tkList" style="display:flex;flex-direction:column;gap:10px"></div>
+            <div class="scope">
+              <label><input type="radio" name="tkScope" value="Branch" checked> <span><b>My branch only</b>Works from the next draft.</span></label>
+              <label><input type="radio" name="tkScope" value="All"> <span><b>Suggest for all branches</b>Needs Administrator approval</span></label>
+            </div>
+            <div id="tkOk" class="msg info" role="status" hidden></div>
+            <div><button type="button" class="btn-main" id="tkSave">Save lessons</button></div>
+          </div>
+        </div>
+        <div id="tkPane2" hidden>
+          <div id="tk2Err" class="msg err" role="alert" hidden></div>
+          <div class="tablebox"><table class="reg lt" style="min-width:760px"><thead><tr><th>Applies to</th><th>Lahiyo wrote → should be</th><th>Rule</th><th>Status</th><th></th></tr></thead><tbody id="tkLessons"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- LESSONS (Admin) -->
+      <section id="step14" hidden>
+        <div class="page-head"><div><h2>Lessons</h2><p>What Lahiyo has been taught. Lessons for all branches need your approval. Lahiyo uses up to 15 lessons per letter type (newest first), so drafts stay fast.</p></div>
+          <button type="button" class="btn-ghost" id="lsRefresh"><svg class="i"><use href="#ic-clock"/></svg>Refresh</button></div>
+        <div class="tabsx" role="tablist">
+          <button type="button" role="tab" id="lsTab1" aria-selected="true">Waiting for approval <span id="lsWaitN"></span></button>
+          <button type="button" role="tab" id="lsTab2" aria-selected="false">All lessons <span id="lsAllN"></span></button>
+        </div>
+        <div id="lsErr" class="msg err" role="alert" hidden></div>
+        <div id="lsOk" class="msg info" role="status" hidden></div>
+        <div class="tablebox"><table class="reg lt" style="min-width:860px"><thead><tr><th>Taught by</th><th>Applies to</th><th>Lahiyo wrote → should be</th><th>Rule</th><th></th></tr></thead><tbody id="lsBody"></tbody></table></div>
+        <div class="reg-foot"><span id="lsCounts"></span><span>Branch lessons work for that branch only</span></div>
       </section>
 
       <!-- MARK AS SENT -->
@@ -770,7 +996,7 @@
       <!-- MY WORK -->
       <section id="step9" hidden>
         <div class="page-head"><div><h2>My Work</h2><p id="wkSub">Letters drafted, checked or sent in the chosen period.</p></div>
-          <button type="button" class="btn-ghost" id="wkExcel"><svg class="i"><use href="#ic-book"/></svg>Download Excel</button></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn-ghost danger" id="wkDel">Delete selected</button><button type="button" class="btn-ghost" id="wkExcel"><svg class="i"><use href="#ic-book"/></svg>Download Excel</button></div></div>
         <div class="section" style="gap:16px">
           <div class="period">
             <div><label class="f">Period</label><div class="chips" id="wkChips">
@@ -790,6 +1016,7 @@
             <div class="grow"><label for="wkSearch">Search</label><input type="search" id="wkSearch" placeholder="Subject, letter no., outward or e-Sarkar no."></div>
           </div>
           <div id="wkErr" class="msg err" role="alert" hidden></div>
+          <div id="wkOk" class="msg info" role="status" hidden></div>
           <div class="tablebox"><table class="reg" style="min-width:820px">
             <thead><tr id="wkHead"></tr></thead><tbody id="wkBody"></tbody></table></div>
           <div class="reg-foot"><span id="wkCount"></span></div>
@@ -846,7 +1073,7 @@
 
       <!-- DRAFTS TRAY -->
       <section id="step11" hidden>
-        <div class="page-head"><div><h2>Drafts Tray</h2><p>Letters drafted in the background. Open a draft to check and edit it, or download several at once. Drafts not opened are removed after 7 days.</p></div>
+        <div class="page-head"><div><h2>Drafts Tray</h2><p>Letters drafted in the background. Open a draft to check and edit it, or download several at once. Everything in the tray (drafts and their PDFs) is removed after 7 days.</p></div>
           <button type="button" class="btn-ghost" id="trRefresh"><svg class="i"><use href="#ic-clock"/></svg>Refresh</button></div>
         <div class="section" style="gap:14px">
           <div class="tray-tools">
@@ -895,6 +1122,10 @@
               <label class="f" for="cTo">2 · To</label>
               <select id="cTo"></select>
               <textarea id="cToOther" rows="2" placeholder="Type the address, one line per row" style="margin-top:8px" hidden></textarea>
+              <div id="cCcstBox" class="grid2" style="gap:10px;margin-top:8px" hidden>
+                <select id="cRank" aria-label="CCST officer" style="flex:1 1 200px"><option value="JC">સંયુક્ત રાજ્યવેરા કમિશનરશ્રી</option><option value="ADDL">અધિક રાજ્યવેરા કમિશનરશ્રી</option><option value="DC">નાયબ રાજ્યવેરા કમિશનરશ્રી</option><option value="CHIEF">મુખ્ય રાજ્યવેરા કમિશનરશ્રી</option></select>
+                <select id="cCcst" aria-label="CCST branch" style="flex:1 1 160px"></select>
+              </div>
             </div>
             <div style="flex:1 1 280px;min-width:0">
               <label class="f" for="cSig">3 · Signed by</label>
@@ -941,6 +1172,7 @@
           </div>
         </div>
         <div class="section">
+          <div id="rFor" class="msg info" role="status" hidden></div>
           <div id="rBranchBox" hidden>
             <div class="label"><span class="n">★</span>Record this reminder under</div>
             <div class="branch-pick"><select id="rBranch" aria-label="Branch for this reminder"></select><span class="meta">Administrator only</span></div>
@@ -1017,6 +1249,11 @@
     </main>
 
     <aside class="rail" id="rail" aria-label="Summary">
+      <div class="card bk" id="bkCard" hidden>
+        <h3><svg class="i"><use href="#ic-book"/></svg>Backups</h3>
+        <div id="bkInfo">–</div>
+        <div class="row"><button type="button" class="btn-ghost mini" id="bkNow">Back up now</button><a class="btn-ghost mini" id="bkOpen" href="#" target="_blank" rel="noopener" hidden style="text-decoration:none;display:inline-flex;align-items:center">Open folder</a></div>
+      </div>
       <div class="card" id="duePanel">
         <h3><svg class="i"><use href="#ic-cal"/></svg>Deadlines<span class="count" id="dueScope"></span></h3>
         <div class="stats" role="group" aria-label="Register summary">
@@ -1131,15 +1368,21 @@
     $('stBranch').innerHTML = '<option value="">Any branch</option>' + opts;
     $('regBranch').innerHTML = '<option value="">All branches</option>' + opts;
     ['adminBranchBox', 'cBranchBox', 'rBranchBox', 'regBranchBox', 'kBranchBox'].forEach(function (id) { $(id).hidden = !s.admin; });
-    $('navSign').hidden = !s.admin; $('navStaff').hidden = !s.admin;
+    $('navSign').hidden = !s.admin; $('navStaff').hidden = !s.admin; $('navCcst').hidden = !s.admin;
+    var dOpt = document.querySelector('#regStatus option[value="deleted"]');
+    if (s.admin && !dOpt) $('regStatus').insertAdjacentHTML('beforeend', '<option value="deleted">Deleted entries (Administrator)</option>');
+    if (!s.admin && dOpt) dOpt.remove();
+    setCcst(s.ccst || []);
     $('sheetLink').hidden = !(s.admin && s.sheetUrl);
     if (s.admin && s.sheetUrl) $('sheetLink').href = s.sheetUrl;
     $('cTo').innerHTML = state.addressees.map(function (a) { return '<option value="' + esc(a.id) + '">' + esc(a.label) + '</option>'; }).join('') +
-      '<option value="OTHER">Other (type the address)</option>';
+      '<option value="CCST">CCST office (choose officer and branch)</option><option value="OTHER">Other (type the address)</option>';
     setSignatories(s.signatories || []);
     showStep(1);
     loadDashboard();
     loadTray();
+    $('bkCard').hidden = !s.admin; $('navLessons').hidden = !s.admin;
+    if (s.admin) { loadBackup(false); loadLessons(); }
   }
 
   (function boot() {
@@ -1194,19 +1437,19 @@
   }
 
   // ── Navigation ──
-  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11' };
-  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTray', 'navStaff', 'navSign'];
+  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11', 12: 'step12', 13: 'step13', 14: 'step14' };
+  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTeach', 'navLessons', 'navTray', 'navCcst', 'navStaff', 'navSign'];
   var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', COMPOSE: 'navCompose', REMINDER: 'navReminder', CHECKED: 'navCheck' };
   function setNav(id) { NAV_IDS.forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
   function navFor(n) {
     if (n === 1) return MODE_NAV[state.mode];
     if (n === 2) return state.draft && state.draft.details && state.draft.details.queueId ? 'navTray' : MODE_NAV[(state.draft && state.draft.mode) || state.mode];
     if (n === 8) return state.sent && state.sent.back === 10 ? 'navCheck' : (state.sent && state.sent.back === 2 ? navFor(2) : 'navRegister');
-    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray' }[n];
+    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray', 12: 'navCcst', 13: 'navTeach', 14: 'navLessons' }[n];
   }
   function showStep(n) {
     Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
-    $('rail').hidden = [3, 6, 7, 8, 9, 11].indexOf(n) >= 0; // wide screens use the full width
+    $('rail').hidden = [3, 6, 7, 8, 9, 11, 12, 13, 14].indexOf(n) >= 0; // wide screens use the full width
     setNav(navFor(n)); window.scrollTo(0, 0);
   }
   /** Leaving the review page drops the draft (after asking). */
@@ -1227,7 +1470,7 @@
   $('navFwd').onclick = function () { openForward('DOWN'); };
   $('navReply').onclick = function () { openForward('UP'); };
   $('navCompose').onclick = function () { if (leaveDraftOk()) { $('err4').hidden = true; showStep(4); } };
-  $('navReminder').onclick = function () { if (leaveDraftOk()) { $('err5').hidden = true; showStep(5); } };
+  $('navReminder').onclick = function () { if (leaveDraftOk()) { $('err5').hidden = true; $('rFor').hidden = true; showStep(5); } };
   $('navSign').onclick = function () { if (leaveDraftOk()) { resetSigForm(); renderSigList(); showStep(6); } };
   function openRegister(view) {
     if (!leaveDraftOk()) return;
@@ -1309,7 +1552,7 @@
     if (!files || !state.token) return null;
     var key = prefetchKey(files);
     if (state.pre && state.pre.key === key && state.pre.status !== 'error') return state.pre;
-    var pre = { key: key, status: 'running', started: Date.now(), waiters: [] };
+    var pre = { key: key, status: 'running', started: Date.now(), waiters: [], mode: state.mode };
     state.pre = pre;
     $('preHint').textContent = '⚡ Reading has started. You can choose the deadline meanwhile.';
     $('preHint').hidden = false;
@@ -1317,6 +1560,8 @@
       function (d) {
         if (state.pre !== pre) return;                     // a different file was chosen meanwhile
         pre.status = 'done'; pre.draft = d; pre.ms = Date.now() - pre.started;
+        d.req = { fn: 'generateDraft', req: { mode: pre.mode, deadline: 'SAME', files: files, branch: $('recBranch').value } };
+        d.srcFiles = files.map(function (f) { return { name: f.name, data: f.data, label: f.label }; });
         $('preHint').textContent = '✓ Draft is ready (' + secs(pre.ms) + '). Click Generate Draft to see it.';
         pre.waiters.splice(0).forEach(function (f) { f(); });
       },
@@ -1346,6 +1591,13 @@
   }
   function showPrepared(pre) {
     var d = withDeadlineChoice(pre.draft);
+    var st = d.mode === 'UP' ? sendTo() : null;
+    if (st) {                                   // the office chosen on the page wins over what was read
+      d.letter.to = ccstLines(st.rank, st.branchId);
+      d.details.addressee = d.letter.to.join(' ').replace(/,\s*$/, '');
+      d.noting = null;
+      d.checks = (d.checks || []).filter(function (c) { return !/Choose the CCST office|Addressee read from the original|not in the CCST Branches list/.test(c.note || ''); });
+    }
     if (state.sess && state.sess.admin) d.branch = $('recBranch').value || d.branch;
     d.clientMs = pre.ms;
     state.draft = d; showDraft(d);
@@ -1354,6 +1606,7 @@
   $('genBtn').onclick = function () {
     $('err1').hidden = true;
     if (!forwardFiles()) return showErr('err1', state.mode === 'DOWN' ? 'Please upload the CCST letter first.' : 'Please upload the Range-7 report first.');
+    if (state.mode === 'UP' && !state.files.orig && !sendTo()) return showErr('err1', 'Choose the CCST office this reply goes to (officer and branch), or upload the original CCST letter so Lahiyo can read it.');
     var pre = startPrefetch();
     var done = function () {
       busyBtn('genBtn', 'spin', 'genIcon', 'genTxt', false, '', 'Generate Draft');
@@ -1373,7 +1626,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.cIns'), function (x) { x.setAttribute('aria-pressed', x === b); });
     };
   });
-  $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; };
+  $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; $('cCcstBox').hidden = $('cTo').value !== 'CCST'; };
   $('cSig').onchange = function () {
     var other = $('cSig').value === 'OTHER';
     $('cOther').hidden = !other;
@@ -1386,6 +1639,7 @@
     if (note.length < 10) return showErr('err4', 'Please write what has been asked (at least one sentence).');
     if ($('cTo').value === 'OTHER' && !$('cToOther').value.trim()) return showErr('err4', 'Please type the address.');
     if (!$('cSig').value) return showErr('err4', 'Please choose who signs the letter.');
+    if ($('cTo').value === 'CCST' && $('cRank').value !== 'CHIEF' && !$('cCcst').value) return showErr('err4', 'Please choose the CCST branch.');
     var sigId = $('cSig').value;
     if (sigId === 'OTHER') {
       var block = lines($('cOtherBlock').value);
@@ -1398,9 +1652,10 @@
     busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', true, 'Writing the letter…', 'Write the Letter');
     var fail = function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); };
     var write = function (id) {
-      api('composeDraft', [{ instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, note: note,
-        refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id }],
-        function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; state.draft = d; showDraft(d); }, fail);
+      var creq = { instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, ccstRank: $('cRank').value, ccstBranch: $('cCcst').value, note: note,
+        refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id };
+      api('composeDraft', [creq],
+        function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; d.req = { fn: 'composeDraft', req: creq }; state.draft = d; showDraft(d); }, fail);
     };
     if (sigId === 'OTHER' && state.sess && state.sess.admin && $('cOtherSave').checked) {
       var nm = $('cOtherName').value.trim();
@@ -1428,8 +1683,11 @@
     if (!$('rSig').value) return showErr('err5', 'Please choose who signs the reminder.');
     var r0 = Date.now();
     busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', true, 'Reading the earlier letter…', 'Draft the Reminder');
-    api('reminderDraft', [{ files: [state.files.rem], level: state.level, deadline: $('rDl').value, branch: $('rBranch').value, signatoryId: $('rSig').value }],
-      function (d) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); d.clientMs = Date.now() - r0; state.draft = d; showDraft(d); },
+    var rreq = { files: [state.files.rem], level: state.level, deadline: $('rDl').value, branch: $('rBranch').value, signatoryId: $('rSig').value };
+    api('reminderDraft', [rreq],
+      function (d) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); d.clientMs = Date.now() - r0;
+        d.req = { fn: 'reminderDraft', req: rreq }; d.srcFiles = [{ name: state.files.rem.name, data: state.files.rem.data, label: 'Letter sent earlier' }];
+        state.draft = d; showDraft(d); },
       function (e) { busyBtn('rBtn', 'rSpin', 'rIcon', 'rTxt', false, '', 'Draft the Reminder'); showErr('err5', e); });
   };
 
@@ -1472,8 +1730,9 @@
     $('noteBox').hidden = !showNote;
     $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(state.note) : '';
   }
-  $('e_sig').onchange = function () { applySignatory($('e_sig').value); };
+  $('e_sig').onchange = function () { applySignatory($('e_sig').value); courtesyNow(); };
   $('eOtherNote').onchange = function () { applySignatory('OTHER'); };
+  $('eOtherBlock').addEventListener('input', function () { courtesyNow(); });
 
   function showDraft(d) {
     var det = d.details || {}, L = d.letter || {};
@@ -1509,6 +1768,7 @@
     delete $('eOther').dataset.filled;
     $('e_sig').innerHTML = sigOptions(chosenId);
     applySignatory(chosenId);
+    courtesyNow();
     state.downloaded = false;
 
     if (d.duplicate) {
@@ -1553,6 +1813,7 @@
       $('ok2').hidden = false;
       state.downloaded = true;
       loadDashboard();
+      try { offerLessons(); } catch (er) { /* teaching is optional */ }
     }, function (e) { $('dlBtn').disabled = false; $('spin2').hidden = true; showErr('err2', e); });
   };
 
@@ -1572,12 +1833,15 @@
     $('regTitle').textContent = admin ? (b ? b + ' · Register' : 'All Registers') : state.sess.branch + ' · Register';
     $('regSub').textContent = admin ? 'Administrator view. Choose a branch to see one register, or leave it on All branches.' :
       'Letters of your branch. Use “Mark sent” to record the e-Sarkar dispatch or the outward number; deadlines then count from the date sent.';
-    api('getRegister', [b], function (r) { state.regRows = r.rows; state.statuses = r.statuses; renderRegister(); },
+    state.regDeleted = admin && $('regStatus').value === 'deleted';
+    $('regDel').hidden = state.regDeleted; $('regRestore').hidden = !state.regDeleted; $('regErase').hidden = !state.regDeleted;
+    if (state.regDeleted) $('regTitle').textContent += ' · Deleted entries';
+    api('getRegister', [b, { deleted: state.regDeleted }], function (r) { state.regRows = r.rows; state.statuses = r.statuses; renderRegister(); },
       function (e) { showErr('regErr', e); $('regBody').innerHTML = ''; });
   }
   function renderRegister() {
     var admin = state.sess && state.sess.admin;
-    var view = $('regStatus').value, q = $('regSearch').value.trim().toLowerCase();
+    var view = state.regDeleted ? 'all' : $('regStatus').value, q = $('regSearch').value.trim().toLowerCase();
     var rows = state.regRows.filter(function (r) {
       var closed = CLOSED.test(r.status);
       if (view === 'open' && closed) return false;
@@ -1588,8 +1852,11 @@
       return true;
     });
     if (view === 'deadlines' || view === 'overdue') rows.sort(function (a, b) { return a.left - b.left; });
-    var head = ['Drafted', admin ? 'Branch' : null, 'Type / To', 'Letter No. / From', 'Subject', 'Deadline', 'Sent', 'Status', ''].filter(function (x) { return x !== null; });
-    $('regHead').innerHTML = head.map(function (h) { return '<th scope="col">' + h + '</th>'; }).join('');
+    var head = ['Drafted', admin ? 'Branch' : null, 'Type / To', 'Letter No. / From', 'Subject', 'Deadline', 'Sent', state.regDeleted ? 'Deleted' : 'Status', ''].filter(function (x) { return x !== null; });
+    var anySel = rows.some(canDelete);
+    $('regHead').innerHTML = '<th class="selc">' + (anySel ? '<input type="checkbox" id="regAll" aria-label="Select all">' : '') + '</th>' +
+      head.map(function (h) { return '<th scope="col">' + h + '</th>'; }).join('');
+    head.unshift('');
     if (!rows.length) { $('regBody').innerHTML = '<tr><td colspan="' + head.length + '" class="empty" style="padding:18px">No letters to show.</td></tr>'; }
     else $('regBody').innerHTML = rows.map(function (r, i) {
       var closed = CLOSED.test(r.status);
@@ -1598,6 +1865,7 @@
       var opts = state.statuses.map(function (s) { return '<option' + (s === r.status ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('');
       if (state.statuses.indexOf(r.status) < 0) opts = '<option selected>' + esc(r.status) + '</option>' + opts;
       return '<tr data-i="' + i + '">' +
+        '<td class="selc">' + (canDelete(r) ? '<input type="checkbox" class="regSel" aria-label="Select">' : '') + '</td>' +
         '<td style="white-space:nowrap">' + esc(r.drafted) + (r.workedBy ? '<br><small class="meta">' + esc(r.workedBy) + '</small>' : '') + '</td>' +
         (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') +
         '<td style="max-width:200px">' + esc(r.direction) + '</td>' +
@@ -1606,14 +1874,27 @@
         '<td>' + dl + '</td>' +
         '<td style="max-width:220px">' + (r.sentOn ? esc(r.sentVia) + ' · ' + esc(r.sentOn) + '<br><small class="meta">' + esc([r.outward, r.esarkar.split('\n')[0]].filter(Boolean).join(' · ')) + '</small>' +
           (r.sentTo ? '<br><small class="meta">To ' + esc(r.sentTo.split('\n')[0]) + '</small>' : '') : (r.outward ? 'Outward ' + esc(r.outward) : '<span class="meta">Not sent</span>')) + '</td>' +
-        '<td><select aria-label="Status">' + opts + '</select></td>' +
-        '<td><div class="rowbtns"><button type="button" class="savebtn">Save</button><button type="button" class="savebtn sentbtn">' + (r.sentOn ? 'Edit sent' : 'Mark sent') + '</button></div></td></tr>';
+        (state.regDeleted
+          ? '<td>' + esc(r.deletedOn) + '<br><small class="meta">by ' + esc(r.deletedBy) + (r.deleteReason ? ' · ' + esc(r.deleteReason) : '') + '</small></td>' +
+            '<td><div class="rowbtns"><button type="button" class="savebtn rstbtn">Restore</button><button type="button" class="delbtn erbtn">Erase</button></div></td></tr>'
+          : '<td><select aria-label="Status">' + opts + '</select></td>' +
+            '<td><div class="rowbtns"><button type="button" class="savebtn">Save</button><button type="button" class="savebtn sentbtn">' + (r.sentOn ? 'Edit sent' : 'Mark sent') + '</button>' +
+            (!closed && r.left != null && r.left < 0 ? '<button type="button" class="savebtn remBtn" title="Draft a સ્મૃતિપત્ર for this letter">Draft સ્મૃતિપત્ર</button>' : '') +
+            (canDelete(r) ? '<button type="button" class="delbtn rdel">Delete</button>' : '') + '</div></td></tr>');
     }).join('');
     state.shown = rows;
     document.querySelector('.tablebox').scrollLeft = 0;
     $('regCount').textContent = 'Showing ' + rows.length + ' of ' + state.regRows.length + ' letters';
   }
   $('regBody').addEventListener('click', function (e) {
+    var t = e.target, tr0 = t.closest('tr');
+    if (tr0 && (t.classList.contains('rdel') || t.classList.contains('rstbtn') || t.classList.contains('erbtn'))) {
+      var r0 = state.shown[Number(tr0.dataset.i)], it = [{ tab: r0.tab, row: r0.row }];
+      if (t.classList.contains('rdel')) askDelete(it, r0.subject || r0.letterNo, function (m) { regMsg(m); afterRegChange(); });
+      else if (t.classList.contains('rstbtn')) api('restoreEntries', [it], function () { regMsg('Restored.'); afterRegChange(); }, function (er) { showErr('regErr', er); });
+      else if (confirm('Erase this entry from the Sheet for good? This cannot be undone.')) api('eraseEntries', [it], function () { regMsg('Erased.'); afterRegChange(); }, function (er) { showErr('regErr', er); });
+      return;
+    }
     if (!e.target.classList.contains('savebtn')) return;
     var tr = e.target.closest('tr'), r = state.shown[Number(tr.dataset.i)];
     if (e.target.classList.contains('sentbtn')) { openMarkSent({ tab: r.tab, row: r.row, subject: r.subject, type: r.direction, drafted: r.drafted, outward: r.outward }, 3); return; }
@@ -1626,7 +1907,11 @@
       loadDashboard();
     }, function (err) { e.target.disabled = false; e.target.textContent = 'Save'; showErr('regErr', err); });
   });
-  $('regStatus').onchange = renderRegister;
+  $('regStatus').onchange = function () {
+    $('regOk').hidden = true;
+    var del = $('regStatus').value === 'deleted';
+    if (del !== !!state.regDeleted) loadRegister(); else renderRegister();
+  };
   $('regSearch').oninput = renderRegister;
   $('regBranch').onchange = loadRegister;
   $('regRefresh').onclick = loadRegister;
@@ -1759,7 +2044,8 @@
     var sig = rem ? $('rSig').value : ((defaultSig(b.mode) || {}).id || '');
     if (sig === 'OTHER') return showErr('batchErr', 'For background drafting please choose a signatory from the list.');
     var opts = { mode: b.mode, deadline: state.deadline, level: state.level, remDeadline: $('rDl').value,
-      branch: rem ? $('rBranch').value : $('recBranch').value, signatoryId: sig, count: b.files.length };
+      branch: rem ? $('rBranch').value : $('recBranch').value, signatoryId: sig, count: b.files.length, sendTo: b.mode === 'UP' ? sendTo() : null };
+    if (b.mode === 'UP' && !opts.sendTo) return showErr('batchErr', 'Choose the CCST office (officer and branch) these replies go to — step 2 above.');
     var n = b.files.length, done = 0;
     busyBtn('batchBtn', 'batchSpin', 'batchIcon', 'batchTxt', true, 'Uploading 1 of ' + n + '…', '');
     var tick = function () { clearInterval(timers.batchBtn); $('batchTxt').textContent = 'Uploading ' + Math.min(done + 1, n) + ' of ' + n + '…'; };
@@ -2003,15 +2289,22 @@
       .map(function (x) { return '<div class="tile ' + (x[2] || '') + '"><div class="n">' + x[1] + '</div><small' + (/[઀-૿]/.test(x[0]) ? ' class="gu-l"' : '') + '>' + esc(x[0]) + '</small></div>'; }).join('');
     var admin = state.sess && state.sess.admin, showWho = $('wkPerson').value === 'ALL';
     var head = ['Date', 'Type', 'Subject', 'To / From', 'Sent', 'Status'].concat(showWho ? ['Worked by'] : []).concat(admin ? ['Branch'] : []);
-    $('wkHead').innerHTML = head.map(function (h) { return '<th>' + h + '</th>'; }).join('');
-    $('wkBody').innerHTML = rows.length ? rows.map(function (r) {
+    var anySel = rows.some(canDelete);
+    $('wkHead').innerHTML = '<th class="selc">' + (anySel ? '<input type="checkbox" id="wkAll" aria-label="Select all">' : '') + '</th>' +
+      head.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '<th></th>';
+    head.unshift(''); head.push('');
+    state.wkShown = rows;
+    $('wkDel').hidden = !anySel;
+    $('wkBody').innerHTML = rows.length ? rows.map(function (r, i) {
       var to = r.direction.replace(/^(Written|Checked|Reminder[^→]*)\s*→\s*/, '').replace(/^To /, '');
       var sent = r.sentOn ? esc(r.sentVia) + ' · ' + esc(r.sentOn) + '<br><small class="meta">' + esc((r.outward || r.esarkar.split('\n')[0] || '')) + '</small>' : (r.outward ? 'Outward ' + esc(r.outward) : '—');
       var closed = CLOSED.test(r.status);
-      return '<tr><td style="white-space:nowrap">' + esc(r.drafted.slice(0, 10)) + '</td><td' + (r.type === 'Reminder' ? ' class="gu-l"' : '') + '>' + esc(TYPE_LABEL[r.type] || r.type) + '</td>' +
+      return '<tr data-i="' + i + '"><td class="selc">' + (canDelete(r) ? '<input type="checkbox" class="wkSel" aria-label="Select">' : '') + '</td>' +
+        '<td style="white-space:nowrap">' + esc(r.drafted.slice(0, 10)) + '</td><td' + (r.type === 'Reminder' ? ' class="gu-l"' : '') + '>' + esc(TYPE_LABEL[r.type] || r.type) + '</td>' +
         '<td class="gu">' + esc(r.subject) + (r.letterNo ? '<br><small class="meta">' + esc(r.letterNo) + '</small>' : '') + '</td><td style="max-width:200px">' + esc(to) + '</td><td>' + sent + '</td>' +
         '<td><span class="pill ' + (closed ? 'done' : (r.sentOn || /^Sent/.test(r.status) ? 'ok' : 'soon')) + '">' + esc(r.status) + '</span></td>' +
-        (showWho ? '<td>' + esc(r.workedBy || r.sentBy || '—') + '</td>' : '') + (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') + '</tr>';
+        (showWho ? '<td>' + esc(r.workedBy || r.sentBy || '—') + '</td>' : '') + (admin ? '<td><span class="branch-tag">' + esc(shortBranch(r.tab)) + '</span></td>' : '') +
+        '<td>' + (canDelete(r) ? '<button type="button" class="delbtn wdel">Delete</button>' : '') + '</td></tr>';
     }).join('') : '<tr><td colspan="' + head.length + '" class="empty" style="padding:18px">No letters in this period' + (state.work && state.work.person !== 'ALL' ? ' for ' + esc(state.work.person) : '') + '.</td></tr>';
     $('wkCount').textContent = 'Showing ' + rows.length + ' of ' + all.length + ' letters · ' + $('wkFrom').value.split('-').reverse().join('-') + ' to ' + $('wkTo').value.split('-').reverse().join('-');
   }
@@ -2084,7 +2377,9 @@
     api('improveLetter', [{ mine: state.files.mine, orig: state.files.korig || null, suggestions: res.suggestions.concat(res.checks.filter(function (c) { return !c.ok; }).map(function (c) { return { area: 'Content', note: c.item + (c.note ? ' — ' + c.note : '') }; })),
       branch: $('kBranch').value, saved: res.saved || null }], function (d) {
       busyBtn('kImprove', 'kiSpin', 'kiIcon', 'kiTxt', false, '', 'Get an improved version');
-      d.clientMs = Date.now() - i0; d.fromCheck = true; state.draft = d; showDraft(d);
+      d.clientMs = Date.now() - i0; d.fromCheck = true;
+      d.srcFiles = [state.files.mine, state.files.korig].filter(function (f) { return f && f.type !== 'docx'; }).map(function (f) { return { name: f.name, data: f.data, label: f.name }; });
+      state.draft = d; showDraft(d);
     }, function (e) { busyBtn('kImprove', 'kiSpin', 'kiIcon', 'kiTxt', false, '', 'Get an improved version'); showErr('err10b', e); });
   };
   $('kSent').onclick = function () {
@@ -2145,6 +2440,597 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () { $('e_noting').select(); document.execCommand('copy'); done(); });
     else { $('e_noting').select(); document.execCommand('copy'); done(); }
   };
+
+  // ── CCST offices, ranks and courtesy ──
+  var RANK = { STO: 1, AC: 2, DC: 3, JC: 4, ADDL: 5, CHIEF: 6 };
+  var RANK_WORD = { CHIEF: 'મુખ્ય રાજ્યવેરા કમિશનર', ADDL: 'અધિક રાજ્યવેરા કમિશનર', JC: 'સંયુક્ત રાજ્યવેરા કમિશનર', DC: 'નાયબ રાજ્યવેરા કમિશનર', AC: 'સહાયક રાજ્યવેરા કમિશનર', STO: 'રાજ્યવેરા અધિકારી' };
+  function normGu(s) { return String(s || '').replace(/[\s્.()\-–]/g, ''); }
+  function rankOfText(t) {
+    var x = normGu(t), order = ['CHIEF', 'ADDL', 'JC', 'DC', 'AC', 'STO'];
+    for (var i = 0; i < order.length; i++) if (x.indexOf(normGu(RANK_WORD[order[i]])) >= 0) return RANK[order[i]];
+    return 0;
+  }
+  function setCcst(list) {
+    state.ccst = list || [];
+    var opts = state.ccst.map(function (b) { return '<option value="' + esc(b.id) + '">' + esc(b.name) + ' (' + esc(b.gu) + ')</option>'; }).join('');
+    $('cCcst').innerHTML = '<option value="">Choose the branch…</option>' + opts;
+    $('upBranch').innerHTML = '<option value="">— Read it from the original CCST letter —</option>' + opts;
+    upHint();
+  }
+  function ccstLines(rank, branchId) {
+    if (rank === 'CHIEF') return [RANK_WORD.CHIEF + 'શ્રી,', 'ગુજરાત રાજ્ય, અમદાવાદ'];
+    var b = (state.ccst || []).filter(function (x) { return x.id === branchId; })[0];
+    return b ? [RANK_WORD[rank] + 'શ્રી (' + b.gu + '),', b.address] : null;
+  }
+  function sendTo() {
+    var r = $('upRank').value, b = $('upBranch').value;
+    return r === 'CHIEF' || b ? { rank: r, branchId: b } : null;
+  }
+  function upHint() {
+    var st = sendTo(), lines = st ? ccstLines(st.rank, st.branchId) : null;
+    $('upBranch').disabled = $('upRank').value === 'CHIEF';
+    $('upHint').textContent = lines ? 'Address: ' + lines.join(' ') :
+      (state.files && state.files.orig ? 'Lahiyo will read the officer and branch from the original CCST letter (“Approved By: …”). You can check it on the next page.' :
+        'Choose the branch, or upload the original CCST letter so Lahiyo can read it.');
+  }
+  $('upRank').onchange = $('upBranch').onchange = upHint;
+  document.getElementById('f_orig').addEventListener('change', function () { setTimeout(upHint, 300); });
+  /** "માન." before the addressee when the addressee's rank ≥ the signer's (AC → DC: "માન.નાયબ…", JC → DC: "નાયબ…"). */
+  function courtesyNow() {
+    var d = state.draft; if (!d) return;
+    var sigLines = $('e_sig').value === 'OTHER' ? lines($('eOtherBlock').value) : ((sigById($('e_sig').value) || {}).block || (d.letter.signature || []));
+    var sr = sigLines.reduce(function (m, l) { return Math.max(m, rankOfText(l)); }, 0);
+    var to = $('e_to').value.split('\n'), i = -1;
+    for (var k = 0; k < to.length; k++) if (to[k].trim() && !/^\s*પ્રતિ,?\s*$/.test(to[k])) { i = k; break; }
+    if (i < 0) return;
+    var line = to[i].replace(/^\s*(માનનીય|માન\.?)\s*/, ''), ar = rankOfText(line);
+    if (!ar || !sr) return;
+    to[i] = (ar >= sr ? 'માન.' : '') + line;
+    $('e_to').value = to.join('\n');
+    if (!state.notingEdited) $('e_noting').value = notingFor(d);
+  }
+
+  // ── CCST Branches page (Admin) ──
+  $('navCcst').onclick = function () { if (leaveDraftOk()) { resetCb(); showStep(12); api('getCcstBranches', [], renderCb, function (e) { showErr('err12', e); }); } };
+  function renderCb(list) {
+    state.cbAll = list || [];
+    $('cbList').innerHTML = state.cbAll.length ? state.cbAll.map(function (b) {
+      return '<tr data-id="' + esc(b.id) + '"' + (b.active ? '' : ' style="opacity:.55"') + '><td><b>' + esc(b.name) + '</b></td><td class="gu">(' + esc(b.gu) + ')</td><td class="gu">' + esc(b.address) + '</td><td>' + esc(b.codes) + '</td><td>' + (b.active ? 'Yes' : 'No') + '</td>' +
+        '<td style="white-space:nowrap"><button type="button" class="savebtn cbEdit">Edit</button> <button type="button" class="linkbtn cbDel">Remove</button></td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">No branches yet.</td></tr>';
+    setCcst(state.cbAll.filter(function (b) { return b.active; }));
+  }
+  function cbPreview() { var g = $('cbGu').value.trim(); $('cbPreview').textContent = g ? 'Address: માન.સંયુક્ત રાજ્યવેરા કમિશનરશ્રી (' + g + '), ' + ($('cbAddr').value.trim() || 'ગુજરાત રાજ્ય, અમદાવાદ') : ''; }
+  ['cbGu', 'cbAddr'].forEach(function (id) { $(id).oninput = cbPreview; });
+  function resetCb() { $('cbId').value = ''; $('cbName').value = ''; $('cbGu').value = ''; $('cbAddr').value = 'ગુજરાત રાજ્ય, અમદાવાદ'; $('cbCodes').value = ''; $('cbActive').checked = true; $('cbTitle').textContent = 'Add a branch'; $('cbCancel').hidden = true; $('err12').hidden = true; $('ok12').hidden = true; cbPreview(); }
+  $('cbCancel').onclick = resetCb;
+  $('cbList').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var b = (state.cbAll || []).filter(function (x) { return x.id === tr.dataset.id; })[0]; if (!b) return;
+    if (e.target.classList.contains('cbEdit')) {
+      $('cbId').value = b.id; $('cbName').value = b.name; $('cbGu').value = b.gu; $('cbAddr').value = b.address; $('cbCodes').value = b.codes; $('cbActive').checked = b.active;
+      $('cbTitle').textContent = 'Edit · ' + b.name; $('cbCancel').hidden = false; $('err12').hidden = true; $('ok12').hidden = true; cbPreview();
+    } else if (e.target.classList.contains('cbDel')) {
+      if (!confirm('Remove ' + b.name + ' from the CCST branches?')) return;
+      api('removeCcstBranch', [b.id], function (l) { renderCb(l); resetCb(); $('ok12').textContent = b.name + ' removed.'; $('ok12').hidden = false; }, function (err) { showErr('err12', err); });
+    }
+  });
+  $('cbSave').onclick = function () {
+    $('err12').hidden = true; $('ok12').hidden = true;
+    var b = { id: $('cbId').value, name: $('cbName').value.trim(), gu: $('cbGu').value.trim(), address: $('cbAddr').value.trim(), codes: $('cbCodes').value.trim(), active: $('cbActive').checked };
+    if (!b.name || !b.gu) return showErr('err12', 'Please enter the branch name in English and in Gujarati.');
+    $('cbSave').disabled = true;
+    api('saveCcstBranch', [b], function (l) { $('cbSave').disabled = false; renderCb(l); resetCb(); $('ok12').textContent = b.name + ' saved.'; $('ok12').hidden = false; },
+      function (err) { $('cbSave').disabled = false; showErr('err12', err); });
+  };
+
+  // ── Delete (hide) entries: Register and My Work ──
+  function canDelete(r) {
+    var s = state.sess || {}, me = s.person && s.person.name;
+    if (state.regDeleted && $('step3') && !$('step3').hidden) return !!s.admin;
+    return !!s.admin || (!!me && r.workedBy === me);
+  }
+  function regMsg(t) { $('regOk').textContent = t; $('regOk').hidden = false; }
+  function afterRegChange() { loadRegister(); loadDashboard(); }
+  function selectedIn(bodyId, cls, list) {
+    return Array.prototype.filter.call(document.querySelectorAll('#' + bodyId + ' .' + cls), function (c) { return c.checked; })
+      .map(function (c) { var r = list[Number(c.closest('tr').dataset.i)]; return { tab: r.tab, row: r.row }; });
+  }
+  document.addEventListener('change', function (e) {
+    if (e.target.id === 'regAll') Array.prototype.forEach.call(document.querySelectorAll('#regBody .regSel'), function (c) { c.checked = e.target.checked; });
+    if (e.target.id === 'wkAll') Array.prototype.forEach.call(document.querySelectorAll('#wkBody .wkSel'), function (c) { c.checked = e.target.checked; });
+  });
+  var delCb = null;
+  function askDelete(items, label, done) {
+    delCb = { items: items, done: done };
+    $('delText').textContent = items.length === 1 ? '“' + String(label || 'This entry').slice(0, 90) + '” will be hidden from Register and My Work. The Administrator can restore it.'
+      : items.length + ' entries will be hidden from Register and My Work. The Administrator can restore them.';
+    $('delTitle').textContent = items.length === 1 ? 'Delete this entry?' : 'Delete ' + items.length + ' entries?';
+    $('delReason').value = ''; $('delOther').value = ''; $('delOther').hidden = true;
+    $('delModal').hidden = false; $('delOk').disabled = false; $('delOk').textContent = 'Delete';
+    setTimeout(function () { $('delReason').focus(); }, 50);
+  }
+  $('delReason').onchange = function () { $('delOther').hidden = $('delReason').value !== 'OTHER'; if (!$('delOther').hidden) $('delOther').focus(); };
+  $('delCancel').onclick = function () { $('delModal').hidden = true; delCb = null; };
+  $('delModal').addEventListener('click', function (e) { if (e.target.id === 'delModal') $('delCancel').onclick(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('delModal').hidden) $('delCancel').onclick(); });
+  $('delOk').onclick = function () {
+    if (!delCb) return;
+    var reason = $('delReason').value === 'OTHER' ? $('delOther').value.trim() : $('delReason').value;
+    var cb = delCb;
+    $('delOk').disabled = true; $('delOk').textContent = 'Deleting…';
+    api('deleteEntries', [cb.items, reason], function (res) {
+      $('delModal').hidden = true; delCb = null;
+      var msg = res.done + (res.done === 1 ? ' entry' : ' entries') + ' deleted.' + (res.refused.length ? ' Not deleted: ' + res.refused.join(' ') : '');
+      cb.done(msg);
+    }, function (er) { $('delOk').disabled = false; $('delOk').textContent = 'Delete'; alertErr(er); });
+  };
+  function alertErr(er) { $('delText').textContent = 'Could not delete: ' + (er && er.message || er); }
+  $('regDel').onclick = function () {
+    $('regErr').hidden = true; $('regOk').hidden = true;
+    var it = selectedIn('regBody', 'regSel', state.shown);
+    if (!it.length) return showErr('regErr', 'Tick the entries to delete first.');
+    askDelete(it, '', function (m) { regMsg(m); afterRegChange(); });
+  };
+  $('regRestore').onclick = function () {
+    var it = selectedIn('regBody', 'regSel', state.shown);
+    if (!it.length) return showErr('regErr', 'Tick the entries to restore first.');
+    api('restoreEntries', [it], function (r) { regMsg(r.done + ' restored.'); afterRegChange(); }, function (er) { showErr('regErr', er); });
+  };
+  $('regErase').onclick = function () {
+    var it = selectedIn('regBody', 'regSel', state.shown);
+    if (!it.length) return showErr('regErr', 'Tick the entries to erase first.');
+    if (!confirm('Erase ' + it.length + ' entries from the Sheet for good? This cannot be undone.')) return;
+    api('eraseEntries', [it], function (r) { regMsg(r.done + ' erased.'); afterRegChange(); }, function (er) { showErr('regErr', er); });
+  };
+  $('wkDel').onclick = function () {
+    $('wkErr').hidden = true; $('wkOk').hidden = true;
+    var it = selectedIn('wkBody', 'wkSel', state.wkShown || []);
+    if (!it.length) return showErr('wkErr', 'Tick the letters to delete first.');
+    askDelete(it, '', function (m) { $('wkOk').textContent = m; $('wkOk').hidden = false; loadWork(); loadDashboard(); });
+  };
+  $('wkBody').addEventListener('click', function (e) {
+    if (!e.target.classList.contains('wdel')) return;
+    var r = (state.wkShown || [])[Number(e.target.closest('tr').dataset.i)]; if (!r) return;
+    $('wkOk').hidden = true;
+    askDelete([{ tab: r.tab, row: r.row }], r.subject || r.letterNo, function (m) { $('wkOk').textContent = m; $('wkOk').hidden = false; loadWork(); loadDashboard(); });
+  });
+
+  // ════════════════════ v3.7 ════════════════════
+  // ── PDF reader (pdf.js, loaded only when needed) ──
+  var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  var PDFJS_W = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  function loadPdfJs() {
+    if (state.pdfjsP) return state.pdfjsP;
+    state.pdfjsP = new Promise(function (res, rej) {
+      var add = function (u, cb) { var s = document.createElement('script'); s.src = u; s.onload = cb; s.onerror = function () { state.pdfjsP = null; rej(new Error('The PDF reader could not be loaded (internet?).')); }; document.head.appendChild(s); };
+      // The worker script runs on the page itself (no separate worker), which also works inside Apps Script.
+      add(PDFJS_W, function () { add(PDFJS, function () { try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_W; } catch (e) {} res(window.pdfjsLib); }); });
+    });
+    return state.pdfjsP;
+  }
+  function b64bytes(b64) { var s = atob(b64), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
+  function openPdf(f) {
+    if (!(f._doc && typeof f._doc.then === 'function')) {
+      // kept out of JSON copies of the draft
+      Object.defineProperty(f, '_doc', { value: loadPdfJs().then(function (lib) { return lib.getDocument({ data: b64bytes(f.data), isEvalSupported: false }).promise; }), enumerable: false, configurable: true, writable: true });
+    }
+    return f._doc;
+  }
+  function pdfText(f) {
+    if (f._text) return Promise.resolve(f._text);
+    return openPdf(f).then(function (doc) {
+      var n = Math.min(doc.numPages, 20), ps = [];
+      for (var i = 1; i <= n; i++) ps.push(doc.getPage(i).then(function (p) { return p.getTextContent(); }).then(function (tc) {
+        return tc.items.map(function (it) { return it.str + (it.hasEOL ? '\n' : ' '); }).join('');
+      }));
+      return Promise.all(ps).then(function (t) { f._text = t.join('\n'); return f._text; });
+    });
+  }
+
+  // ── Automatic check: numbers, dates, letter numbers, GSTIN, amounts (no AI) ──
+  function asciiDigits(s) { return String(s || '').replace(/[૦-૯]/g, function (c) { return '૦૧૨૩૪૫૬૭૮૯'.indexOf(c); }); }
+  function factsOf(text, isSource) {
+    var t = asciiDigits(text), out = {}, m, re;
+    var add = function (kind, key, shown) { if (!out[key]) out[key] = { kind: kind, key: key, shown: shown }; };
+    re = /\b([A-Z][A-Z0-9]{1,}(?:\/[A-Za-z0-9-]+){2,})/g;
+    while ((m = re.exec(t))) { var v = m[1].replace(/[-\/.]+$/, ''); if (isSource && /e-file/i.test(v)) continue; if (/\/\d{2,4}/.test(v)) add('Letter / file no.', 'L:' + v.toUpperCase(), v); }
+    re = /\b\d{2}[A-Z]{5}\d{4}[A-Z][0-9A-Z]Z[0-9A-Z]\b/g;
+    while ((m = re.exec(t))) add('GSTIN', 'G:' + m[0], m[0]);
+    re = /\b(\d{1,2})\s*[\/.-]\s*(\d{1,2})\s*[\/.-]\s*(\d{4})\b/g;
+    while ((m = re.exec(t))) { var d = ('0' + m[1]).slice(-2) + '-' + ('0' + m[2]).slice(-2) + '-' + m[3]; if (Number(m[2]) <= 12) add('Date', 'D:' + d, d); }
+    re = /(?:₹|Rs\.?|રૂ\.?|રૂપિયા)\s*([\d,]+(?:\.\d+)?)/g;
+    while ((m = re.exec(t))) add('Amount', 'N:' + m[1].replace(/,/g, ''), '₹ ' + m[1]);
+    re = /\b\d{1,3}(?:,\d{2})+,\d{3}(?:\.\d+)?\b|\b\d{1,3},\d{3}(?:\.\d+)?\b/g;
+    while ((m = re.exec(t))) add('Amount', 'N:' + m[0].replace(/,/g, ''), m[0]);
+    re = /\b\d{8,}\b/g;
+    while ((m = re.exec(t))) {
+      var pre = t.slice(Math.max(0, m.index - 25), m.index);
+      if (/(Ph|Phone|Mobile|Mo|Fax|ફોન|મો)\.?\s*(No\.?|નં\.?)?\s*[:.]?\s*[\d\s+()-]*$/i.test(pre) || /\b0\d{2,4}\s*-\s*$/.test(pre)) continue;   // phone numbers
+      add('Number', 'N:' + m[0], m[0]);
+    }
+    re = /\b(\d{1,2}):(\d{2})(?!:\d)\s*(AM|PM|am|pm)?/g;
+    while ((m = re.exec(t))) {
+      var before = t.slice(Math.max(0, m.index - 40), m.index);
+      if (isSource && /(Approved Date|Date)\s*:?\s*[\d\/.-]+\s*$/.test(before)) continue;   // the e-Sarkar header time
+      add('Time', 'T:' + Number(m[1]) + ':' + m[2], m[0]);
+    }
+    return out;
+  }
+  function draftText() {
+    return [$('e_to').value, $('e_subject').value, $('e_refs').value, $('e_body').value, $('e_encl').value].join('\n');
+  }
+  function runAutoCheck() {
+    var d = state.draft, files = d && d.srcFiles;
+    if (!files || !files.length) { $('autoCheck').innerHTML = ''; return; }
+    $('autoCheck').innerHTML = '<div class="auto wait">Automatic check: comparing numbers and dates with the source PDF…</div>';
+    Promise.all(files.map(pdfText)).then(function (texts) {
+      if (state.draft !== d) return;
+      var src = factsOf(texts.join('\n'), true), dr = factsOf(draftText(), false);
+      var missing = Object.keys(src).filter(function (k) { return !dr[k]; }).map(function (k) { return src[k]; });
+      var extra = Object.keys(dr).filter(function (k) { return !src[k]; }).map(function (k) { return dr[k]; });
+      var total = Object.keys(src).length;
+      if (!total) { $('autoCheck').innerHTML = '<div class="auto wait">Automatic check: no numbers or dates could be read from the PDF (scanned image?). Please compare by eye — “Show source”.</div>'; return; }
+      var li = function (x) { return '<li>' + esc(x.kind) + ': <code>' + esc(x.shown) + '</code></li>'; };
+      if (!missing.length && !extra.length) {
+        $('autoCheck').innerHTML = '<div class="auto ok">✓ Automatic check: all ' + total + ' numbers, dates and letter numbers from the source are in the draft.</div>';
+      } else {
+        $('autoCheck').innerHTML = '<div class="auto bad"><b>Automatic check</b> · ' + (total - missing.length) + ' of ' + total + ' found in the draft.' +
+          (missing.length ? '<div style="margin-top:6px"><b>In the source, not in the draft</b> — check whether they are needed:</div><ul>' + missing.slice(0, 12).map(li).join('') + '</ul>' : '') +
+          (extra.length ? '<div style="margin-top:6px"><b>In the draft, not in the source</b> — check they are correct:</div><ul>' + extra.slice(0, 12).map(li).join('') + '</ul>' : '') +
+          '<div style="margin-top:6px"><button type="button" class="linkbtn" id="autoRe">Check again after editing</button></div></div>';
+      }
+      var n = (d.checks || []).length + (missing.length || extra.length ? 1 : 0);
+      $('checkCount').textContent = n;
+    }).catch(function (e) { $('autoCheck').innerHTML = '<div class="auto wait">Automatic check could not run: ' + esc(e.message || e) + '</div>'; });
+  }
+  document.addEventListener('click', function (e) { if (e.target.id === 'autoRe') runAutoCheck(); });
+
+  // ── Side-by-side source view ──
+  function showSource(on) {
+    var d = state.draft, files = (d && d.srcFiles) || [];
+    if (on && !files.length) return;
+    $('srcPane').hidden = !on; document.body.classList.toggle('src-open', !!on);
+    $('srcBtn').textContent = on ? '✕ Hide source' : '⇆ Show source';
+    if (!on) return;
+    $('srcTabs').innerHTML = files.map(function (f, i) { return '<button type="button" data-i="' + i + '"' + (i ? '' : ' class="on"') + '>' + esc(f.label || f.name) + '</button>'; }).join('');
+    renderSource(files[0]);
+  }
+  function renderSource(f) {
+    $('srcPages').innerHTML = '<p style="color:var(--muted)">Opening ' + esc(f.name) + '…</p>';
+    openPdf(f).then(function (doc) {
+      $('srcPages').innerHTML = '';
+      var w = Math.max(320, $('srcPages').clientWidth - 24), n = Math.min(doc.numPages, 15), chain = Promise.resolve();
+      for (var i = 1; i <= n; i++) (function (i) {
+        chain = chain.then(function () { return doc.getPage(i); }).then(function (p) {
+          var v = p.getViewport({ scale: 1 }), sc = (w / v.width) * (window.devicePixelRatio || 1), vp = p.getViewport({ scale: sc });
+          var c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height; $('srcPages').appendChild(c);
+          return p.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+        });
+      })(i);
+      return chain;
+    }).catch(function (e) { $('srcPages').innerHTML = '<p style="color:#B3261E">Could not show the PDF: ' + esc(e.message || e) + '</p>'; });
+  }
+  $('srcBtn').onclick = function () { showSource($('srcPane').hidden); };
+  $('srcClose').onclick = function () { showSource(false); };
+  $('srcTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    Array.prototype.forEach.call($('srcTabs').children, function (x) { x.classList.toggle('on', x === b); });
+    renderSource(state.draft.srcFiles[Number(b.dataset.i)]);
+  });
+
+  // ── After every draft is shown ──
+  var showDraftBase = showDraft;
+  showDraft = function (d) {
+    if (d.sourcePdf && !d.srcFiles) d.srcFiles = [{ name: d.sourcePdf.name, data: d.sourcePdf.data, label: 'Source PDF' }];
+    showDraftBase(d);
+    $('srcBtn').hidden = !(d.srcFiles && d.srcFiles.length);
+    if (!$('srcPane').hidden) showSource(!!(d.srcFiles && d.srcFiles.length));
+    state.origForm = formSnapshot();
+    runAutoCheck();
+  };
+  var showStepBase = showStep;
+  showStep = function (n) { if (n !== 2 && !$('srcPane').hidden) showSource(false); showStepBase(n); };
+  function formSnapshot() { return { to: $('e_to').value, subject: $('e_subject').value, refs: $('e_refs').value, body: $('e_body').value, encl: $('e_encl').value }; }
+
+  // ── Teach Lahiyo: one correction ──
+  var TEACH_FIELDS = ['e_to', 'e_subject', 'e_refs', 'e_body', 'e_encl'];
+  TEACH_FIELDS.forEach(function (id) {
+    ['select', 'mouseup', 'keyup'].forEach(function (ev) {
+      $(id).addEventListener(ev, function () {
+        var el = $(id), t = el.value.slice(el.selectionStart, el.selectionEnd).trim();
+        if (t) state.sel = { text: t, field: id };
+      });
+    });
+  });
+  function addrOf(d) {
+    if (!d) return 'ANY';
+    if (d.mode === 'DOWN') return 'R7';
+    if (d.mode === 'UP') return 'CCST';
+    var t = $('e_to').value;
+    return /વર્તુળ\s*[-–]?\s*(૭|7)/.test(t) ? 'R7' : /ઘટક/.test(t) ? 'UNITS' : /અમદાવાદ/.test(t) ? 'CCST' : 'ANY';
+  }
+  function setSeg(id, v) { Array.prototype.forEach.call($(id).children, function (b) { b.setAttribute('aria-pressed', b.dataset.v === v); }); }
+  function segVal(id) { var b = $(id).querySelector('[aria-pressed="true"]'); return b ? b.dataset.v : ''; }
+  ['tType', 'tAddr'].forEach(function (id) { $(id).addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setSeg(id, b.dataset.v); }); });
+  function openTeach(o) {
+    o = o || {};
+    $('tId').value = o.id || '';
+    $('tTitleTxt').textContent = o.id ? 'Edit lesson' : 'Teach Lahiyo';
+    $('tWrong').value = o.wrong || ''; $('tRight').value = o.right != null ? o.right : (o.wrong || '');
+    $('tRule').value = o.rule || ''; $('tWarn').hidden = true; $('tErr').hidden = true; $('tOk').hidden = true;
+    setSeg('tType', o.type || 'ALL'); setSeg('tAddr', o.addr || 'ANY');
+    $('tScopeBox').hidden = !!o.id;
+    document.querySelector('input[name="tScope"][value="Branch"]').checked = true;
+    $('tBrName').textContent = 'Works from the next draft for ' + shortBranch((state.sess || {}).branch || '') + '.';
+    $('tAllTxt').textContent = state.sess && state.sess.admin ? 'Works for every branch at once (you are the Administrator).' : 'Sent to the Administrator for approval. Works for your branch meanwhile.';
+    $('tTry').hidden = !!o.id || !(state.draft && state.draft.req) || $('step2').hidden;
+    state.teachEdit = o;
+    $('teachModal').hidden = false;
+    setTimeout(function () { (o.wrong ? $('tRight') : $('tWrong')).focus(); }, 50);
+  }
+  $('teachBtn').onclick = function () {
+    var d = state.draft;
+    openTeach({ wrong: state.sel ? state.sel.text : '', type: d ? ({ DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER' }[d.mode] || 'ALL') : 'ALL', addr: addrOf(d) });
+  };
+  $('tCancel').onclick = function () { $('teachModal').hidden = true; };
+  function teachItem() { return { wrong: $('tWrong').value.trim(), right: $('tRight').value.trim(), rule: $('tRule').value.trim(), type: segVal('tType'), addr: segVal('tAddr') }; }
+  function writeRule(cb) {
+    var it = teachItem();
+    if (!it.wrong || !it.right || it.wrong === it.right) return showErr('tErr', 'Write what Lahiyo should have written (different from what it wrote).');
+    $('tRuleSpin').hidden = false; $('tRuleBtn').disabled = true;
+    api('lessonRules', [[it]], function (r) {
+      $('tRuleSpin').hidden = true; $('tRuleBtn').disabled = false;
+      var x = r[0] || {};
+      if (x.rule) $('tRule').value = x.rule;
+      $('tWarn').textContent = x.specific ? '⚠ ' + (x.reason || 'This looks specific to one letter, not a general lesson.') : ''; $('tWarn').hidden = !x.specific;
+      if (cb) cb();
+    }, function (e) { $('tRuleSpin').hidden = true; $('tRuleBtn').disabled = false; showErr('tErr', e); });
+  }
+  $('tRuleBtn').onclick = function () { $('tErr').hidden = true; writeRule(); };
+  $('tSave').onclick = function () {
+    $('tErr').hidden = true;
+    var it = teachItem();
+    if (!it.wrong || !it.right || it.wrong === it.right) return showErr('tErr', 'Write what Lahiyo should have written (different from what it wrote).');
+    var go = function () {
+      it = teachItem();
+      $('tSave').disabled = true;
+      var done = function (r) { $('tSave').disabled = false; state.lessons = r; renderLessonsAll(); $('teachModal').hidden = true; flash(it.wrong ? 'Lesson saved. Lahiyo will follow it from the next draft.' : ''); };
+      var fail = function (e) { $('tSave').disabled = false; showErr('tErr', e); };
+      if ($('tId').value) api('updateLesson', [$('tId').value, it], done, fail);
+      else api('saveLessons', [[it], document.querySelector('input[name="tScope"]:checked').value], done, fail);
+    };
+    if (!it.rule) writeRule(go); else go();
+  };
+  $('tTry').onclick = function () {
+    var d = state.draft, it = teachItem();
+    if (!d || !d.req) return;
+    if (!it.wrong || !it.right) return showErr('tErr', 'Write the correction first.');
+    var req = JSON.parse(JSON.stringify(d.req.req)); req.extraLessons = [it];
+    $('tTrySpin').hidden = false; $('tTry').disabled = true; $('tErr').hidden = true;
+    api(d.req.fn, [req], function (nd) {
+      $('tTrySpin').hidden = true; $('tTry').disabled = false;
+      nd.req = d.req; nd.srcFiles = d.srcFiles;
+      if (d.req.fn === 'generateDraft') showPrepared({ draft: nd, ms: 0 });
+      else { state.draft = nd; showDraft(nd); }
+      $('tOk').textContent = 'The draft behind this box was written again with this lesson. Check it, then save the lesson.'; $('tOk').hidden = false;
+    }, function (e) { $('tTrySpin').hidden = true; $('tTry').disabled = false; showErr('tErr', e); });
+  };
+  function flash(t) { if (!t) return; var m = $('step2').hidden ? null : $('ok2'); if (m) { m.className = 'msg info'; m.textContent = t; m.hidden = false; } }
+
+  // ── Teach Lahiyo: after download, from the officer's edits ──
+  function sentences(s) { return String(s || '').split(/\n+|(?<=[.।])\s+/).map(function (x) { return x.trim(); }).filter(function (x) { return x.length > 3; }); }
+  function bigrams(s) { var a = {}, t = String(s).replace(/\s+/g, ' '); for (var i = 0; i < t.length - 1; i++) a[t.substr(i, 2)] = (a[t.substr(i, 2)] || 0) + 1; return a; }
+  function similar(a, b) { var x = bigrams(a), y = bigrams(b), n = 0, tx = 0, ty = 0, k; for (k in x) { tx += x[k]; if (y[k]) n += Math.min(x[k], y[k]); } for (k in y) ty += y[k]; return tx + ty ? 2 * n / (tx + ty) : 0; }
+  function trimPair(w, r) {
+    var a = w.split(' '), b = r.split(' '), i = 0, j = 0;
+    while (i < a.length - 1 && i < b.length - 1 && a[i] === b[i]) i++;
+    while (j < a.length - i - 1 && j < b.length - i - 1 && a[a.length - 1 - j] === b[b.length - 1 - j]) j++;
+    var s = Math.max(0, i - 3), ea = Math.min(a.length, a.length - j + 3), eb = Math.min(b.length, b.length - j + 3);
+    return { wrong: (s ? '…' : '') + a.slice(s, ea).join(' ') + (ea < a.length ? '…' : ''), right: (s ? '…' : '') + b.slice(s, eb).join(' ') + (eb < b.length ? '…' : '') };
+  }
+  function editPairs() {
+    var o = state.origForm, now = formSnapshot(), pairs = [];
+    if (!o) return pairs;
+    ['subject', 'refs', 'body', 'encl', 'to'].forEach(function (k) {
+      var A = sentences(o[k]), B = sentences(now[k]);
+      var gone = A.filter(function (x) { return B.indexOf(x) < 0; }), added = B.filter(function (x) { return A.indexOf(x) < 0; });
+      added.forEach(function (b) {
+        var best = null, sc = 0;
+        gone.forEach(function (a) { var v = similar(a, b); if (v > sc) { sc = v; best = a; } });
+        if (best && sc > 0.45) {
+          if (best.replace(/^માન\.?/, '') === b.replace(/^માન\.?/, '')) return;   // only the courtesy prefix changed
+          var p = trimPair(best, b); p.field = k; pairs.push(p); gone.splice(gone.indexOf(best), 1);
+        }
+      });
+    });
+    return pairs.slice(0, 6);
+  }
+  function offerLessons() {
+    var d = state.draft, pairs = editPairs();
+    if (!pairs.length) return;
+    var type = { DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER' }[d.mode] || 'ALL', addr = addrOf(d);
+    pairs.forEach(function (p) { p.type = type; p.addr = addr; });
+    state.learn = pairs;
+    $('lnTitleTxt').textContent = 'You changed ' + pairs.length + (pairs.length === 1 ? ' sentence' : ' sentences') + '. Teach Lahiyo?';
+    $('lnList').innerHTML = '<div class="auto wait">Lahiyo is writing a rule for each change…</div>';
+    $('lnErr').hidden = true; $('learnModal').hidden = false;
+    api('lessonRules', [pairs], function (items) {
+      state.learn = pairs.map(function (p, i) { var x = items[i] || {}; p.rule = x.rule || ''; p.specific = !!x.specific; p.reason = x.reason || ''; return p; });
+      renderLearn();
+    }, function () { renderLearn(); });
+  }
+  function renderLearn() {
+    $('lnList').innerHTML = state.learn.map(function (p, i) {
+      return '<div class="chg"><input type="checkbox" class="lnSel" data-i="' + i + '"' + (p.specific ? '' : ' checked') + ' aria-label="Teach this"><div>' +
+        '<div class="pair"><s>' + esc(p.wrong) + '</s><ins>' + esc(p.right) + '</ins></div>' +
+        (p.rule ? '<div class="tl-rule" style="margin-top:6px">✨ Rule: <span class="lnRule" contenteditable="true" data-i="' + i + '">' + esc(p.rule) + '</span></div>' : '') +
+        (p.specific ? '<div class="warnline" style="margin-top:6px">⚠ ' + esc(p.reason || 'Looks specific to this letter, not a general lesson.') + '</div>' : '') + '</div></div>';
+    }).join('');
+  }
+  $('lnNo').onclick = function () { $('learnModal').hidden = true; };
+  $('lnSave').onclick = function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.lnRule'), function (r) { state.learn[Number(r.dataset.i)].rule = r.textContent.trim(); });
+    var items = Array.prototype.filter.call(document.querySelectorAll('.lnSel'), function (c) { return c.checked; }).map(function (c) { return state.learn[Number(c.dataset.i)]; });
+    if (!items.length) { $('learnModal').hidden = true; return; }
+    $('lnSave').disabled = true;
+    api('saveLessons', [items, document.querySelector('input[name="lnScope"]:checked').value], function (r) {
+      $('lnSave').disabled = false; $('learnModal').hidden = true; state.lessons = r; renderLessonsAll();
+      flash(items.length + (items.length === 1 ? ' lesson' : ' lessons') + ' saved. Lahiyo will follow them from the next draft.');
+    }, function (e) { $('lnSave').disabled = false; showErr('lnErr', e); });
+  };
+
+  // ── Teach Lahiyo page (step 13) ──
+  $('navTeach').onclick = function () { if (leaveDraftOk()) { showStep(13); tkTab(1); loadLessons(); } };
+  function tkTab(n) { $('tkTab1').setAttribute('aria-selected', n === 1); $('tkTab2').setAttribute('aria-selected', n === 2); $('tkPane1').hidden = n !== 1; $('tkPane2').hidden = n !== 2; }
+  $('tkTab1').onclick = function () { tkTab(1); };
+  $('tkTab2').onclick = function () { tkTab(2); loadLessons(); };
+  ['tk1', 'tk2'].forEach(function (slot) {
+    $('f_' + slot).onchange = function (e) {
+      var f = e.target.files[0]; if (!f) return;
+      if (!/\.(pdf|docx)$/i.test(f.name)) return showErr('tkErr', 'Please choose a Word (.docx) or PDF file.');
+      var r = new FileReader();
+      r.onload = function () { state.files[slot] = { name: f.name, data: String(r.result).split(',')[1], type: /\.docx$/i.test(f.name) ? 'docx' : 'pdf' };
+        $('n_' + slot).textContent = '✓ ' + f.name; $('n_' + slot).closest('.drop').classList.add('has'); $('tkErr').hidden = true; };
+      r.readAsDataURL(f);
+    };
+  });
+  var TYPE_OPTS = [['DOWN', 'Forward'], ['UP', 'Reply'], ['COMPOSE', 'Write'], ['REMINDER', 'સ્મૃતિપત્ર'], ['ALL', 'All types']];
+  var ADDR_OPTS = [['R7', 'DC Range-7'], ['UNITS', 'Units'], ['CCST', 'CCST'], ['ANY', 'Any addressee']];
+  function optsHtml(list, v) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === v ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join(''); }
+  $('tkBtn').onclick = function () {
+    $('tkErr').hidden = true; $('tkOk').hidden = true;
+    if (!state.files.tk1 || !state.files.tk2) return showErr('tkErr', 'Please upload both letters.');
+    busyBtn('tkBtn', 'tkSpin', 'tkIcon', 'tkTxt', true, 'Comparing…', 'Compare and suggest lessons');
+    api('compareLetters', [{ lahiyo: state.files.tk1, expected: state.files.tk2 }], function (items) {
+      busyBtn('tkBtn', 'tkSpin', 'tkIcon', 'tkTxt', false, '', 'Compare and suggest lessons');
+      state.tkItems = items;
+      $('tkFound').textContent = items.length ? 'Lahiyo found ' + items.length + (items.length === 1 ? ' difference' : ' differences') : 'No useful differences found — the letters say the same thing.';
+      $('tkList').innerHTML = items.map(function (x, i) {
+        return '<div class="chg"><input type="checkbox" class="tkSel" data-i="' + i + '"' + (x.specific ? '' : ' checked') + ' aria-label="Save this lesson"><div>' +
+          '<div class="pair"><s>' + esc(x.wrong) + '</s><ins>' + esc(x.right) + '</ins></div>' +
+          '<div class="tl-rule" style="margin-top:6px">✨ Rule: <span class="tkRule" contenteditable="true" data-i="' + i + '">' + esc(x.rule) + '</span></div>' +
+          (x.specific ? '<div class="warnline" style="margin-top:6px">⚠ ' + esc(x.reason || 'Specific to this letter — not suggested as a lesson.') + '</div>' : '') +
+          '<div class="opts"><select class="tkType" data-i="' + i + '" aria-label="Letter type">' + optsHtml(TYPE_OPTS, x.type) + '</select><select class="tkAddr" data-i="' + i + '" aria-label="Addressee">' + optsHtml(ADDR_OPTS, x.addr) + '</select></div></div></div>';
+      }).join('');
+      $('tkResult').hidden = false; $('tkSave').hidden = !items.length;
+    }, function (e) { busyBtn('tkBtn', 'tkSpin', 'tkIcon', 'tkTxt', false, '', 'Compare and suggest lessons'); showErr('tkErr', e); });
+  };
+  $('tkSave').onclick = function () {
+    var items = Array.prototype.filter.call(document.querySelectorAll('.tkSel'), function (c) { return c.checked; }).map(function (c) {
+      var i = Number(c.dataset.i), x = state.tkItems[i];
+      return { wrong: x.wrong, right: x.right, rule: document.querySelector('.tkRule[data-i="' + i + '"]').textContent.trim(),
+        type: document.querySelector('.tkType[data-i="' + i + '"]').value, addr: document.querySelector('.tkAddr[data-i="' + i + '"]').value };
+    });
+    if (!items.length) return showErr('tkErr', 'Tick at least one lesson to save.');
+    $('tkSave').disabled = true;
+    api('saveLessons', [items, document.querySelector('input[name="tkScope"]:checked').value], function (r) {
+      $('tkSave').disabled = false; state.lessons = r; renderLessonsAll();
+      $('tkOk').textContent = items.length + (items.length === 1 ? ' lesson' : ' lessons') + ' saved. Lahiyo will follow them from the next draft.'; $('tkOk').hidden = false;
+    }, function (e) { $('tkSave').disabled = false; showErr('tkErr', e); });
+  };
+
+  // ── Lessons lists (Teach page: My lessons · Admin: Lessons) ──
+  var TYPE_NAME = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'સ્મૃતિપત્ર', ALL: 'All types' };
+  var ADDR_NAME = { R7: 'DC Range-7', UNITS: 'Units', CCST: 'CCST', ANY: 'Any addressee' };
+  function loadLessons() { api('getLessons', [], function (r) { state.lessons = r; renderLessonsAll(); }, function (e) { showErr($('step14').hidden ? 'tk2Err' : 'lsErr', e); }); }
+  function statusBadge(x) {
+    if (x.status === 'Off') return '<span class="badge b-off">Off</span>';
+    if (x.status === 'Waiting') return '<span class="badge b-wait">Waiting for approval</span><br><span class="badge b-br">Active for own branch</span>';
+    if (x.scope === 'All') return '<span class="badge b-all">All branches</span>';
+    return '<span class="badge b-br">' + esc(shortBranch(x.branch)) + ' only</span>';
+  }
+  function lessonCells(x) {
+    return '<td>' + esc(TYPE_NAME[x.type] || x.type) + '<br><small class="meta">' + esc(ADDR_NAME[x.addr] || x.addr) + '</small></td>' +
+      '<td class="gu" style="max-width:360px"><s style="color:#B3261E">' + esc(x.wrong) + '</s><br><span style="color:#1E7B3A">' + esc(x.right) + '</span></td>' +
+      '<td style="max-width:260px;font-size:13px">' + esc(x.rule || '—') + (x.conflict ? '<div class="warnline" style="margin-top:6px">⚠ May conflict with: ' + esc(x.conflict) + '</div>' : '') + '</td>';
+  }
+  function renderLessonsAll() {
+    var r = state.lessons; if (!r) return;
+    var mine = r.lessons.filter(function (x) { return x.mine || (r.admin && x.scope !== 'All'); });
+    $('tkCount').textContent = '(' + r.lessons.filter(function (x) { return x.mine; }).length + ')';
+    $('tkLessons').innerHTML = r.lessons.length ? r.lessons.filter(function (x) { return x.mine || x.scope === 'All'; }).map(function (x) {
+      return '<tr data-id="' + esc(x.id) + '">' + lessonCells(x) + '<td>' + statusBadge(x) + '<br><small class="meta">' + esc(x.by) + ' · ' + esc(x.created) + '</small></td>' +
+        '<td><div class="rowbtns">' + (x.canEdit ? '<button type="button" class="savebtn lsEdit">Edit</button><button type="button" class="savebtn lsOnOff">' + (x.status === 'Off' ? 'Turn on' : 'Turn off') + '</button><button type="button" class="delbtn lsDel">Remove</button>' : '<small class="meta">Approved for all</small>') + '</div></td></tr>';
+    }).join('') : '<tr><td colspan="5" class="empty" style="padding:18px">No lessons yet. Teach Lahiyo from a draft, or compare two letters.</td></tr>';
+    // Admin page
+    $('navLessons').hidden = !r.admin;
+    $('lsBadge').textContent = r.waiting; $('lsBadge').hidden = !r.waiting;
+    if (!r.admin) return;
+    $('lsWaitN').textContent = '(' + r.waiting + ')'; $('lsAllN').textContent = '(' + r.lessons.length + ')';
+    var waitView = $('lsTab1').getAttribute('aria-selected') === 'true';
+    var list = r.lessons.filter(function (x) { return waitView ? x.status === 'Waiting' : true; });
+    $('lsBody').innerHTML = list.length ? list.map(function (x) {
+      return '<tr data-id="' + esc(x.id) + '"><td>' + esc(x.by) + '<br><small class="meta">' + esc(shortBranch(x.branch)) + ' · ' + esc(x.created) + '</small><br>' + statusBadge(x) + '</td>' + lessonCells(x) +
+        '<td><div class="rowbtns">' + (x.status === 'Waiting' ? '<button type="button" class="savebtn lsApprove">Approve for all</button>' : '') +
+        '<button type="button" class="savebtn lsEdit">Edit</button>' +
+        (x.status === 'Waiting' ? '<button type="button" class="delbtn lsReject">Reject</button>' : '<button type="button" class="savebtn lsOnOff">' + (x.status === 'Off' ? 'Turn on' : 'Turn off') + '</button><button type="button" class="delbtn lsDel">Remove</button>') +
+        '</div></td></tr>';
+    }).join('') : '<tr><td colspan="5" class="empty" style="padding:18px">' + (waitView ? 'Nothing waiting for approval.' : 'No lessons yet.') + '</td></tr>';
+    var c = r.counts || {};
+    $('lsCounts').textContent = 'Active for all branches — Forward: ' + (c.DOWN || 0) + ' · Reply: ' + (c.UP || 0) + ' · Write: ' + (c.COMPOSE || 0) + ' · સ્મૃતિપત્ર: ' + (c.REMINDER || 0) + ' · All types: ' + (c.ALL || 0) + ' (Lahiyo uses up to ' + r.max + ' per letter type)';
+  }
+  function lessonAction(e, okBox) {
+    var tr = e.target.closest('tr'); if (!tr || !tr.dataset.id) return;
+    var x = state.lessons.lessons.filter(function (l) { return l.id === tr.dataset.id; })[0]; if (!x) return;
+    var t = e.target.classList, v = null, msg = '';
+    if (t.contains('lsEdit')) return openTeach(x);
+    if (t.contains('lsOnOff')) { v = { status: x.status === 'Off' ? 'Active' : 'Off' }; msg = 'Lesson turned ' + (v.status === 'Off' ? 'off.' : 'on.'); }
+    if (t.contains('lsApprove')) { v = { approve: true }; msg = 'Approved — the lesson now works for every branch.'; }
+    if (t.contains('lsReject')) { v = { reject: true }; msg = 'Not approved — it stays a lesson for ' + shortBranch(x.branch) + ' only.'; }
+    if (t.contains('lsDel')) { if (!confirm('Remove this lesson?')) return; v = { remove: true }; msg = 'Lesson removed.'; }
+    if (!v) return;
+    api('updateLesson', [x.id, v], function (r) { state.lessons = r; renderLessonsAll(); if (okBox) { $(okBox).textContent = msg; $(okBox).hidden = false; } },
+      function (er) { showErr($('step14').hidden ? 'tk2Err' : 'lsErr', er); });
+  }
+  $('tkLessons').addEventListener('click', function (e) { lessonAction(e, null); });
+  $('lsBody').addEventListener('click', function (e) { $('lsOk').hidden = true; lessonAction(e, 'lsOk'); });
+  $('navLessons').onclick = function () { if (leaveDraftOk()) { showStep(14); $('lsOk').hidden = true; loadLessons(); } };
+  $('lsTab1').onclick = function () { $('lsTab1').setAttribute('aria-selected', 'true'); $('lsTab2').setAttribute('aria-selected', 'false'); renderLessonsAll(); };
+  $('lsTab2').onclick = function () { $('lsTab2').setAttribute('aria-selected', 'true'); $('lsTab1').setAttribute('aria-selected', 'false'); renderLessonsAll(); };
+  $('lsRefresh').onclick = loadLessons;
+
+  // ── Register: "Draft સ્મૃતિપત્ર" on overdue letters ──
+  function reminderLevelFor(r) {
+    if (r.type === 'Reminder') {
+      if (/Final|અંતિમ/.test(r.direction)) return 'FINAL';
+      var m = asciiDigits(r.direction).match(/સ્મૃતિપત્ર-(\d)|Reminder\s*(\d)/);
+      var n = m ? Number(m[1] || m[2]) : 1;
+      return n >= 2 ? 'FINAL' : String(n + 1);
+    }
+    var nums = [r.outward].concat((r.esarkar || '').split('\n')).map(function (x) { return String(x || '').replace(/\s+/g, '').toUpperCase(); }).filter(Boolean);
+    var earlier = (state.regRows || []).filter(function (x) { return x.type === 'Reminder' && nums.indexOf(String(x.letterNo || '').replace(/\s+/g, '').toUpperCase()) >= 0; }).length;
+    return earlier >= 2 ? 'FINAL' : String(earlier + 1);
+  }
+  function openReminderFor(r) {
+    if (!leaveDraftOk()) return;
+    var lv = reminderLevelFor(r);
+    var b = document.querySelector('.rLvl[data-v="' + lv + '"]'); if (b) b.click();
+    if (state.sess && state.sess.admin && $('rBranch')) $('rBranch').value = r.tab;
+    var no = r.outward || (r.esarkar || '').split('\n')[0] || '';
+    $('rFor').innerHTML = '<b>For:</b> <span class="gu-l">' + esc(r.subject) + '</span><br>' +
+      (r.sentOn ? 'Sent ' + esc(r.sentOn) + (no ? ' · ' + esc(no) : '') + (r.sentTo ? ' · to ' + esc(r.sentTo.split('\n')[0]) : '') + '<br>' : '') +
+      'Download this letter from e-Sarkar and upload its PDF below. Level set to <b>' + (lv === 'FINAL' ? 'અંતિમ સ્મૃતિપત્ર' : 'સ્મૃતિપત્ર-' + gujNum(lv)) + '</b>.';
+    $('rFor').hidden = false; $('err5').hidden = true;
+    showStep(5);
+  }
+  $('regBody').addEventListener('click', function (e) {
+    if (!e.target.classList.contains('remBtn')) return;
+    var r = state.shown[Number(e.target.closest('tr').dataset.i)];
+    if (r) openReminderFor(r);
+  });
+
+  // ── Backups (Administrator, side panel) ──
+  function loadBackup(now) {
+    if (!(state.sess && state.sess.admin)) return;
+    $('bkCard').hidden = false; $('bkInfo').textContent = now ? 'Backing up…' : 'Checking…';
+    api('backupInfo', [!!now], function (b) {
+      $('bkInfo').innerHTML = (b.count ? 'Last backup: <b>' + esc(b.last) + '</b><br>' + b.count + (b.count === 1 ? ' copy' : ' copies') + (b.mb ? ' · ' + b.mb + ' MB' : '') : 'No backup yet.') +
+        '<br><small class="meta">Every Sunday night · kept for 1 year</small>';
+      $('bkOpen').href = b.url; $('bkOpen').hidden = false;
+    }, function (e) { $('bkInfo').textContent = 'Backups need permission: open the Apps Script editor and run setupBatch once. (' + (e.message || e) + ')'; });
+  }
+  $('bkNow').onclick = function () { loadBackup(true); };
 </script>
 <script>
   // Makes Lahiyo installable ("Install app" in Chrome) and quick to open.
