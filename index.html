@@ -450,6 +450,17 @@
   .tl-rule { background: #EEF3FA; border: 1px solid #C9D6EA; border-radius: 10px; padding: 10px 12px; font-size: 13.5px; }
   .tl-rule textarea { width: 100%; background: #fff; margin-top: 6px; font-size: 13.5px; }
   .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ot-opts { display: flex; flex-direction: column; gap: 10px; }
+  .ot-opt { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; background: #fff; cursor: pointer; }
+  .ot-opt.on { border-color: var(--navy-700); box-shadow: inset 0 0 0 1px var(--navy-700); background: #F7FAFE; }
+  .ot-opt > input { width: 18px; height: 18px; margin-top: 2px; }
+  .ot-opt b { color: var(--navy-900); }
+  .ot-opt .ot-in { margin-top: 8px; }
+  .ot-opt:not(.on) .ot-in { display: none; }
+  .ot-found { margin-top: 8px; border: 1px solid #9CD3AE; background: #E8F5EC; border-radius: 10px; padding: 10px 12px; font-family: var(--gu); font-size: 14.5px; line-height: 1.6; white-space: pre-line; }
+  .ot-found small { font-family: var(--ui); color: #1E5631; font-weight: 700; display: block; margin-bottom: 4px; }
+  .paper.en textarea, .paper.en .fixed { font-family: 'Times New Roman', Times, serif; font-size: 15.5px; }
+  .ob-gu { font-family: var(--gu); }
   .seg button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font: 600 13px var(--ui); color: var(--navy-900); cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--navy-900); color: #fff; border-color: var(--navy-900); }
   .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -562,6 +573,7 @@
     <h2>New letter</h2>
     <button type="button" class="nav active" id="navFwd"><svg class="i"><use href="#ic-down"/></svg>Forward to Range-7</button>
     <button type="button" class="nav" id="navReply"><svg class="i"><use href="#ic-up"/></svg>Reply to CCST</button>
+    <button type="button" class="nav" id="navOther"><svg class="i"><use href="#ic-up"/></svg>Letter to Other Offices</button>
     <button type="button" class="nav" id="navCompose"><svg class="i"><use href="#ic-pen"/></svg>Write a Letter</button>
     <button type="button" class="nav" id="navReminder"><svg class="i"><use href="#ic-remind"/></svg><span>Reminder · <span class="gu-l">સ્મૃતિપત્ર</span></span></button>
     <button type="button" class="nav" id="navCheck"><svg class="i"><use href="#ic-check"/></svg>Check a Letter</button>
@@ -572,6 +584,7 @@
     <button type="button" class="nav" id="navTeach"><svg class="i"><use href="#ic-wand"/></svg>Teach Lahiyo</button>
     <button type="button" class="nav" id="navLessons" hidden><svg class="i"><use href="#ic-check"/></svg>Lessons<span class="nb" id="lsBadge" style="background:#C9A227" hidden></span></button>
     <button type="button" class="nav" id="navTray"><svg class="i"><use href="#ic-word"/></svg>Drafts Tray<span class="nb" id="trayBadge" title="Drafts ready" style="background:#1E7B3A" hidden></span></button>
+    <button type="button" class="nav" id="navOffices"><svg class="i"><use href="#ic-book"/></svg>Other Offices</button>
     <button type="button" class="nav" id="navCcst" hidden><svg class="i"><use href="#ic-book"/></svg>CCST Branches</button>
     <button type="button" class="nav" id="navStaff" hidden><svg class="i"><use href="#ic-sign"/></svg>Staff</button>
     <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
@@ -659,6 +672,50 @@
             <p class="hint" id="upHint" style="margin:8px 0 0"></p>
           </div>
 
+          <div id="otherBox" hidden style="display:flex;flex-direction:column;gap:22px">
+            <div>
+              <div class="label"><span class="n">1</span>Upload the letter received</div>
+              <div class="drops">
+                <div class="drop" data-slot="oth">
+                  <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+                  <div class="t">Letter from the Unit / Range-7 (PDF)</div>
+                  <div class="s">Required · the letter that asks us to write to the other office</div>
+                  <input type="file" id="f_oth" accept="application/pdf,.pdf" multiple>
+                  <label class="filebtn" for="f_oth"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
+                  <div class="or">or drag and drop · several = background drafting</div>
+                  <div class="fname" id="n_oth"></div>
+                </div>
+                <div class="drop optional" data-slot="oth2">
+                  <div class="cloud" aria-hidden="true"><svg class="i"><use href="#ic-cloud"/></svg></div>
+                  <div class="t">Earlier letter in the chain (PDF)</div>
+                  <div class="s">Optional · e.g. the original CCST letter</div>
+                  <input type="file" id="f_oth2" accept="application/pdf,.pdf">
+                  <label class="filebtn" for="f_oth2"><svg class="i"><use href="#ic-folder"/></svg>Choose PDF</label>
+                  <div class="or">or drag and drop here</div>
+                  <div class="fname" id="n_oth2"></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="label"><span class="n">2</span>Send to</div>
+              <div class="ot-opts" id="otOpts">
+                <div class="ot-opt on" data-how="letter"><input type="radio" name="otHow" value="letter" checked><div><b>Read it from the letter</b> <span class="meta">(recommended)</span>
+                  <div class="ot-in meta" style="display:block">Lahiyo finds the office named in the letter. You can check and change it on the next page.</div></div></div>
+                <div class="ot-opt" data-how="book"><input type="radio" name="otHow" value="book"><div><b>Choose from the address book</b> <span class="meta" id="otCount"></span>
+                  <div class="ot-in"><input type="search" id="otFind" placeholder="Search: CGST, Collector, police, bank…" autocomplete="off" style="margin-bottom:8px"><select id="otBook" size="5" aria-label="Office from the address book"></select>
+                  <div class="ot-found" id="otBookShow" hidden></div></div></div></div>
+                <div class="ot-opt" data-how="typed"><input type="radio" name="otHow" value="typed"><div><b>Type the address</b>
+                  <div class="ot-in"><textarea id="otTyped" rows="3" placeholder="One line per row, e.g.&#10;The Assistant Commissioner,&#10;CGST Division-V, Gandhinagar"></textarea>
+                  <label class="chk" style="margin-top:8px"><input type="checkbox" id="otSave" checked> Save to the address book (all branches can use it)</label></div></div></div>
+              </div>
+            </div>
+            <div>
+              <div class="label"><span class="n">3</span>Language</div>
+              <div class="seg" id="otLang"><button type="button" data-v="AUTO" aria-pressed="true">Same as the letter received</button><button type="button" data-v="GU" aria-pressed="false">Gujarati</button><button type="button" data-v="EN" aria-pressed="false">English</button></div>
+              <p class="hint" style="margin:8px 0 0">Lahiyo writes politely, as to a respected outside office (સવિનય · વિનંતી · માન.). No copy (નકલ રવાના) line is added.</p>
+            </div>
+          </div>
+
           <div class="batch-box" id="batchBox" hidden>
             <b id="batchTitle"></b>
             <ol id="batchList"></ol>
@@ -697,6 +754,7 @@
             <div class="card">
               <h3><svg class="i"><use href="#ic-doc"/></svg>Letter details</h3>
               <dl class="facts" id="facts"></dl>
+              <div id="offSaveBox" class="msg info" style="margin-top:12px" hidden></div>
             </div>
             <div class="card checks">
               <h3><svg class="i"><use href="#ic-warn"/></svg>Points to verify<span class="count" id="checkCount"></span></h3>
@@ -706,12 +764,12 @@
           </div>
 
           <div class="paper-col">
-            <div class="paper">
+            <div class="paper" id="paper">
               <div class="paper-head">
-                <h3>Draft letter (Gujarati)</h3>
+                <h3 id="paperTitle">Draft letter (Gujarati)</h3>
                 <small>Letterhead, outward number and e-signature are added by e-Sarkar</small>
               </div>
-              <div class="fixed"><span class="k">Salutation</span>પ્રતિ,</div>
+              <div class="fixed"><span class="k">Salutation</span><span id="salut">પ્રતિ,</span></div>
               <div>
                 <label class="f" for="e_to">Addressee <span id="toHint"></span></label>
                 <textarea id="e_to" rows="2"></textarea>
@@ -794,6 +852,31 @@
         <div class="reg-foot"><span id="regCount"></span><span>Status options: Drafted · Sent · Sent to Range-7 · Sent to CCST · Reply received · Closed</span></div>
       </section>
 
+      <!-- OTHER OFFICES (address book) -->
+      <section id="step15" hidden>
+        <div class="page-head"><div><h2>Other Offices</h2><p id="obSub">Address book for “Letter to Other Offices” and “Write a Letter”. Every branch can add an office; only the Administrator can edit or delete one.</p></div></div>
+        <div class="toolbar"><div class="grow"><label for="obFind">Search</label><input type="search" id="obFind" placeholder="Office or address"></div></div>
+        <div class="grid2">
+          <div class="info-col" style="flex:2 1 520px">
+            <div class="tablebox"><table class="reg" style="min-width:0"><thead><tr><th>Office</th><th>Address (Gujarati)</th><th>Address (English)</th><th>માન.</th><th>Added by</th><th></th></tr></thead><tbody id="obList"><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
+          </div>
+          <div class="paper" style="flex:1 1 320px">
+            <div class="paper-head"><h3 id="obTitle">Add an office</h3></div>
+            <input type="hidden" id="obId">
+            <div><label class="f" for="obName">Office <span>(short name, English)</span></label><input type="text" id="obName" placeholder="e.g. Collector, Gandhinagar"></div>
+            <div><label class="f" for="obGu">Address in Gujarati <span>(one line per row · without માન.)</span></label><textarea id="obGu" rows="3" class="ob-gu" placeholder="કલેક્ટરશ્રી,&#10;ગાંધીનગર"></textarea></div>
+            <div><label class="f" for="obEn">Address in English <span>(one line per row)</span></label><textarea id="obEn" rows="3" placeholder="The Collector,&#10;Gandhinagar"></textarea></div>
+            <label class="chk"><input type="checkbox" id="obMaan" checked> Write “માન.” before the office in Gujarati letters</label>
+            <div id="err15" class="msg err" role="alert" hidden></div>
+            <div id="ok15" class="msg info" role="status" hidden></div>
+            <div class="actions">
+              <button type="button" class="btn-main" id="obSave">Add to the address book</button>
+              <button type="button" class="btn-ghost" id="obCancel" hidden>Cancel edit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- STAFF (Admin) -->
       <section id="step7" hidden>
         <div class="page-head"><div><h2>Staff</h2><p>Names people choose after signing in. Each letter they draft, check or send is recorded under their name. Leave Branch blank for staff who work for any branch.</p></div></div>
@@ -864,9 +947,9 @@
           </div>
           <div class="tl-row">
             <div><label class="f">Letter type</label><div class="seg" id="tType">
-              <button type="button" data-v="DOWN">Forward</button><button type="button" data-v="UP">Reply</button><button type="button" data-v="COMPOSE">Write</button><button type="button" data-v="REMINDER">સ્મૃતિપત્ર</button><button type="button" data-v="ALL">All</button></div></div>
+              <button type="button" data-v="DOWN">Forward</button><button type="button" data-v="UP">Reply</button><button type="button" data-v="COMPOSE">Write</button><button type="button" data-v="REMINDER">સ્મૃતિપત્ર</button><button type="button" data-v="OTHER">Other office</button><button type="button" data-v="ALL">All</button></div></div>
             <div><label class="f">Addressee</label><div class="seg" id="tAddr">
-              <button type="button" data-v="R7">DC Range-7</button><button type="button" data-v="UNITS">Units</button><button type="button" data-v="CCST">CCST</button><button type="button" data-v="ANY">Any</button></div></div>
+              <button type="button" data-v="R7">DC Range-7</button><button type="button" data-v="UNITS">Units</button><button type="button" data-v="CCST">CCST</button><button type="button" data-v="OTHER">Other office</button><button type="button" data-v="ANY">Any</button></div></div>
           </div>
           <div class="tl-rule">✨ <b>Rule Lahiyo will follow</b> <span class="meta">(written by Lahiyo · you can edit)</span>
             <textarea id="tRule" rows="2" placeholder="Click “Write the rule”, or type it yourself"></textarea>
@@ -1011,7 +1094,7 @@
           <div class="tiles" id="wkTiles"></div>
           <div class="toolbar" style="margin:0">
             <div><label for="wkPerson">Person</label><select id="wkPerson"></select></div>
-            <div><label for="wkType">Type</label><select id="wkType"><option value="">All types</option><option>Forward</option><option>Reply</option><option>Written</option><option value="Reminder">સ્મૃતિપત્ર</option><option>Checked</option></select></div>
+            <div><label for="wkType">Type</label><select id="wkType"><option value="">All types</option><option>Forward</option><option>Reply</option><option>Written</option><option value="Reminder">સ્મૃતિપત્ર</option><option>Checked</option><option value="Other office">Other office</option></select></div>
             <div><label for="wkStatus">Status</label><select id="wkStatus"><option value="">All</option><option value="sent">Sent</option><option value="notsent">Not yet sent</option><option value="closed">Reply received / Closed</option></select></div>
             <div class="grow"><label for="wkSearch">Search</label><input type="search" id="wkSearch" placeholder="Subject, letter no., outward or e-Sarkar no."></div>
           </div>
@@ -1122,6 +1205,7 @@
               <label class="f" for="cTo">2 · To</label>
               <select id="cTo"></select>
               <textarea id="cToOther" rows="2" placeholder="Type the address, one line per row" style="margin-top:8px" hidden></textarea>
+              <select id="cBook" style="margin-top:8px" hidden aria-label="Office from the address book"></select>
               <div id="cCcstBox" class="grid2" style="gap:10px;margin-top:8px" hidden>
                 <select id="cRank" aria-label="CCST officer" style="flex:1 1 200px"><option value="JC">સંયુક્ત રાજ્યવેરા કમિશનરશ્રી</option><option value="ADDL">અધિક રાજ્યવેરા કમિશનરશ્રી</option><option value="DC">નાયબ રાજ્યવેરા કમિશનરશ્રી</option><option value="CHIEF">મુખ્ય રાજ્યવેરા કમિશનરશ્રી</option></select>
                 <select id="cCcst" aria-label="CCST branch" style="flex:1 1 160px"></select>
@@ -1227,6 +1311,7 @@
             <input type="hidden" id="sgId">
             <div><label class="f" for="sgName">Name <span>(English, for the menu)</span></label><input type="text" id="sgName" placeholder="e.g. R.K. Patel"></div>
             <div><label class="f" for="sgBlock">Signature block <span>(Gujarati, one line per row, as printed)</span></label><textarea id="sgBlock" rows="3" placeholder="(આર.કે. પટેલ)&#10;નાયબ રાજ્યવેરા કમિશનર&#10;વિભાગ-૩, ગાંધીનગર"></textarea></div>
+            <div><label class="f" for="sgBlockEn">Signature block in English <span>(optional · for English letters; left empty, Lahiyo makes it from the name and rank)</span></label><textarea id="sgBlockEn" rows="3" placeholder="(R.K. Patel)&#10;Deputy Commissioner of State Tax&#10;Division-3, Gandhinagar"></textarea></div>
             <div><label class="f" for="sgRank">Rank</label><select id="sgRank"><option>JC</option><option>DC</option><option>AC</option><option>STO</option></select></div>
             <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
               <legend class="f" style="margin-bottom:6px">Suggest by default for</legend>
@@ -1234,6 +1319,7 @@
               <label class="chk"><input type="checkbox" id="sgDefUP"> Reply to CCST</label>
               <label class="chk"><input type="checkbox" id="sgDefCOMPOSE"> Write a Letter</label>
               <label class="chk"><input type="checkbox" id="sgDefREMINDER"> Reminders</label>
+              <label class="chk"><input type="checkbox" id="sgDefOTHER"> Letter to Other Offices</label>
             </fieldset>
             <label class="chk"><input type="checkbox" id="sgNote"> Add the approval note "(નોંધ: સદર પત્રનો મુસદ્દો … મંજૂર કરેલ છે.)" when this officer signs</label>
             <label class="chk"><input type="checkbox" id="sgActive" checked> Active (shown in the "Signed by" menu)</label>
@@ -1278,7 +1364,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function leftLabel(l) { return l < 0 ? Math.abs(l) + (l === -1 ? ' day' : ' days') + ' overdue' : (l === 0 ? 'Due today' : l + (l === 1 ? ' day' : ' days') + ' left'); }
   var TYPES = { forward_for_action: 'Forward for action', data_call: 'Data call', explanation: 'Explanation sought', reply_with_data: 'Reply with data', other: 'Other' };
-  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder · સ્મૃતિપત્ર', CHECKED: 'Checked letter (improved)' };
+  var MODE_NAMES = { DOWN: 'Forward to Range-7', UP: 'Reply to CCST', COMPOSE: 'Written letter', REMINDER: 'Reminder · સ્મૃતિપત્ર', CHECKED: 'Checked letter (improved)', OTHER: 'Letter to other office' };
   var CLOSED = /received|closed|done|મળેલ|બંધ|પૂર્ણ/i;
   /** Branch name without the word "શાખા"/"Branch", for small labels. */
   function shortBranch(n) { return String(n || '').replace(/\s*(શાખા|Branch)\s*$/i, '').replace(/\s*શાખા\s*/, ' ').trim() || n; }
@@ -1353,7 +1439,7 @@
 
   function startSession(s) {
     state.token = s.token; state.sess = s; saveToken(s.token);
-    state.addressees = s.addressees || []; state.note = s.approvalNote || '';
+    state.addressees = s.addressees || []; state.note = s.approvalNote || ''; state.noteEn = s.approvalNoteEn || '';
     if ((s.staff || []).length && !s.person) { showPersonStep(s); return; }
     $('login').hidden = true;
     $('userName').textContent = s.person ? s.person.name : s.branch;
@@ -1376,13 +1462,14 @@
     $('sheetLink').hidden = !(s.admin && s.sheetUrl);
     if (s.admin && s.sheetUrl) $('sheetLink').href = s.sheetUrl;
     $('cTo').innerHTML = state.addressees.map(function (a) { return '<option value="' + esc(a.id) + '">' + esc(a.label) + '</option>'; }).join('') +
-      '<option value="CCST">CCST office (choose officer and branch)</option><option value="OTHER">Other (type the address)</option>';
+      '<option value="CCST">CCST office (choose officer and branch)</option><option value="BOOK">Other office · from the address book</option><option value="OTHER">Other (type the address)</option>';
     setSignatories(s.signatories || []);
     showStep(1);
     loadDashboard();
     loadTray();
     $('bkCard').hidden = !s.admin; $('navLessons').hidden = !s.admin;
     if (s.admin) { loadBackup(false); loadLessons(); }
+    loadOffices();
   }
 
   (function boot() {
@@ -1437,19 +1524,19 @@
   }
 
   // ── Navigation ──
-  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11', 12: 'step12', 13: 'step13', 14: 'step14' };
-  var NAV_IDS = ['navFwd', 'navReply', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTeach', 'navLessons', 'navTray', 'navCcst', 'navStaff', 'navSign'];
-  var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', COMPOSE: 'navCompose', REMINDER: 'navReminder', CHECKED: 'navCheck' };
+  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11', 12: 'step12', 13: 'step13', 14: 'step14', 15: 'step15' };
+  var NAV_IDS = ['navFwd', 'navReply', 'navOther', 'navOffices', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTeach', 'navLessons', 'navTray', 'navCcst', 'navStaff', 'navSign'];
+  var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', OTHER: 'navOther', COMPOSE: 'navCompose', REMINDER: 'navReminder', CHECKED: 'navCheck' };
   function setNav(id) { NAV_IDS.forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
   function navFor(n) {
     if (n === 1) return MODE_NAV[state.mode];
     if (n === 2) return state.draft && state.draft.details && state.draft.details.queueId ? 'navTray' : MODE_NAV[(state.draft && state.draft.mode) || state.mode];
     if (n === 8) return state.sent && state.sent.back === 10 ? 'navCheck' : (state.sent && state.sent.back === 2 ? navFor(2) : 'navRegister');
-    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray', 12: 'navCcst', 13: 'navTeach', 14: 'navLessons' }[n];
+    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray', 12: 'navCcst', 13: 'navTeach', 14: 'navLessons', 15: 'navOffices' }[n];
   }
   function showStep(n) {
     Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
-    $('rail').hidden = [3, 6, 7, 8, 9, 11, 12, 13, 14].indexOf(n) >= 0; // wide screens use the full width
+    $('rail').hidden = [3, 6, 7, 8, 9, 11, 12, 13, 14, 15].indexOf(n) >= 0; // wide screens use the full width
     setNav(navFor(n)); window.scrollTo(0, 0);
   }
   /** Leaving the review page drops the draft (after asking). */
@@ -1469,6 +1556,7 @@
   }
   $('navFwd').onclick = function () { openForward('DOWN'); };
   $('navReply').onclick = function () { openForward('UP'); };
+  $('navOther').onclick = function () { openForward('OTHER'); };
   $('navCompose').onclick = function () { if (leaveDraftOk()) { $('err4').hidden = true; showStep(4); } };
   $('navReminder').onclick = function () { if (leaveDraftOk()) { $('err5').hidden = true; $('rFor').hidden = true; showStep(5); } };
   $('navSign').onclick = function () { if (leaveDraftOk()) { resetSigForm(); renderSigList(); showStep(6); } };
@@ -1485,10 +1573,13 @@
     state.mode = m;
     $('downBox').hidden = m !== 'DOWN';
     $('upBox').hidden = m !== 'UP';
-    $('fwdTitle').textContent = m === 'DOWN' ? 'Forward to Range-7' : 'Reply to CCST';
+    $('otherBox').hidden = m !== 'OTHER';
+    $('fwdTitle').textContent = m === 'DOWN' ? 'Forward to Range-7' : (m === 'UP' ? 'Reply to CCST' : 'Letter to Other Offices');
     $('fwdSub').textContent = m === 'DOWN'
       ? 'Upload the CCST letter received on e-Sarkar. Lahiyo prepares the forwarding letter to the Deputy Commissioner, Range-7.'
-      : 'Upload the Range-7 report (and, if you have it, the original CCST letter). Lahiyo prepares the reply to the CCST branch.';
+      : m === 'UP' ? 'Upload the Range-7 report (and, if you have it, the original CCST letter). Lahiyo prepares the reply to the CCST branch.'
+      : 'Upload the letter received from a Unit or DC Range-7. Lahiyo writes to the office it names — Central GST, police, Collector, a bank, a court, another division — in the same language as the letter received.';
+    if (m === 'OTHER') renderOtBook();
   }
   function setDl(d) {
     state.deadline = d;
@@ -1498,8 +1589,8 @@
   $('dlSame').onclick = function () { setDl('SAME'); };
   $('dlLess').onclick = function () { setDl('LESS'); };
 
-  var LABELS = { ccst: 'CCST letter', r7: 'Range-7 reply', orig: 'Original CCST letter', rem: 'Letter sent earlier' };
-  var SLOTS = ['ccst', 'r7', 'orig', 'rem'];
+  var LABELS = { ccst: 'CCST letter', r7: 'Range-7 reply', orig: 'Original CCST letter', rem: 'Letter sent earlier', oth: 'Letter received from the Unit / Range-7', oth2: 'Earlier letter in the chain' };
+  var SLOTS = ['ccst', 'r7', 'orig', 'rem', 'oth', 'oth2'];
   function errFor(slot) { return slot === 'rem' ? 'err5' : (slot === 'mine' || slot === 'korig' ? 'err10' : 'err1'); }
   function readFile(slot, file) {
     if (!file) return;
@@ -1510,7 +1601,7 @@
       $('n_' + slot).textContent = '✓ ' + file.name;
       $('n_' + slot).closest('.drop').classList.add('has');
       $(errFor(slot)).hidden = true;
-      if (slot === 'ccst' || slot === 'r7' || slot === 'orig') startPrefetch();
+      if (slot === 'ccst' || slot === 'r7' || slot === 'orig' || slot === 'oth' || slot === 'oth2') startPrefetch();
     };
     r.readAsDataURL(file);
   }
@@ -1541,11 +1632,13 @@
   // so changing it does not need a new AI request.
   function forwardFiles() {
     if (state.mode === 'DOWN') return state.files.ccst ? [state.files.ccst] : null;
+    if (state.mode === 'OTHER') return state.files.oth ? (state.files.oth2 ? [state.files.oth, state.files.oth2] : [state.files.oth]) : null;
     if (!state.files.r7) return null;
     return state.files.orig ? [state.files.r7, state.files.orig] : [state.files.r7];
   }
   function prefetchKey(files) {
-    return state.mode + '|' + files.map(function (f) { return f.name + ':' + f.data.length; }).join('|');
+    return state.mode + '|' + files.map(function (f) { return f.name + ':' + f.data.length; }).join('|') +
+      (state.mode === 'OTHER' ? '|' + JSON.stringify(otherReq().sendTo) + '|' + otherReq().lang : '');
   }
   function startPrefetch() {
     var files = forwardFiles();
@@ -1554,13 +1647,16 @@
     if (state.pre && state.pre.key === key && state.pre.status !== 'error') return state.pre;
     var pre = { key: key, status: 'running', started: Date.now(), waiters: [], mode: state.mode };
     state.pre = pre;
-    $('preHint').textContent = '⚡ Reading has started. You can choose the deadline meanwhile.';
+    $('preHint').textContent = state.mode === 'OTHER' ? '⚡ Reading has started.' : '⚡ Reading has started. You can choose the deadline meanwhile.';
     $('preHint').hidden = false;
-    api('generateDraft', [{ mode: state.mode, deadline: 'SAME', files: files, branch: $('recBranch').value }],
+    var fn = state.mode === 'OTHER' ? 'otherDraft' : 'generateDraft';
+    var preq = state.mode === 'OTHER' ? Object.assign(otherReq(), { files: files, branch: $('recBranch').value })
+      : { mode: state.mode, deadline: 'SAME', files: files, branch: $('recBranch').value };
+    api(fn, [preq],
       function (d) {
         if (state.pre !== pre) return;                     // a different file was chosen meanwhile
         pre.status = 'done'; pre.draft = d; pre.ms = Date.now() - pre.started;
-        d.req = { fn: 'generateDraft', req: { mode: pre.mode, deadline: 'SAME', files: files, branch: $('recBranch').value } };
+        d.req = { fn: fn, req: preq };
         d.srcFiles = files.map(function (f) { return { name: f.name, data: f.data, label: f.label }; });
         $('preHint').textContent = '✓ Draft is ready (' + secs(pre.ms) + '). Click Generate Draft to see it.';
         pre.waiters.splice(0).forEach(function (f) { f(); });
@@ -1605,7 +1701,8 @@
 
   $('genBtn').onclick = function () {
     $('err1').hidden = true;
-    if (!forwardFiles()) return showErr('err1', state.mode === 'DOWN' ? 'Please upload the CCST letter first.' : 'Please upload the Range-7 report first.');
+    if (!forwardFiles()) return showErr('err1', state.mode === 'DOWN' ? 'Please upload the CCST letter first.' : state.mode === 'OTHER' ? 'Please upload the letter received from the Unit or Range-7 first.' : 'Please upload the Range-7 report first.');
+    if (state.mode === 'OTHER') { var oe = otherProblem(); if (oe) return showErr('err1', oe); }
     if (state.mode === 'UP' && !state.files.orig && !sendTo()) return showErr('err1', 'Choose the CCST office this reply goes to (officer and branch), or upload the original CCST letter so Lahiyo can read it.');
     var pre = startPrefetch();
     var done = function () {
@@ -1626,7 +1723,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.cIns'), function (x) { x.setAttribute('aria-pressed', x === b); });
     };
   });
-  $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; $('cCcstBox').hidden = $('cTo').value !== 'CCST'; };
+  $('cTo').onchange = function () { $('cToOther').hidden = $('cTo').value !== 'OTHER'; $('cCcstBox').hidden = $('cTo').value !== 'CCST'; $('cBook').hidden = $('cTo').value !== 'BOOK'; if ($('cTo').value === 'BOOK') renderCBook(); };
   $('cSig').onchange = function () {
     var other = $('cSig').value === 'OTHER';
     $('cOther').hidden = !other;
@@ -1638,6 +1735,7 @@
     var note = $('cNote').value.trim();
     if (note.length < 10) return showErr('err4', 'Please write what has been asked (at least one sentence).');
     if ($('cTo').value === 'OTHER' && !$('cToOther').value.trim()) return showErr('err4', 'Please type the address.');
+    if ($('cTo').value === 'BOOK' && !$('cBook').value) return showErr('err4', 'Please choose the office from the address book.');
     if (!$('cSig').value) return showErr('err4', 'Please choose who signs the letter.');
     if ($('cTo').value === 'CCST' && $('cRank').value !== 'CHIEF' && !$('cCcst').value) return showErr('err4', 'Please choose the CCST branch.');
     var sigId = $('cSig').value;
@@ -1652,7 +1750,7 @@
     busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', true, 'Writing the letter…', 'Write the Letter');
     var fail = function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); };
     var write = function (id) {
-      var creq = { instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, ccstRank: $('cRank').value, ccstBranch: $('cCcst').value, note: note,
+      var creq = { instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, bookId: $('cBook').value, ccstRank: $('cRank').value, ccstBranch: $('cCcst').value, note: note,
         refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id };
       api('composeDraft', [creq],
         function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; d.req = { fn: 'composeDraft', req: creq }; state.draft = d; showDraft(d); }, fail);
@@ -1697,6 +1795,10 @@
     if (d.mode === 'CHECKED') return [
       ['Letter type', 'Checked letter · improved version'], ['To', det.addressee], ['Subject', det.subject],
       ['Original letter', det.input_letter_no], ['Register', det.regTab ? 'Already recorded when checked' : d.branch], ['AI model', d.model]];
+    if (d.mode === 'OTHER') return [
+      ['Letter type', 'Letter to other office'], ['To', det.addressee], ['Language', d.lang === 'en' ? 'English' : 'Gujarati'],
+      ['Letter received No.', det.input_letter_no], ['Approved on', det.input_approved_date], ['From', det.sender_full],
+      ['Deadline', det.deadline_days ? days(det.deadline_days) : 'None'], ['Register', d.branch], ['AI model', d.model]];
     if (d.mode === 'COMPOSE') return [
       ['Letter type', 'Written letter'], ['To', det.addressee], ['Instructed by', det.instructed_by],
       ['Deadline', det.deadline_text], ['References', det.input_letter_no], ['Register', d.branch], ['AI model', d.model]];
@@ -1720,15 +1822,15 @@
       var o = state.otherSig || { block: [], note: false };
       if (!$('eOther').dataset.filled) { $('eOtherBlock').value = o.block.join('\n'); $('eOtherNote').checked = !!o.note; $('eOther').dataset.filled = '1'; }
       $('noteBox').hidden = !$('eOtherNote').checked;
-      $('noteBox').innerHTML = $('eOtherNote').checked ? '<span class="k">Approval note</span>' + esc(state.note) : '';
+      $('noteBox').innerHTML = $('eOtherNote').checked ? '<span class="k">Approval note</span>' + esc(noteText()) : '';
       return;
     }
     var s = sigById(id);
-    var lines = s ? s.block : ((state.draft && state.draft.letter.signature) || []);
-    $('sigBox').innerHTML = '<span class="k">Signature block</span>' + esc(lines.join('\n'));
+    var lines = s ? sigLines(s) : ((state.draft && state.draft.letter.signature) || []);
+    $('sigBox').innerHTML = '<span class="k">Signature block</span>' + (isEn() ? 'Yours faithfully,\n' : '') + esc(lines.join('\n'));
     var showNote = s ? s.note : !!(state.draft && state.draft.letter.note);
     $('noteBox').hidden = !showNote;
-    $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(state.note) : '';
+    $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(noteText()) : '';
   }
   $('e_sig').onchange = function () { applySignatory($('e_sig').value); courtesyNow(); };
   $('eOtherNote').onchange = function () { applySignatory('OTHER'); };
@@ -1751,15 +1853,21 @@
         (c.note ? '<div class="note">' + esc(c.note) + '</div>' : '') + '</div>';
     }).join('') : '<p class="empty">Nothing to verify.</p>';
 
+    var enL = d.lang === 'en';
+    $('paper').classList.toggle('en', enL);
+    $('paperTitle').textContent = enL ? 'Draft letter (English)' : 'Draft letter (Gujarati)';
+    $('salut').textContent = enL ? 'To,' : 'પ્રતિ,';
+    showOffSave(d);
     $('e_to').value = (L.to || []).join('\n');
+    $('e_to').rows = Math.max(2, Math.min(5, (L.to || []).length));
     $('e_to').readOnly = d.mode === 'DOWN';
-    $('toHint').textContent = d.mode === 'DOWN' ? '(fixed · from master data)' : (d.mode === 'UP' ? '(check the CCST branch)' : '(you can edit the address)');
+    $('toHint').textContent = d.mode === 'DOWN' ? '(fixed · from master data)' : (d.mode === 'UP' ? '(check the CCST branch)' : d.mode === 'OTHER' ? '(check the office · you can edit it)' : '(you can edit the address)');
     $('e_subject').value = L.subject || '';
     $('e_refs').value = (L.refs || []).join('\n');
     $('e_body').value = (L.body || []).join('\n\n');
     $('e_encl').value = L.enclosure || '';
     state.notingTopic = (det.noting_topic || '');
-    state.notingEdited = false;
+    state.notingEdited = false; state.toEdited = false;
     $('e_noting').value = d.noting || notingFor(d);
     $('copyTxt').textContent = 'Copy noting';
 
@@ -1786,12 +1894,14 @@
     var d = state.draft; if (!d) return;
     var other = $('e_sig').value === 'OTHER';
     var s = other ? { block: lines($('eOtherBlock').value), note: $('eOtherNote').checked } : sigById($('e_sig').value);
+    if (s && !other) s = { block: sigLines(s), note: s.note };
     var letter = {
+      lang: d.lang || 'gu',
       to: lines($('e_to').value),
       subject: $('e_subject').value.trim(),
       refs: lines($('e_refs').value),
       body: $('e_body').value.split(/\n\s*\n/).map(function (x) { return x.replace(/\s*\n\s*/g, ' ').trim(); }).filter(Boolean),
-      note: s ? (s.note ? state.note : '') : (d.letter.note || ''),
+      note: s ? (s.note ? noteText() : '') : (d.letter.note || ''),
       enclosure: $('e_encl').value.trim(),
       signature: s ? s.block : (d.letter.signature || [])
     };
@@ -1813,6 +1923,11 @@
       $('ok2').hidden = false;
       state.downloaded = true;
       loadDashboard();
+      if (d.mode === 'OTHER' && d.details && d.details.pendingSave) {
+        var ps = d.details.pendingSave; d.details.pendingSave = null; ps.quiet = true;
+        api('saveOffice', [ps], function (r) { state.offices = r.list; renderOtBook(); renderCBook(); d.details.bookId = r.id;
+          $('offSaveBox').textContent = r.existed ? '✓ ' + ps.name + ' is already in the address book.' : '✓ ' + ps.name + ' was added to the address book.'; }, function (er) { $('offSaveBox').textContent = 'The office could not be added to the address book: ' + er.message; });
+      }
       try { offerLessons(); } catch (er) { /* teaching is optional */ }
     }, function (e) { $('dlBtn').disabled = false; $('spin2').hidden = true; showErr('err2', e); });
   };
@@ -1917,7 +2032,7 @@
   $('regRefresh').onclick = loadRegister;
 
   // ── Signatories admin (step 6) ──
-  var MODE_SHORT = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'Reminder' };
+  var MODE_SHORT = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'Reminder', OTHER: 'Other office' };
   function renderSigList() {
     if (!state.sigs.length) { $('sigList').innerHTML = '<p class="empty">No signatories yet. Add one on the right.</p>'; return; }
     $('sigList').innerHTML = state.sigs.map(function (x) {
@@ -1931,8 +2046,8 @@
     }).join('');
   }
   function resetSigForm() {
-    $('sgId').value = ''; $('sgName').value = ''; $('sgBlock').value = ''; $('sgRank').value = 'AC';
-    ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].forEach(function (m) { $('sgDef' + m).checked = false; });
+    $('sgId').value = ''; $('sgName').value = ''; $('sgBlock').value = ''; $('sgBlockEn').value = ''; $('sgRank').value = 'AC';
+    ['DOWN', 'UP', 'COMPOSE', 'REMINDER', 'OTHER'].forEach(function (m) { $('sgDef' + m).checked = false; });
     $('sgNote').checked = false; $('sgActive').checked = true;
     $('sgTitle').textContent = 'Add a signatory'; $('sgCancel').hidden = true; $('err6').hidden = true; $('ok6').hidden = true;
   }
@@ -1940,8 +2055,8 @@
     var card = e.target.closest('.sigcard'); if (!card) return;
     var x = sigById(card.dataset.id); if (!x) return;
     if (e.target.classList.contains('sgEdit')) {
-      $('sgId').value = x.id; $('sgName').value = x.name; $('sgBlock').value = x.block.join('\n'); $('sgRank').value = x.rank || 'AC';
-      ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].forEach(function (m) { $('sgDef' + m).checked = x.defaults.indexOf(m) >= 0; });
+      $('sgId').value = x.id; $('sgName').value = x.name; $('sgBlock').value = x.block.join('\n'); $('sgBlockEn').value = (x.blockEn || []).join('\n'); $('sgRank').value = x.rank || 'AC';
+      ['DOWN', 'UP', 'COMPOSE', 'REMINDER', 'OTHER'].forEach(function (m) { $('sgDef' + m).checked = x.defaults.indexOf(m) >= 0; });
       $('sgNote').checked = x.note; $('sgActive').checked = x.active;
       $('sgTitle').textContent = 'Edit · ' + x.name; $('sgCancel').hidden = false; $('err6').hidden = true; $('ok6').hidden = true;
       $('sgName').focus();
@@ -1955,7 +2070,7 @@
   $('sgSave').onclick = function () {
     $('err6').hidden = true; $('ok6').hidden = true;
     var data = { id: $('sgId').value, name: $('sgName').value, block: $('sgBlock').value, rank: $('sgRank').value,
-      defaults: ['DOWN', 'UP', 'COMPOSE', 'REMINDER'].filter(function (m) { return $('sgDef' + m).checked; }),
+      defaults: ['DOWN', 'UP', 'COMPOSE', 'REMINDER', 'OTHER'].filter(function (m) { return $('sgDef' + m).checked; }), blockEn: $('sgBlockEn').value,
       note: $('sgNote').checked, active: $('sgActive').checked };
     if (!data.name.trim()) return showErr('err6', 'Please enter the officer\'s name.');
     if (!data.block.trim()) return showErr('err6', 'Please enter the signature block in Gujarati.');
@@ -1996,7 +2111,7 @@
   };
 
   // ── Background drafting: several PDFs chosen at once ──
-  var BATCH_SLOTS = { ccst: 'DOWN', r7: 'UP', rem: 'REMINDER' };
+  var BATCH_SLOTS = { ccst: 'DOWN', r7: 'UP', rem: 'REMINDER', oth: 'OTHER' };
   function pickFiles(slot, list) {
     var files = Array.prototype.filter.call(list || [], function (f) { return /\.pdf$/i.test(f.name) || f.type === 'application/pdf'; });
     if (BATCH_SLOTS[slot] && files.length > 1) return startBatchPick(slot, files);
@@ -2017,13 +2132,14 @@
     actions.parentNode.insertBefore($('batchBox'), actions);
     $('batchBox').hidden = false; actions.hidden = true;
     if (slot === 'r7') { $('f_orig').closest('.drop').style.opacity = '.45'; }
+    if (slot === 'oth') { $('f_oth2').closest('.drop').style.opacity = '.45'; }
   }
   function clearBatch() {
     if (!state.batch) return;
     var slot = state.batch.slot;
     state.batch = null; $('batchBox').hidden = true;
     $('genActions').hidden = false; $('rActions').hidden = false;
-    $('f_orig').closest('.drop').style.opacity = '';
+    $('f_orig').closest('.drop').style.opacity = ''; $('f_oth2').closest('.drop').style.opacity = '';
     $('f_' + slot).value = ''; $('n_' + slot).textContent = ''; $('n_' + slot).closest('.drop').classList.remove('has');
   }
   $('batchClear').onclick = clearBatch;
@@ -2045,6 +2161,7 @@
     if (sig === 'OTHER') return showErr('batchErr', 'For background drafting please choose a signatory from the list.');
     var opts = { mode: b.mode, deadline: state.deadline, level: state.level, remDeadline: $('rDl').value,
       branch: rem ? $('rBranch').value : $('recBranch').value, signatoryId: sig, count: b.files.length, sendTo: b.mode === 'UP' ? sendTo() : null };
+    if (b.mode === 'OTHER') { var oe = otherProblem(); if (oe) return showErr('batchErr', oe); var orq = otherReq(); opts.otherTo = orq.sendTo; opts.lang = orq.lang; }
     if (b.mode === 'UP' && !opts.sendTo) return showErr('batchErr', 'Choose the CCST office (officer and branch) these replies go to — step 2 above.');
     var n = b.files.length, done = 0;
     busyBtn('batchBtn', 'batchSpin', 'batchIcon', 'batchTxt', true, 'Uploading 1 of ' + n + '…', '');
@@ -2073,7 +2190,7 @@
 
   // ── Drafts Tray ──
   var TRAY_TXT = { Waiting: 'Waiting', Working: 'Working…', Busy: 'Gemini busy', Ready: 'Draft ready', Opened: 'Opened', Downloaded: 'Downloaded', Failed: 'Needs attention' };
-  var MODE_SHORT2 = { DOWN: 'Forward', UP: 'Reply', REMINDER: 'સ્મૃતિપત્ર' };
+  var MODE_SHORT2 = { DOWN: 'Forward', UP: 'Reply', REMINDER: 'સ્મૃતિપત્ર', OTHER: 'Other office' };
   function loadTray(cb) {
     api('getQueue', [], function (q) { renderTray(q); if (cb) cb(q); }, function (e) { showErr('trErr', e); });
   }
@@ -2096,7 +2213,7 @@
         '<td style="white-space:nowrap">' + (can ? '<button type="button" class="savebtn trOpen">Open</button> ' : '') +
         (r.status === 'Failed' ? '<button type="button" class="savebtn trRetry">Try again</button> ' : '') +
         (r.status !== 'Working' ? '<button type="button" class="linkbtn trDel">Remove</button>' : '') + '</td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">The tray is empty. Choose several PDFs on Forward, Reply or Reminder to draft them in the background.</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">The tray is empty. Choose several PDFs on Forward, Reply, Letter to Other Offices or Reminder to draft them in the background.</td></tr>';
     $('trAll').checked = false;
     clearTimeout(state.trayTimer);
     if (q.pending) state.trayTimer = setTimeout(function () { loadTray(); }, $('step11').hidden ? 60000 : 15000);
@@ -2285,7 +2402,7 @@
   function renderWork() {
     var rows = workRows(), all = state.work ? state.work.rows : [];
     var count = function (t) { return all.filter(function (r) { return r.type === t; }).length; };
-    $('wkTiles').innerHTML = [['Total letters', all.length, 'gold'], ['Forward', count('Forward')], ['Reply', count('Reply')], ['Written', count('Written')], ['સ્મૃતિપત્ર', count('Reminder')], ['Checked', count('Checked')]]
+    $('wkTiles').innerHTML = [['Total letters', all.length, 'gold'], ['Forward', count('Forward')], ['Reply', count('Reply')], ['Written', count('Written')], ['સ્મૃતિપત્ર', count('Reminder')], ['Other office', count('Other office')], ['Checked', count('Checked')]]
       .map(function (x) { return '<div class="tile ' + (x[2] || '') + '"><div class="n">' + x[1] + '</div><small' + (/[઀-૿]/.test(x[0]) ? ' class="gu-l"' : '') + '>' + esc(x[0]) + '</small></div>'; }).join('');
     var admin = state.sess && state.sess.admin, showWho = $('wkPerson').value === 'ALL';
     var head = ['Date', 'Type', 'Subject', 'To / From', 'Sent', 'Status'].concat(showWho ? ['Worked by'] : []).concat(admin ? ['Branch'] : []);
@@ -2296,7 +2413,7 @@
     state.wkShown = rows;
     $('wkDel').hidden = !anySel;
     $('wkBody').innerHTML = rows.length ? rows.map(function (r, i) {
-      var to = r.direction.replace(/^(Written|Checked|Reminder[^→]*)\s*→\s*/, '').replace(/^To /, '');
+      var to = r.direction.replace(/^(Written|Checked|Reminder[^→]*|To other office)\s*→\s*/, '').replace(/^To /, '');
       var sent = r.sentOn ? esc(r.sentVia) + ' · ' + esc(r.sentOn) + '<br><small class="meta">' + esc((r.outward || r.esarkar.split('\n')[0] || '')) + '</small>' : (r.outward ? 'Outward ' + esc(r.outward) : '—');
       var closed = CLOSED.test(r.status);
       return '<tr data-i="' + i + '"><td class="selc">' + (canDelete(r) ? '<input type="checkbox" class="wkSel" aria-label="Select">' : '') + '</td>' +
@@ -2427,13 +2544,14 @@
   function notingFor(d) {
     var subj = $('e_subject').value || '';
     var topic = (state.notingTopic || '').trim() || subj.replace(/\s*\((અંતિમ\s*)?સ્મૃતિપત્ર[^)]*\)\s*[.।]?\s*$/, '').replace(/\s*(બાબતે|બાબતનો|બાબત)[.।]?\s*$/, '').replace(/[.।]\s*$/, '');
-    var to = lines($('e_to').value).map(function (x) { return x.trim(); }).filter(Boolean).join(' ').replace(/^પ્રતિ,?\s*/, '').replace(/[\s.।]+$/, '');
     var det = (d && d.details) || {};
+    var toL = d && d.lang === 'en' && det.office_gu && det.office_gu.length && !state.toEdited ? maanFirst(det.office_gu) : lines($('e_to').value);
+    var to = toL.map(function (x) { return x.trim(); }).filter(Boolean).join(' ').replace(/^(પ્રતિ|To),?\s*/, '').replace(/[\s.।]+$/, '');
     var word = d && d.mode === 'REMINDER' ? (String(det.level) === 'FINAL' ? 'અંતિમ સ્મૃતિપત્ર' : 'સ્મૃતિપત્ર-' + gujNum(det.level || 1)) : 'પત્ર';
     return 'સાદર રજૂ, આપશ્રીની મૌખિક સૂચના અનુસાર ' + topic + ' બાબતનો ' + word + (to ? ' ' + to + ' ને સંબોધીને' : '') + ' તૈયાર કરેલ છે. જે સહી અર્થે રજુ.';
   }
   $('e_noting').oninput = function () { state.notingEdited = true; };
-  $('e_to').addEventListener('input', function () { if (!state.notingEdited && state.draft) $('e_noting').value = notingFor(state.draft); });
+  $('e_to').addEventListener('input', function () { state.toEdited = true; if (!state.notingEdited && state.draft) $('e_noting').value = notingFor(state.draft); });
   $('copyNoting').onclick = function () {
     var t = $('e_noting').value;
     var done = function () { $('copyTxt').textContent = 'Copied ✓'; setTimeout(function () { $('copyTxt').textContent = 'Copy noting'; }, 2500); };
@@ -2477,7 +2595,7 @@
   document.getElementById('f_orig').addEventListener('change', function () { setTimeout(upHint, 300); });
   /** "માન." before the addressee when the addressee's rank ≥ the signer's (AC → DC: "માન.નાયબ…", JC → DC: "નાયબ…"). */
   function courtesyNow() {
-    var d = state.draft; if (!d) return;
+    var d = state.draft; if (!d || d.lang === 'en') return;
     var sigLines = $('e_sig').value === 'OTHER' ? lines($('eOtherBlock').value) : ((sigById($('e_sig').value) || {}).block || (d.letter.signature || []));
     var sr = sigLines.reduce(function (m, l) { return Math.max(m, rankOfText(l)); }, 0);
     var to = $('e_to').value.split('\n'), i = -1;
@@ -2522,6 +2640,134 @@
     $('cbSave').disabled = true;
     api('saveCcstBranch', [b], function (l) { $('cbSave').disabled = false; renderCb(l); resetCb(); $('ok12').textContent = b.name + ' saved.'; $('ok12').hidden = false; },
       function (err) { $('cbSave').disabled = false; showErr('err12', err); });
+  };
+
+  // ════════════════════ v3.8 · Letter to Other Offices ════════════════════
+  function isEn() { return !!(state.draft && state.draft.lang === 'en'); }
+  function noteText() { return isEn() ? (state.noteEn || state.note) : state.note; }
+  function sigLines(s) { return isEn() && s.en && s.en.length ? s.en : s.block; }
+  function maanFirst(a) {
+    a = (a || []).slice();
+    if (a.length && !/^\s*માન/.test(a[0]) && !rankOfText(a[0])) a[0] = 'માન.' + a[0];
+    return a;
+  }
+  // Send-to choice
+  function otHow() { var r = document.querySelector('input[name="otHow"]:checked'); return r ? r.value : 'letter'; }
+  function otLang() { return segVal('otLang') || 'AUTO'; }
+  function otherReq() {
+    var how = otHow(), st = { how: 'letter' };
+    if (how === 'book' && $('otBook').value) st = { how: 'book', id: $('otBook').value };
+    if (how === 'typed' && $('otTyped').value.trim()) st = { how: 'typed', lines: $('otTyped').value.trim(), save: $('otSave').checked };
+    return { sendTo: st, lang: otLang(), signatoryId: (defaultSig('OTHER') || {}).id || '' };
+  }
+  function otherProblem() {
+    var how = otHow();
+    if (how === 'book' && !$('otBook').value) return 'Choose the office from the address book, or let Lahiyo read it from the letter.';
+    if (how === 'typed' && !$('otTyped').value.trim()) return 'Type the address of the office, or let Lahiyo read it from the letter.';
+    return '';
+  }
+  function setOtHow(how) {
+    Array.prototype.forEach.call(document.querySelectorAll('#otOpts .ot-opt'), function (o) {
+      var on = o.dataset.how === how; o.classList.toggle('on', on); o.querySelector('input[name="otHow"]').checked = on;
+    });
+  }
+  $('otOpts').addEventListener('change', function (e) { if (e.target.name === 'otHow') setOtHow(e.target.value); });
+  $('otOpts').addEventListener('click', function (e) {
+    var o = e.target.closest('.ot-opt'); if (o && !o.classList.contains('on')) setOtHow(o.dataset.how);
+  });
+  $('otLang').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { setSeg('otLang', b.dataset.v); otBookShow(); } });
+  function officeText(o, lang) {
+    var a = lang === 'en' ? (o.en.length ? o.en : o.gu) : (o.gu.length ? o.gu : o.en);
+    return (o.maan && a === o.gu ? maanFirst(a) : a).join('\n');
+  }
+  function officeOpts(list, sel) {
+    return list.map(function (o) { return '<option value="' + esc(o.id) + '"' + (o.id === sel ? ' selected' : '') + '>' + esc(o.name) + '</option>'; }).join('');
+  }
+  function renderOtBook() {
+    var list = state.offices || [], q = ($('otFind').value || '').trim().toLowerCase(), sel = $('otBook').value;
+    var shown = list.filter(function (o) { return !q || (o.name + ' ' + o.gu.join(' ') + ' ' + o.en.join(' ')).toLowerCase().indexOf(q) >= 0; });
+    $('otCount').textContent = '· ' + list.length + (list.length === 1 ? ' office' : ' offices');
+    $('otBook').innerHTML = shown.length ? officeOpts(shown, sel) : '<option value="" disabled>' + (list.length ? 'No office matches the search' : 'The address book is empty — type the address below') + '</option>';
+    otBookShow();
+  }
+  function otBookShow() {
+    var o = (state.offices || []).filter(function (x) { return x.id === $('otBook').value; })[0];
+    $('otBookShow').hidden = !o;
+    if (o) $('otBookShow').innerHTML = '<small>Address</small>' + esc(officeText(o, otLang() === 'EN' ? 'en' : 'gu'));
+  }
+  $('otFind').oninput = renderOtBook;
+  $('otBook').onchange = otBookShow;
+  function renderCBook() {
+    var sel = $('cBook').value, list = state.offices || [];
+    $('cBook').innerHTML = '<option value="">' + (list.length ? 'Choose the office…' : 'The address book is empty') + '</option>' + officeOpts(list, sel);
+  }
+  function loadOffices(cb) {
+    api('getOffices', [], function (l) { state.offices = l || []; renderOtBook(); renderCBook(); if (!$('step15').hidden) renderOb(); if (cb) cb(); }, function () { state.offices = state.offices || []; });
+  }
+  // Review page: offer to save the office Lahiyo found
+  function showOffSave(d) {
+    var det = d.details || {}, box = $('offSaveBox');
+    box.hidden = true; box.className = 'msg info';
+    if (d.mode !== 'OTHER') return;
+    if (det.pendingSave) { box.textContent = '“' + (det.pendingSave.name || 'This office') + '” will be added to the address book when you download the letter.'; box.hidden = false; return; }
+    if (det.savedOffice === 'saved') { box.textContent = '✓ ' + (det.office_name || 'The office') + ' was added to the address book.'; box.hidden = false; return; }
+    if (det.savedOffice === 'already') { box.textContent = '✓ ' + (det.office_name || 'This office') + ' is already in the address book.'; box.hidden = false; return; }
+    if (det.bookId || !(det.office_gu || []).length && !(det.office_en || []).length) return;
+    box.innerHTML = '<b>' + esc(det.office_name || 'This office') + '</b> is not in the address book. <button type="button" class="savebtn" id="offSaveBtn">Save to the address book</button>';
+    box.hidden = false;
+  }
+  $('offSaveBox').addEventListener('click', function (e) {
+    if (e.target.id !== 'offSaveBtn' || !state.draft) return;
+    var det = state.draft.details || {};
+    e.target.disabled = true; e.target.textContent = 'Saving…';
+    api('saveOffice', [{ name: det.office_name, gu: (det.office_gu || []).join('\n'), en: (det.office_en || []).join('\n'), maan: true }], function (r) {
+      state.offices = r.list; renderOtBook(); renderCBook(); det.bookId = r.id;
+      $('offSaveBox').textContent = '✓ ' + (det.office_name || 'The office') + ' saved to the address book.';
+    }, function (er) { $('offSaveBox').className = 'msg err'; $('offSaveBox').textContent = er.message; });
+  });
+  // Address book page (all users add · Administrator edits and deletes)
+  $('navOffices').onclick = function () { if (leaveDraftOk()) { resetOb(); showStep(15); renderOb(); loadOffices(); } };
+  function renderOb() {
+    var admin = state.sess && state.sess.admin, q = ($('obFind').value || '').trim().toLowerCase();
+    var list = (state.offices || []).filter(function (o) { return !q || (o.name + ' ' + o.gu.join(' ') + ' ' + o.en.join(' ')).toLowerCase().indexOf(q) >= 0; });
+    $('obSub').textContent = 'Address book for “Letter to Other Offices” and “Write a Letter”. Every branch can add an office; ' + (admin ? 'as the Administrator you can also edit or delete them.' : 'only the Administrator can edit or delete one.');
+    $('obList').innerHTML = list.length ? list.map(function (o) {
+      return '<tr data-id="' + esc(o.id) + '"><td><b>' + esc(o.name) + '</b></td>' +
+        '<td class="gu">' + (o.gu.length ? esc((o.maan ? maanFirst(o.gu) : o.gu).join('\n')).replace(/\n/g, '<br>') : '—') + '</td>' +
+        '<td>' + (o.en.length ? esc(o.en.join('\n')).replace(/\n/g, '<br>') : '—') + '</td><td>' + (o.maan ? 'Yes' : 'No') + '</td>' +
+        '<td>' + esc(o.by) + '<br><small class="meta">' + esc([o.branch && o.branch !== 'Administrator' ? shortBranch(o.branch) : '', o.on].filter(Boolean).join(' · ')) + '</small></td>' +
+        '<td>' + (admin ? '<div class="rowbtns"><button type="button" class="savebtn obEdit">Edit</button><button type="button" class="delbtn obDel">Delete</button></div>' : '') + '</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">' + ((state.offices || []).length ? 'No office matches the search.' : 'No offices yet. Add one on the right, or tick “Save to the address book” when you type an address.') + '</td></tr>';
+  }
+  $('obFind').oninput = renderOb;
+  function resetOb() {
+    $('obId').value = ''; $('obName').value = ''; $('obGu').value = ''; $('obEn').value = ''; $('obMaan').checked = true;
+    $('obTitle').textContent = 'Add an office'; $('obSave').textContent = 'Add to the address book'; $('obCancel').hidden = true; $('err15').hidden = true; $('ok15').hidden = true;
+  }
+  $('obCancel').onclick = resetOb;
+  $('obList').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var o = (state.offices || []).filter(function (x) { return x.id === tr.dataset.id; })[0]; if (!o) return;
+    if (e.target.classList.contains('obEdit')) {
+      $('obId').value = o.id; $('obName').value = o.name; $('obGu').value = o.gu.join('\n'); $('obEn').value = o.en.join('\n'); $('obMaan').checked = o.maan;
+      $('obTitle').textContent = 'Edit · ' + o.name; $('obSave').textContent = 'Save changes'; $('obCancel').hidden = false; $('err15').hidden = true; $('ok15').hidden = true;
+      $('obName').focus();
+    } else if (e.target.classList.contains('obDel')) {
+      if (!confirm('Delete ' + o.name + ' from the address book? Letters already drafted are not affected.')) return;
+      api('removeOffice', [o.id], function (l) { state.offices = l; renderOb(); renderOtBook(); renderCBook(); resetOb(); $('ok15').textContent = o.name + ' deleted.'; $('ok15').hidden = false; },
+        function (er) { showErr('err15', er); });
+    }
+  });
+  $('obSave').onclick = function () {
+    $('err15').hidden = true; $('ok15').hidden = true;
+    var o = { id: $('obId').value, name: $('obName').value.trim(), gu: $('obGu').value.replace(/^\s*માન\.?\s*/, ''), en: $('obEn').value, maan: $('obMaan').checked };
+    if (!o.name) return showErr('err15', 'Please enter the office name.');
+    if (!o.gu.trim() && !o.en.trim()) return showErr('err15', 'Please enter the address in Gujarati or in English.');
+    $('obSave').disabled = true;
+    api('saveOffice', [o], function (r) {
+      $('obSave').disabled = false; state.offices = r.list; renderOb(); renderOtBook(); renderCBook(); resetOb();
+      $('ok15').textContent = o.name + ' saved.'; $('ok15').hidden = false;
+    }, function (er) { $('obSave').disabled = false; showErr('err15', er); });
   };
 
   // ── Delete (hide) entries: Register and My Work ──
@@ -2747,6 +2993,7 @@
     if (!d) return 'ANY';
     if (d.mode === 'DOWN') return 'R7';
     if (d.mode === 'UP') return 'CCST';
+    if (d.mode === 'OTHER') return 'OTHER';
     var t = $('e_to').value;
     return /વર્તુળ\s*[-–]?\s*(૭|7)/.test(t) ? 'R7' : /ઘટક/.test(t) ? 'UNITS' : /અમદાવાદ/.test(t) ? 'CCST' : 'ANY';
   }
@@ -2771,7 +3018,7 @@
   }
   $('teachBtn').onclick = function () {
     var d = state.draft;
-    openTeach({ wrong: state.sel ? state.sel.text : '', type: d ? ({ DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER' }[d.mode] || 'ALL') : 'ALL', addr: addrOf(d) });
+    openTeach({ wrong: state.sel ? state.sel.text : '', type: d ? ({ DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER', OTHER: 'OTHER' }[d.mode] || 'ALL') : 'ALL', addr: addrOf(d) });
   };
   $('tCancel').onclick = function () { $('teachModal').hidden = true; };
   function teachItem() { return { wrong: $('tWrong').value.trim(), right: $('tRight').value.trim(), rule: $('tRule').value.trim(), type: segVal('tType'), addr: segVal('tAddr') }; }
@@ -2849,7 +3096,7 @@
   function offerLessons() {
     var d = state.draft, pairs = editPairs();
     if (!pairs.length) return;
-    var type = { DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER' }[d.mode] || 'ALL', addr = addrOf(d);
+    var type = { DOWN: 'DOWN', UP: 'UP', COMPOSE: 'COMPOSE', REMINDER: 'REMINDER', OTHER: 'OTHER' }[d.mode] || 'ALL', addr = addrOf(d);
     pairs.forEach(function (p) { p.type = type; p.addr = addr; });
     state.learn = pairs;
     $('lnTitleTxt').textContent = 'You changed ' + pairs.length + (pairs.length === 1 ? ' sentence' : ' sentences') + '. Teach Lahiyo?';
@@ -2895,8 +3142,8 @@
       r.readAsDataURL(f);
     };
   });
-  var TYPE_OPTS = [['DOWN', 'Forward'], ['UP', 'Reply'], ['COMPOSE', 'Write'], ['REMINDER', 'સ્મૃતિપત્ર'], ['ALL', 'All types']];
-  var ADDR_OPTS = [['R7', 'DC Range-7'], ['UNITS', 'Units'], ['CCST', 'CCST'], ['ANY', 'Any addressee']];
+  var TYPE_OPTS = [['DOWN', 'Forward'], ['UP', 'Reply'], ['COMPOSE', 'Write'], ['REMINDER', 'સ્મૃતિપત્ર'], ['OTHER', 'Other office'], ['ALL', 'All types']];
+  var ADDR_OPTS = [['R7', 'DC Range-7'], ['UNITS', 'Units'], ['CCST', 'CCST'], ['OTHER', 'Other office'], ['ANY', 'Any addressee']];
   function optsHtml(list, v) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === v ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join(''); }
   $('tkBtn').onclick = function () {
     $('tkErr').hidden = true; $('tkOk').hidden = true;
@@ -2931,8 +3178,8 @@
   };
 
   // ── Lessons lists (Teach page: My lessons · Admin: Lessons) ──
-  var TYPE_NAME = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'સ્મૃતિપત્ર', ALL: 'All types' };
-  var ADDR_NAME = { R7: 'DC Range-7', UNITS: 'Units', CCST: 'CCST', ANY: 'Any addressee' };
+  var TYPE_NAME = { DOWN: 'Forward', UP: 'Reply', COMPOSE: 'Write', REMINDER: 'સ્મૃતિપત્ર', OTHER: 'Other office', ALL: 'All types' };
+  var ADDR_NAME = { R7: 'DC Range-7', UNITS: 'Units', CCST: 'CCST', OTHER: 'Other office', ANY: 'Any addressee' };
   function loadLessons() { api('getLessons', [], function (r) { state.lessons = r; renderLessonsAll(); }, function (e) { showErr($('step14').hidden ? 'tk2Err' : 'lsErr', e); }); }
   function statusBadge(x) {
     if (x.status === 'Off') return '<span class="badge b-off">Off</span>';
@@ -2968,7 +3215,7 @@
         '</div></td></tr>';
     }).join('') : '<tr><td colspan="5" class="empty" style="padding:18px">' + (waitView ? 'Nothing waiting for approval.' : 'No lessons yet.') + '</td></tr>';
     var c = r.counts || {};
-    $('lsCounts').textContent = 'Active for all branches — Forward: ' + (c.DOWN || 0) + ' · Reply: ' + (c.UP || 0) + ' · Write: ' + (c.COMPOSE || 0) + ' · સ્મૃતિપત્ર: ' + (c.REMINDER || 0) + ' · All types: ' + (c.ALL || 0) + ' (Lahiyo uses up to ' + r.max + ' per letter type)';
+    $('lsCounts').textContent = 'Active for all branches — Forward: ' + (c.DOWN || 0) + ' · Reply: ' + (c.UP || 0) + ' · Write: ' + (c.COMPOSE || 0) + ' · સ્મૃતિપત્ર: ' + (c.REMINDER || 0) + ' · Other office: ' + (c.OTHER || 0) + ' · All types: ' + (c.ALL || 0) + ' (Lahiyo uses up to ' + r.max + ' per letter type)';
   }
   function lessonAction(e, okBox) {
     var tr = e.target.closest('tr'); if (!tr || !tr.dataset.id) return;
