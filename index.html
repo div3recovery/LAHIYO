@@ -584,7 +584,6 @@
     <button type="button" class="nav" id="navTeach"><svg class="i"><use href="#ic-wand"/></svg>Teach Lahiyo</button>
     <button type="button" class="nav" id="navLessons" hidden><svg class="i"><use href="#ic-check"/></svg>Lessons<span class="nb" id="lsBadge" style="background:#C9A227" hidden></span></button>
     <button type="button" class="nav" id="navTray"><svg class="i"><use href="#ic-word"/></svg>Drafts Tray<span class="nb" id="trayBadge" title="Drafts ready" style="background:#1E7B3A" hidden></span></button>
-    <button type="button" class="nav" id="navOffices"><svg class="i"><use href="#ic-book"/></svg>Other Offices</button>
     <button type="button" class="nav" id="navCcst" hidden><svg class="i"><use href="#ic-book"/></svg>CCST Branches</button>
     <button type="button" class="nav" id="navStaff" hidden><svg class="i"><use href="#ic-sign"/></svg>Staff</button>
     <button type="button" class="nav" id="navSign" hidden><svg class="i"><use href="#ic-sign"/></svg>Signatories</button>
@@ -703,10 +702,21 @@
                   <div class="ot-in meta" style="display:block">Lahiyo finds the office named in the letter. You can check and change it on the next page.</div></div></div>
                 <div class="ot-opt" data-how="book"><input type="radio" name="otHow" value="book"><div><b>Choose from the address book</b> <span class="meta" id="otCount"></span>
                   <div class="ot-in"><input type="search" id="otFind" placeholder="Search: CGST, Collector, police, bank…" autocomplete="off" style="margin-bottom:8px"><select id="otBook" size="5" aria-label="Office from the address book"></select>
-                  <div class="ot-found" id="otBookShow" hidden></div></div></div></div>
+                  <div class="ot-found" id="otBookShow" hidden></div>
+                  <div class="row" id="obAdmin" hidden style="margin-top:8px;gap:8px"><button type="button" class="savebtn" id="obEditBtn">Edit</button><button type="button" class="delbtn" id="obDelBtn">Delete</button><span class="meta">Administrator only</span></div>
+                  <div id="obForm" hidden style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+                    <input type="hidden" id="obId">
+                    <div><label class="f" for="obName">Office <span>(short name, English)</span></label><input type="text" id="obName"></div>
+                    <div><label class="f" for="obGu">Address in Gujarati <span>(one line per row · without માન.)</span></label><textarea id="obGu" rows="3" class="ob-gu"></textarea></div>
+                    <div><label class="f" for="obEn">Address in English</label><textarea id="obEn" rows="3"></textarea></div>
+                    <label class="chk"><input type="checkbox" id="obMaan" checked> Write “માન.” before the office in Gujarati letters</label>
+                    <div id="err15" class="msg err" role="alert" hidden></div>
+                    <div class="row" style="gap:8px"><button type="button" class="btn-main" id="obSave" style="padding:10px 18px">Save changes</button><button type="button" class="btn-ghost" id="obCancel">Cancel</button></div>
+                  </div>
+                  <div id="ok15" class="msg info" role="status" hidden style="margin-top:8px"></div></div></div></div>
                 <div class="ot-opt" data-how="typed"><input type="radio" name="otHow" value="typed"><div><b>Type the address</b>
                   <div class="ot-in"><textarea id="otTyped" rows="3" placeholder="One line per row, e.g.&#10;The Assistant Commissioner,&#10;CGST Division-V, Gandhinagar"></textarea>
-                  <label class="chk" style="margin-top:8px"><input type="checkbox" id="otSave" checked> Save to the address book (all branches can use it)</label></div></div></div>
+                  <div class="row" style="margin-top:8px;align-items:center;gap:10px"><button type="button" class="savebtn" id="otSaveBtn">Save this address for future use</button><span class="meta" id="otSaveMsg">Saved addresses appear under “Choose from the address book” for every branch.</span></div></div></div></div>
               </div>
             </div>
             <div>
@@ -795,6 +805,7 @@
                 <label class="f" for="e_sig">Signed by <span>(the signature block and approval note follow this choice)</span></label>
                 <select id="e_sig"></select>
               </div>
+              <div id="toneMsg" class="msg info" role="status" hidden></div>
               <div class="fixed" id="sigBox" style="text-align:right"></div>
               <div class="other-sig" id="eOther" hidden>
                 <div><label class="f" for="eOtherBlock">Signature block <span>(one line per row)</span></label><textarea id="eOtherBlock" rows="3"></textarea></div>
@@ -850,31 +861,6 @@
           </table>
         </div>
         <div class="reg-foot"><span id="regCount"></span><span>Status options: Drafted · Sent · Sent to Range-7 · Sent to CCST · Reply received · Closed</span></div>
-      </section>
-
-      <!-- OTHER OFFICES (address book) -->
-      <section id="step15" hidden>
-        <div class="page-head"><div><h2>Other Offices</h2><p id="obSub">Address book for “Letter to Other Offices” and “Write a Letter”. Every branch can add an office; only the Administrator can edit or delete one.</p></div></div>
-        <div class="toolbar"><div class="grow"><label for="obFind">Search</label><input type="search" id="obFind" placeholder="Office or address"></div></div>
-        <div class="grid2">
-          <div class="info-col" style="flex:2 1 520px">
-            <div class="tablebox"><table class="reg" style="min-width:0"><thead><tr><th>Office</th><th>Address (Gujarati)</th><th>Address (English)</th><th>માન.</th><th>Added by</th><th></th></tr></thead><tbody id="obList"><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
-          </div>
-          <div class="paper" style="flex:1 1 320px">
-            <div class="paper-head"><h3 id="obTitle">Add an office</h3></div>
-            <input type="hidden" id="obId">
-            <div><label class="f" for="obName">Office <span>(short name, English)</span></label><input type="text" id="obName" placeholder="e.g. Collector, Gandhinagar"></div>
-            <div><label class="f" for="obGu">Address in Gujarati <span>(one line per row · without માન.)</span></label><textarea id="obGu" rows="3" class="ob-gu" placeholder="કલેક્ટરશ્રી,&#10;ગાંધીનગર"></textarea></div>
-            <div><label class="f" for="obEn">Address in English <span>(one line per row)</span></label><textarea id="obEn" rows="3" placeholder="The Collector,&#10;Gandhinagar"></textarea></div>
-            <label class="chk"><input type="checkbox" id="obMaan" checked> Write “માન.” before the office in Gujarati letters</label>
-            <div id="err15" class="msg err" role="alert" hidden></div>
-            <div id="ok15" class="msg info" role="status" hidden></div>
-            <div class="actions">
-              <button type="button" class="btn-main" id="obSave">Add to the address book</button>
-              <button type="button" class="btn-ghost" id="obCancel" hidden>Cancel edit</button>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- STAFF (Admin) -->
@@ -1229,7 +1215,11 @@
             </div>
           </div>
           <div>
-            <label class="f" for="cNote">4 · What has been asked <span>(Gujarati or English, a few lines)</span></label>
+            <label class="f">Language of the letter</label>
+            <div class="seg" id="cLang"><button type="button" data-v="GU" aria-pressed="true">Gujarati</button><button type="button" data-v="EN" aria-pressed="false">English</button></div>
+          </div>
+          <div>
+            <label class="f" for="cNote">4 · What has been asked <span>(Gujarati or English, a few lines · the letter is written in the language chosen above)</span></label>
             <textarea id="cNote" rows="6" placeholder="દા.ત. વર્તુળ-૭ પાસેથી ઓક્ટોબર-૨૦૨૬ ની ઘટકવાર બાકી વસૂલાતની માહિતી નિયત પત્રકમાં મંગાવવી."></textarea>
             <p class="meta" style="margin:6px 0 0">Nothing is invented: any missing date, number or format is left as a [blank] for you to fill.</p>
           </div>
@@ -1369,6 +1359,12 @@
   /** Branch name without the word "શાખા"/"Branch", for small labels. */
   function shortBranch(n) { return String(n || '').replace(/\s*(શાખા|Branch)\s*$/i, '').replace(/\s*શાખા\s*/, ' ').trim() || n; }
   /** Two letters for the round badge (works for Gujarati and English names). */
+  /** "Mehulkumar R. Ranavasiya" → "MR" (first and last word, English letters). */
+  function nameInitials(n) {
+    var w = String(n || '').replace(/[^A-Za-z\s.]/g, ' ').split(/[\s.]+/).filter(function (x) { return /[A-Za-z]/.test(x); });
+    if (!w.length) return branchInitials(n);
+    return ((w[0][0] || '') + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase();
+  }
   function branchInitials(n) {
     var words = String(n || '').replace(/[()\/.]/g, ' ').split(/\s+/).filter(function (w) { return w && !/^(શાખા|branch)$/i.test(w); });
     var chars = words.map(function (w) { return Array.from(w)[0]; }).slice(0, 2).join('');
@@ -1445,7 +1441,7 @@
     $('userName').textContent = s.person ? s.person.name : s.branch;
     $('userRole').textContent = s.person ? (s.admin ? 'Administrator' : shortBranch(s.branch)) : (s.admin ? 'Administrator' : 'Branch user');
     $('whoBtn').title = (s.staff || []).length ? 'Change the name' : '';
-    $('avatar').textContent = s.admin ? 'AD' : branchInitials(s.branch);
+    $('avatar').textContent = s.person && s.person.name ? nameInitials(s.person.name) : (s.admin ? 'AD' : branchInitials(s.branch));
     $('ver').textContent = 'Version ' + s.version;
     $('modelInfo').textContent = s.model ? ' · AI: ' + s.model : '';
     $('dueScope').textContent = s.admin ? 'All branches' : '';
@@ -1524,15 +1520,15 @@
   }
 
   // ── Navigation ──
-  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11', 12: 'step12', 13: 'step13', 14: 'step14', 15: 'step15' };
-  var NAV_IDS = ['navFwd', 'navReply', 'navOther', 'navOffices', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTeach', 'navLessons', 'navTray', 'navCcst', 'navStaff', 'navSign'];
+  var STEPS = { 1: 'step1', 2: 'step2', 3: 'step3', 4: 'step4', 5: 'step5', 6: 'step6', 7: 'step7', 8: 'step8', 9: 'step9', 10: 'step10', 11: 'step11', 12: 'step12', 13: 'step13', 14: 'step14' };
+  var NAV_IDS = ['navFwd', 'navReply', 'navOther', 'navCompose', 'navReminder', 'navCheck', 'navRegister', 'navWork', 'navTeach', 'navLessons', 'navTray', 'navCcst', 'navStaff', 'navSign'];
   var MODE_NAV = { DOWN: 'navFwd', UP: 'navReply', OTHER: 'navOther', COMPOSE: 'navCompose', REMINDER: 'navReminder', CHECKED: 'navCheck' };
   function setNav(id) { NAV_IDS.forEach(function (n) { $(n).classList.toggle('active', n === id); }); }
   function navFor(n) {
     if (n === 1) return MODE_NAV[state.mode];
-    if (n === 2) return state.draft && state.draft.details && state.draft.details.queueId ? 'navTray' : MODE_NAV[(state.draft && state.draft.mode) || state.mode];
+    if (n === 2) return state.draft && state.draft.details && state.draft.details.queueId && !state.draft.trayKept ? 'navTray' : MODE_NAV[(state.draft && state.draft.mode) || state.mode];
     if (n === 8) return state.sent && state.sent.back === 10 ? 'navCheck' : (state.sent && state.sent.back === 2 ? navFor(2) : 'navRegister');
-    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray', 12: 'navCcst', 13: 'navTeach', 14: 'navLessons', 15: 'navOffices' }[n];
+    return { 3: 'navRegister', 4: 'navCompose', 5: 'navReminder', 6: 'navSign', 7: 'navStaff', 9: 'navWork', 10: 'navCheck', 11: 'navTray', 12: 'navCcst', 13: 'navTeach', 14: 'navLessons' }[n];
   }
   function showStep(n) {
     Object.keys(STEPS).forEach(function (k) { $(STEPS[k]).hidden = Number(k) !== n; });
@@ -1651,7 +1647,7 @@
     $('preHint').hidden = false;
     var fn = state.mode === 'OTHER' ? 'otherDraft' : 'generateDraft';
     var preq = state.mode === 'OTHER' ? Object.assign(otherReq(), { files: files, branch: $('recBranch').value })
-      : { mode: state.mode, deadline: 'SAME', files: files, branch: $('recBranch').value };
+      : { mode: state.mode, deadline: 'SAME', files: files, branch: $('recBranch').value, signatoryId: (defaultSig(state.mode) || {}).id || '' };
     api(fn, [preq],
       function (d) {
         if (state.pre !== pre) return;                     // a different file was chosen meanwhile
@@ -1751,7 +1747,7 @@
     var fail = function (e) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); showErr('err4', e); };
     var write = function (id) {
       var creq = { instructedBy: state.ins, toId: $('cTo').value, toOther: $('cToOther').value, bookId: $('cBook').value, ccstRank: $('cRank').value, ccstBranch: $('cCcst').value, note: note,
-        refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id };
+        refs: $('cRefs').value, deadline: $('cDl').value, enclosure: $('cEncl').value, branch: $('cBranch').value, signatoryId: id, lang: segVal('cLang') || 'GU' };
       api('composeDraft', [creq],
         function (d) { busyBtn('cBtn', 'cSpin', 'cIcon', 'cTxt', false, '', 'Write the Letter'); d.clientMs = Date.now() - c0; d.req = { fn: 'composeDraft', req: creq }; state.draft = d; showDraft(d); }, fail);
     };
@@ -1832,7 +1828,7 @@
     $('noteBox').hidden = !showNote;
     $('noteBox').innerHTML = showNote ? '<span class="k">Approval note</span>' + esc(noteText()) : '';
   }
-  $('e_sig').onchange = function () { applySignatory($('e_sig').value); courtesyNow(); };
+  $('e_sig').onchange = function () { applySignatory($('e_sig').value); courtesyNow(); toneNow(); };
   $('eOtherNote').onchange = function () { applySignatory('OTHER'); };
   $('eOtherBlock').addEventListener('input', function () { courtesyNow(); });
 
@@ -2037,7 +2033,7 @@
     if (!state.sigs.length) { $('sigList').innerHTML = '<p class="empty">No signatories yet. Add one on the right.</p>'; return; }
     $('sigList').innerHTML = state.sigs.map(function (x) {
       return '<div class="sigcard' + (x.active ? '' : ' off') + '" data-id="' + esc(x.id) + '">' +
-        '<div class="avatar" aria-hidden="true" style="width:44px;height:44px">' + esc((x.name.match(/[A-Za-z]/g) || ['•']).slice(0, 2).join('').toUpperCase()) + '</div>' +
+        '<div class="avatar" aria-hidden="true" style="width:44px;height:44px">' + esc(nameInitials(x.name)) + '</div>' +
         '<div class="who"><b>' + esc(x.name) + '</b>' + (x.rank ? ' <span class="tag-s">' + esc(x.rank) + '</span>' : '') + (x.active ? '' : ' <span class="tag-s">Inactive</span>') +
         '<div class="blk">' + esc(x.block.join('\n')) + '</div>' +
         '<div class="tags">' + x.defaults.map(function (m) { return '<span class="tag-s gold">Default · ' + esc(MODE_SHORT[m] || m) + '</span>'; }).join('') +
@@ -2190,7 +2186,7 @@
 
   // ── Drafts Tray ──
   var TRAY_TXT = { Waiting: 'Waiting', Working: 'Working…', Busy: 'Gemini busy', Ready: 'Draft ready', Opened: 'Opened', Downloaded: 'Downloaded', Failed: 'Needs attention' };
-  var MODE_SHORT2 = { DOWN: 'Forward', UP: 'Reply', REMINDER: 'સ્મૃતિપત્ર', OTHER: 'Other office' };
+  var MODE_SHORT2 = { DOWN: 'Forward', UP: 'Reply', REMINDER: 'સ્મૃતિપત્ર', OTHER: 'Other office', COMPOSE: 'Written' };
   function loadTray(cb) {
     api('getQueue', [], function (q) { renderTray(q); if (cb) cb(q); }, function (e) { showErr('trErr', e); });
   }
@@ -2208,12 +2204,12 @@
         '<td>' + (can ? '<input type="checkbox" class="trSel" aria-label="Select"' + (r.status === 'Ready' ? ' data-ready="1"' : '') + '>' : '') + '</td>' +
         '<td style="white-space:nowrap">' + esc(r.created) + (admin || !r.mine ? '<br><small class="meta">' + esc(r.person || shortBranch(r.branch)) + '</small>' : '') + '</td>' +
         '<td>' + esc(MODE_SHORT2[r.mode] || r.mode) + '</td>' +
-        '<td><b>' + esc(r.letterNo || r.name) + '</b>' + (r.subject ? '<br><span class="gu" style="font-family:var(--gu)">' + esc(r.subject) + '</span>' : (r.letterNo ? '' : '')) + '</td>' +
+        '<td><b>' + esc(r.letterNo || r.name || (r.mode === 'COMPOSE' ? 'Written letter' : '')) + '</b>' + (r.subject ? '<br><span class="gu" style="font-family:var(--gu)">' + esc(r.subject) + '</span>' : (r.letterNo ? '' : '')) + '</td>' +
         '<td><span class="st ' + esc(r.status) + '">' + esc(TRAY_TXT[r.status] || r.status) + '</span>' + (info ? '<br><small class="meta">' + info + '</small>' : '') + '</td>' +
         '<td style="white-space:nowrap">' + (can ? '<button type="button" class="savebtn trOpen">Open</button> ' : '') +
         (r.status === 'Failed' ? '<button type="button" class="savebtn trRetry">Try again</button> ' : '') +
         (r.status !== 'Working' ? '<button type="button" class="linkbtn trDel">Remove</button>' : '') + '</td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">The tray is empty. Choose several PDFs on Forward, Reply, Letter to Other Offices or Reminder to draft them in the background.</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">The tray is empty. Every letter you draft is kept here for 7 days; choose several PDFs on Forward, Reply, Letter to Other Offices or Reminder to draft them in the background.</td></tr>';
     $('trAll').checked = false;
     clearTimeout(state.trayTimer);
     if (q.pending) state.trayTimer = setTimeout(function () { loadTray(); }, $('step11').hidden ? 60000 : 15000);
@@ -2657,7 +2653,7 @@
   function otherReq() {
     var how = otHow(), st = { how: 'letter' };
     if (how === 'book' && $('otBook').value) st = { how: 'book', id: $('otBook').value };
-    if (how === 'typed' && $('otTyped').value.trim()) st = { how: 'typed', lines: $('otTyped').value.trim(), save: $('otSave').checked };
+    if (how === 'typed' && $('otTyped').value.trim()) st = { how: 'typed', lines: $('otTyped').value.trim() };
     return { sendTo: st, lang: otLang(), signatoryId: (defaultSig('OTHER') || {}).id || '' };
   }
   function otherProblem() {
@@ -2694,6 +2690,7 @@
     var o = (state.offices || []).filter(function (x) { return x.id === $('otBook').value; })[0];
     $('otBookShow').hidden = !o;
     if (o) $('otBookShow').innerHTML = '<small>Address</small>' + esc(officeText(o, otLang() === 'EN' ? 'en' : 'gu'));
+    if (typeof obAdminShow === 'function') obAdminShow();
   }
   $('otFind').oninput = renderOtBook;
   $('otBook').onchange = otBookShow;
@@ -2702,7 +2699,7 @@
     $('cBook').innerHTML = '<option value="">' + (list.length ? 'Choose the office…' : 'The address book is empty') + '</option>' + officeOpts(list, sel);
   }
   function loadOffices(cb) {
-    api('getOffices', [], function (l) { state.offices = l || []; renderOtBook(); renderCBook(); if (!$('step15').hidden) renderOb(); if (cb) cb(); }, function () { state.offices = state.offices || []; });
+    api('getOffices', [], function (l) { state.offices = l || []; renderOtBook(); renderCBook(); if (cb) cb(); }, function () { state.offices = state.offices || []; });
   }
   // Review page: offer to save the office Lahiyo found
   function showOffSave(d) {
@@ -2725,50 +2722,102 @@
       $('offSaveBox').textContent = '✓ ' + (det.office_name || 'The office') + ' saved to the address book.';
     }, function (er) { $('offSaveBox').className = 'msg err'; $('offSaveBox').textContent = er.message; });
   });
-  // Address book page (all users add · Administrator edits and deletes)
-  $('navOffices').onclick = function () { if (leaveDraftOk()) { resetOb(); showStep(15); renderOb(); loadOffices(); } };
-  function renderOb() {
-    var admin = state.sess && state.sess.admin, q = ($('obFind').value || '').trim().toLowerCase();
-    var list = (state.offices || []).filter(function (o) { return !q || (o.name + ' ' + o.gu.join(' ') + ' ' + o.en.join(' ')).toLowerCase().indexOf(q) >= 0; });
-    $('obSub').textContent = 'Address book for “Letter to Other Offices” and “Write a Letter”. Every branch can add an office; ' + (admin ? 'as the Administrator you can also edit or delete them.' : 'only the Administrator can edit or delete one.');
-    $('obList').innerHTML = list.length ? list.map(function (o) {
-      return '<tr data-id="' + esc(o.id) + '"><td><b>' + esc(o.name) + '</b></td>' +
-        '<td class="gu">' + (o.gu.length ? esc((o.maan ? maanFirst(o.gu) : o.gu).join('\n')).replace(/\n/g, '<br>') : '—') + '</td>' +
-        '<td>' + (o.en.length ? esc(o.en.join('\n')).replace(/\n/g, '<br>') : '—') + '</td><td>' + (o.maan ? 'Yes' : 'No') + '</td>' +
-        '<td>' + esc(o.by) + '<br><small class="meta">' + esc([o.branch && o.branch !== 'Administrator' ? shortBranch(o.branch) : '', o.on].filter(Boolean).join(' · ')) + '</small></td>' +
-        '<td>' + (admin ? '<div class="rowbtns"><button type="button" class="savebtn obEdit">Edit</button><button type="button" class="delbtn obDel">Delete</button></div>' : '') + '</td></tr>';
-    }).join('') : '<tr><td colspan="6" class="empty" style="padding:18px">' + ((state.offices || []).length ? 'No office matches the search.' : 'No offices yet. Add one on the right, or tick “Save to the address book” when you type an address.') + '</td></tr>';
+  // Address book on the Letter to Other Offices page (v3.9): everyone saves addresses · Administrator edits and deletes.
+  function bookSel() { return (state.offices || []).filter(function (x) { return x.id === $('otBook').value; })[0] || null; }
+  function obAdminShow() {
+    var o = bookSel(), admin = state.sess && state.sess.admin;
+    $('obAdmin').hidden = !(admin && o) || !$('obForm').hidden;
   }
-  $('obFind').oninput = renderOb;
-  function resetOb() {
-    $('obId').value = ''; $('obName').value = ''; $('obGu').value = ''; $('obEn').value = ''; $('obMaan').checked = true;
-    $('obTitle').textContent = 'Add an office'; $('obSave').textContent = 'Add to the address book'; $('obCancel').hidden = true; $('err15').hidden = true; $('ok15').hidden = true;
-  }
-  $('obCancel').onclick = resetOb;
-  $('obList').addEventListener('click', function (e) {
-    var tr = e.target.closest('tr'); if (!tr) return;
-    var o = (state.offices || []).filter(function (x) { return x.id === tr.dataset.id; })[0]; if (!o) return;
-    if (e.target.classList.contains('obEdit')) {
-      $('obId').value = o.id; $('obName').value = o.name; $('obGu').value = o.gu.join('\n'); $('obEn').value = o.en.join('\n'); $('obMaan').checked = o.maan;
-      $('obTitle').textContent = 'Edit · ' + o.name; $('obSave').textContent = 'Save changes'; $('obCancel').hidden = false; $('err15').hidden = true; $('ok15').hidden = true;
-      $('obName').focus();
-    } else if (e.target.classList.contains('obDel')) {
-      if (!confirm('Delete ' + o.name + ' from the address book? Letters already drafted are not affected.')) return;
-      api('removeOffice', [o.id], function (l) { state.offices = l; renderOb(); renderOtBook(); renderCBook(); resetOb(); $('ok15').textContent = o.name + ' deleted.'; $('ok15').hidden = false; },
-        function (er) { showErr('err15', er); });
-    }
-  });
+  $('otBook').addEventListener('change', function () { $('obForm').hidden = true; $('ok15').hidden = true; obAdminShow(); });
+  $('obEditBtn').onclick = function () {
+    var o = bookSel(); if (!o) return;
+    $('obId').value = o.id; $('obName').value = o.name; $('obGu').value = o.gu.join('\n'); $('obEn').value = o.en.join('\n'); $('obMaan').checked = o.maan;
+    $('err15').hidden = true; $('ok15').hidden = true; $('obForm').hidden = false; obAdminShow(); $('obName').focus();
+  };
+  $('obCancel').onclick = function () { $('obForm').hidden = true; obAdminShow(); };
   $('obSave').onclick = function () {
-    $('err15').hidden = true; $('ok15').hidden = true;
+    $('err15').hidden = true;
     var o = { id: $('obId').value, name: $('obName').value.trim(), gu: $('obGu').value.replace(/^\s*માન\.?\s*/, ''), en: $('obEn').value, maan: $('obMaan').checked };
     if (!o.name) return showErr('err15', 'Please enter the office name.');
     if (!o.gu.trim() && !o.en.trim()) return showErr('err15', 'Please enter the address in Gujarati or in English.');
     $('obSave').disabled = true;
     api('saveOffice', [o], function (r) {
-      $('obSave').disabled = false; state.offices = r.list; renderOb(); renderOtBook(); renderCBook(); resetOb();
-      $('ok15').textContent = o.name + ' saved.'; $('ok15').hidden = false;
+      $('obSave').disabled = false; state.offices = r.list; $('obForm').hidden = true; renderOtBook(); renderCBook(); $('otBook').value = r.id; otBookShow(); obAdminShow();
+      $('ok15').className = 'msg info'; $('ok15').textContent = o.name + ' saved.'; $('ok15').hidden = false;
     }, function (er) { $('obSave').disabled = false; showErr('err15', er); });
   };
+  $('obDelBtn').onclick = function () {
+    var o = bookSel(); if (!o) return;
+    if (!confirm('Delete ' + o.name + ' from the address book? Letters already drafted are not affected.')) return;
+    api('removeOffice', [o.id], function (l) { state.offices = l; renderOtBook(); renderCBook(); obAdminShow(); $('ok15').className = 'msg info'; $('ok15').textContent = o.name + ' deleted.'; $('ok15').hidden = false; },
+      function (er) { $('ok15').className = 'msg err'; $('ok15').textContent = er.message || String(er); $('ok15').hidden = false; });
+  };
+  // "Save this address for future use" next to the typed address
+  $('otSaveBtn').onclick = function () {
+    var t = $('otTyped').value.trim();
+    if (!t) { $('otSaveMsg').textContent = 'Type the address first.'; return; }
+    var L = t.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+    var gu = /[઀-૿]/.test(t);
+    var name = L[0].replace(/,\s*$/, '').replace(/^(The|માન\.?)\s*/i, '') + (L.length > 1 ? ', ' + L[L.length - 1].replace(/,\s*$/, '') : '');
+    $('otSaveBtn').disabled = true;
+    api('saveOffice', [{ name: name.slice(0, 120), gu: gu ? t.replace(/^\s*માન\.?\s*/, '') : '', en: gu ? '' : t, maan: true, quiet: true }], function (r) {
+      $('otSaveBtn').disabled = false; state.offices = r.list; renderOtBook(); renderCBook();
+      $('otSaveMsg').textContent = r.existed ? '✓ Already in the address book.' : '✓ Saved. Every branch can now choose it from the address book.';
+    }, function (er) { $('otSaveBtn').disabled = false; $('otSaveMsg').textContent = er.message || String(er); });
+  };
+  $('otTyped').addEventListener('input', function () { $('otSaveMsg').textContent = 'Saved addresses appear under “Choose from the address book” for every branch.'; });
+  // Write a Letter: language
+  $('cLang').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setSeg('cLang', b.dataset.v); });
+
+  // ── Tone by rank (v3.9): when the signer changes, the closing wording follows ──
+  function toneOf(sr, ar) { return !sr || !ar ? '' : sr > ar ? 'DIRECT' : sr === ar ? 'EQUAL' : 'REQUEST'; }
+  function swapTone(text, tone) {
+    var lvl = function (p) { p = String(p || ''); return /અંતિમ/.test(p) ? 'FINAL' : /પુનઃ/.test(p) ? 'AGAIN' : ''; };
+    var say = function (l) {
+      if (tone === 'DIRECT') return (l === 'FINAL' ? 'અંતિમ વખત ' : l === 'AGAIN' ? 'પુનઃ ' : '') + 'જણાવવામાં આવે છે';
+      if (tone === 'EQUAL') return 'આપશ્રીને ' + (l === 'FINAL' ? 'અંતિમ ' : l === 'AGAIN' ? 'પુનઃ ' : '') + 'વિનંતી છે';
+      return 'આપ સાહેબશ્રીને ' + (l === 'FINAL' ? 'અંતિમ ' : l === 'AGAIN' ? 'પુનઃ ' : '') + 'અનુરોધ છે';
+    };
+    var s = String(text);
+    s = s.replace(/(આપ\s*સાહેબશ્રીને|આપશ્રીને|આપને)\s+((?:પુનઃ|અંતિમ)\s+)?(?:આદરપૂર્વક\s+|આદરસહ\s+)?(અનુરોધ|વિનંતી)\s+છે/g, function (m, w, p2) { return say(lvl(p2)); });
+    s = s.replace(/((?:પુનઃ|અંતિમ\s+વખત)\s+)?જણાવવામાં\s+આવે\s+છે(?=\s*[.।]|\s*$)/gm, function (m, p2) { return say(lvl(p2)); });
+    if (tone === 'DIRECT') s = s.replace(/સવિનય\s+/g, '').replace(/આપ\s*સાહેબશ્રી(ના|ની|નું|ને)?/g, function (m, suf) { return 'આપ' + (suf || ''); });
+    return s;
+  }
+  var TONE_NAME = { DIRECT: 'directive (… જણાવવામાં આવે છે)', EQUAL: 'equal-rank (… આપશ્રીને વિનંતી છે)', REQUEST: 'requesting (… આપ સાહેબશ્રીને અનુરોધ છે)' };
+  function toneNow() {
+    var d = state.draft; $('toneMsg').hidden = true;
+    if (!d || d.lang === 'en') return;
+    var s = sigById($('e_sig').value);
+    var sr = $('e_sig').value === 'OTHER' ? lines($('eOtherBlock').value).reduce(function (m, l) { return Math.max(m, rankOfText(l)); }, 0)
+      : (s ? (RANK[s.rank] || s.block.reduce(function (m, l) { return Math.max(m, rankOfText(l)); }, 0)) : 0);
+    var to = lines($('e_to').value), ar = 0;
+    for (var k = 0; k < to.length && !ar; k++) ar = rankOfText(to[k]);
+    var t = toneOf(sr, ar);
+    if (!t || t === d.tone) return;
+    var before = $('e_body').value, after = swapTone(before, t);
+    d.tone = t;
+    if (after !== before) {
+      $('e_body').value = after;
+      $('toneMsg').innerHTML = 'The closing wording was changed to the <b>' + esc(TONE_NAME[t]) + '</b> tone for the new signing officer. Please read the body once.';
+      $('toneMsg').hidden = false;
+    }
+  }
+
+  // ── Every draft is kept in the Drafts Tray for 7 days (v3.9) ──
+  var TRAY_KEEP = { DOWN: 1, UP: 1, OTHER: 1, COMPOSE: 1, REMINDER: 1 };
+  state.trayIds = {};
+  function keepInTray(d) {
+    if (!d || !TRAY_KEEP[d.mode] || (d.details && d.details.queueId)) return;
+    var f = d.srcFiles && d.srcFiles[0];
+    var key = d.mode + '|' + (f ? f.name + ':' + String(f.data || '').length : (d.req && d.req.req ? String(d.req.req.note || '') + '|' + (d.req.req.toId || '') : Math.random()));
+    var copy = JSON.parse(JSON.stringify(d, function (k, v) { return k === 'srcFiles' || k === 'req' || k === 'sourcePdf' || k === '_doc' ? undefined : v; }));
+    api('trayKeep', [{ id: state.trayIds[key] || '', mode: d.mode, draft: copy, file: f ? { name: f.name, data: f.data } : null }], function (id) {
+      state.trayIds[key] = id;
+      if (state.draft === d) { d.details = d.details || {}; d.details.queueId = id; d.trayKept = true; }
+      loadTray();
+    }, function () { /* the tray is optional (e.g. setupBatch not run yet) */ });
+  }
 
   // ── Delete (hide) entries: Register and My Work ──
   function canDelete(r) {
@@ -2974,6 +3023,8 @@
     if (!$('srcPane').hidden) showSource(!!(d.srcFiles && d.srcFiles.length));
     state.origForm = formSnapshot();
     runAutoCheck();
+    $('toneMsg').hidden = true;
+    keepInTray(d);
   };
   var showStepBase = showStep;
   showStep = function (n) { if (n !== 2 && !$('srcPane').hidden) showSource(false); showStepBase(n); };
